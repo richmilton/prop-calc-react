@@ -31,3 +31,62 @@
     transform: rotate(360deg);
   }
 }
+
+li {
+  list-style-type: none;
+  min-width: 15em
+}
+
+.inputLabel {
+  font-size: 0.7em;
+  font-style: italic;
+  text-align: left;
+  width: 100%;
+  min-height: 1.4em;
+  line-height: 0.9em;
+  padding-left: 10px;
+}
+
+input, select {
+  font-size: 0.8em;
+}
+
+input[type=checkbox] {
+  width: 50px
+}
+
+label {
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  border-radius: 0 0 4px 4px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+.hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 500ms linear;
+}
+
+select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}
+
+form {width: 11.5em;}
+
+div.label {float:left; width:70%; text-align: left}
+div.value {float:left; width:30%; text-align: right}

@@ -1,24 +1,66 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Form from './components/FormComponent';
+import fields from './components/formconfig';
 import './App.css';
+import ResultList from './components/ResultListComponent';
+import calc from './logic/calculations';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        dealFinance: [],
+        buyToLet: []
+      },
+      show: 'form'
+    };
+  }
+
+  handleSubmit = (inputData) => {
+    console.log(inputData);
+    const dfResult = calc.initialFinance(inputData);
+    const btlResult = calc.freeCash(inputData)
+    //this.setState({});
+    this.setState({data: {dealFinance: dfResult, buyToLet: btlResult}, show: 'results'})
+  };
+
+  handleGoBack = () => {
+    this.setState({show: 'form'})
+  }
+
+  doContent () {
+    if (this.state.show === 'results') {
+      return (
+        <React.Fragment>
+          <button
+            className='btn-primary form-control'
+            onClick={this.handleGoBack}
+          >
+            Go Back
+          </button>
+          <ResultList id="1" data={this.state.data.dealFinance}/>
+          <ResultList id="2" data={this.state.data.buyToLet}/>
+        </React.Fragment>
+      )
+    }
+    else {
+      return (
+        <Form
+          name={'login'}
+          fields={fields}
+          onsubmit={this.handleSubmit}
+        />
+      )
+    }
+  };
+
   render() {
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          {this.doContent()}
         </header>
       </div>
     );
