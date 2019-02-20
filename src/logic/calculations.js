@@ -1,32 +1,6 @@
-const stampDuty = (val, sdltType) => {
-  let t;
-  const log = console.log;
-  const v = Math.round(val / 100);
-  const load = sdltType === 'corp' ? 0 : 3;
+import calculateStampDuty from './stampduty/stampduty-calculator';
 
-  if (!sdltType) return 0;
-  if (!load) {
-    if (val <= 150000) return 0;
-    if (val <= 250000) return (v - 1500) * 2;
-    return 1500 + ((v - 2500) * 5);
-  }
-  if (val <= 125000) return (v * (load));
-  t = 1250 * (load);
-  log('u125 ' + t);
-  if (val <= 250000) return t += ((v - 1250) * (2 + load));
-  t += (1250 * (2 + load));
-  log('u250 t' + t);
-  if (val <= 925000) return t += ((v - 2500) * (5 + load));
-  t += (6750 * (5 + load));
-  log('u925 ' +  t);
-  if (val <= 1500000) return t += ((v - 9250) * (10 + load));
-  t += (5750 * (10 + load));
-  log('u1.5 ' + t);
-  t += ((v - 15000) * (12 + load));
-  log('rest ' + t);
-  return t;
-};
-
+// eslint-disable-next-line
 const state = {
   buyingCash: "yes",
   doneUpValue: 400000,
@@ -49,8 +23,8 @@ const freeCash = ({loanToValue, buyingCash, propertyValue, doneUpValue,
                     initMortgageFee, initLegalFee, initSurveyorsFee, repairingLease}) => {
 
   const loanToVal = loanToValue / 100;
-  const isCash = buyingCash === 'yes';
-  const initialMortgageAdvance = isCash ? 0 : Math.round(propertyValue * loanToVal);
+  //const isCash = buyingCash === 'yes';
+  //const initialMortgageAdvance = isCash ? 0 : Math.round(propertyValue * loanToVal);
   const remortgageAdvance = Math.round(doneUpValue * loanToVal);
   const remortgageDeposit = Math.round(doneUpValue * (1 - loanToVal));
   const remortgageMonthlyInterest = Math.round(remortgageAdvance * mortgageInterestRatePercent / 1200);
@@ -58,7 +32,7 @@ const freeCash = ({loanToValue, buyingCash, propertyValue, doneUpValue,
   const lettingAgentsFees = monthlyRent * agentsPercent / 100;
   const freeCashFlowMonthly = monthlyRent - moe - remortgageMonthlyInterest - lettingAgentsFees;
   const totalOtherCosts = refurbCost + otherCost;
-  const sdltTotal = stampDuty(propertyValue, stampDutyType);
+  const sdltTotal = calculateStampDuty(propertyValue, stampDutyType);
   const remortgageFees = remortgageFee + remortgageValuationFee + remortgageLegalFee;
   const initialFees = initMortgageFee + initLegalFee + initSurveyorsFee;
   const initialCost = initialFees + totalOtherCosts + sdltTotal + propertyValue;
@@ -90,7 +64,7 @@ const initialFinance = ({buyingCash, loanToValue, propertyValue, initSurveyorsFe
   const initFees = initSurveyorsFee + initLegalFee + initMortgageFee;
   const other = refurbCost + otherCost;
   const initialDeposit = isCash ? propertyValue : Math.round(propertyValue * (1 - loanToVal));
-  const sdltTotal = stampDuty(propertyValue, stampDutyType);
+  const sdltTotal = calculateStampDuty(propertyValue, stampDutyType);
   const totCost = initFees + other + sdltTotal + initialDeposit + initMortgageAdvance;
   const totIn = totCost-initMortgageAdvance;
 
@@ -106,7 +80,7 @@ const initialFinance = ({buyingCash, loanToValue, propertyValue, initSurveyorsFe
     {label: 'Total cost', value: totCost}];
 };
 
-function flip(data) {
+/*function flip(data) {
   var col = 'red', sp = parseFloat(data.form.duv), f = parseFloat(data.form.lsFee) + parseFloat(data.form.eFee);
   data.flipGain = Math.round((sp-data.totCost)/data.totCost*10000)/100;
   data.flipgood = data.flipGain >= 20;
@@ -123,11 +97,11 @@ function minRent(value, rental, ltvPercent, rate, stress) {
   var M = value * ltvPercent, m = M * rate/1200;
   return Math.ceil(m * stress/100);
 }
+*/
 
 const calculations = {
   freeCash: freeCash,
-  stampDuty: stampDuty,
   initialFinance: initialFinance
 };
 
-module.exports = calculations;
+export default calculations;

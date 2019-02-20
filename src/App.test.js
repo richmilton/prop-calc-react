@@ -1,6 +1,7 @@
 //import React from 'react';
 //import App from './App';
 import calculations from "./logic/calculations";
+import calculateStampDuty from './logic/stampduty/stampduty-calculator';
 const {expect} = require('chai');
 
 const state = {
@@ -35,12 +36,6 @@ it('renders without crashing', () => {
   expect(fc[10].value).to.be.equal(240);
   expect(fc[11].value).to.be.equal(1050);
   expect(fc[11].colour).to.be.equal('green');
-
-  let sd = calculations.stampDuty(200000, state);
-  console.log(sd);
-  expect(sd).to.be.equal(7500);
-  sd = calculations.stampDuty(2000000, state);
-  expect(sd).to.be.equal(213750);
 
   let initF = calculations.initialFinance(state);
   console.log(initF);

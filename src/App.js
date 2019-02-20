@@ -3,7 +3,7 @@ import Form from './components/FormComponent';
 import fields from './components/formconfig';
 import './App.css';
 import ResultList from './components/ResultListComponent';
-import calc from './logic/calculations';
+import calculations from './logic/calculations';
 
 class App extends Component {
   constructor(props) {
@@ -19,8 +19,8 @@ class App extends Component {
 
   handleSubmit = (inputData) => {
     console.log(inputData);
-    const dfResult = calc.initialFinance(inputData);
-    const btlResult = calc.freeCash(inputData)
+    const dfResult = calculations.initialFinance(inputData);
+    const btlResult = calculations.freeCash(inputData)
     //this.setState({});
     this.setState({data: {dealFinance: dfResult, buyToLet: btlResult}, show: 'results'})
   };
