@@ -3,18 +3,22 @@ import React, { Component } from 'react';
 
 const ListItem = (props) => {
 
-  return <li key={props.id}>
-    <div className="label">{props.label}</div>
-    <div className="value">{props.value}</div>
-  </li>
+  return (
+    <li>
+      <div className="label">{props.label}</div>
+      <div className="value">{props.value}</div>
+    </li>
+  )
 
 };
 
 const ResultList = (props) => {
 
+  console.log(props.id);
+
   return (
     <ul key={props.id}>
-      {props.data.map((ob, ind) => <ListItem id={'li-' + ind} label={ob.label} value={ob.value}/>)}
+      {props.data.map((ob, ind) => <ListItem key={`li-${props.id}-${ind}`} label={ob.label} value={ob.value}/>)}
     </ul>
   )
 

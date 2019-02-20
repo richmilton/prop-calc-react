@@ -48,11 +48,11 @@ class App extends Component {
         </div>
         <div className="res-block">
           <h4>Stress test</h4>
-          <ResultList id="4" data={this.state.data.stress}/>
+          <ResultList id="3" data={this.state.data.stress}/>
         </div>
         <div className="res-block">
           <h4>Flip</h4>
-          <ResultList id="3" data={this.state.data.flip}/>
+          <ResultList id="4" data={this.state.data.flip}/>
         </div>
       </React.Fragment>
     )
