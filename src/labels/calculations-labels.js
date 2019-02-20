@@ -14,13 +14,26 @@ const freeCashLabels = [
 ];
 
 const initialFinanceLabels = [
-  "Mortgage advance", "Deposit", "Stamp duty", "Professional fees",
-  "Refurb/other costs", "Total money in", "Total cost"
+  "Mortgage advance",
+  "Deposit",
+  "Stamp duty",
+  "Professional fees",
+  "Refurb/other costs",
+  "Total money in",
+  "Total cost"
 ];
 
-const flipLabels = ['Sale price', 'Selling costs', 'Total input costs', 'Profit', 'Gain(%)'];
+const flipLabels = [
+  'Sale price',
+  'Selling costs',
+  'Total input costs',
+  'Profit',
+  'Gain(%)'
+];
 
-const stressLabels = ['Stress test', 'Minimum rent'];
+const stressLabels = [
+  'Stress test',
+  'Minimum rent'];
 
 export default {
   freeCashLabels: freeCashLabels,
