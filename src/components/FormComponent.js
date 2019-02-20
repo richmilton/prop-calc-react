@@ -19,7 +19,7 @@ const Input = (props) => {
         onBlur={(e)=>props.onblur(e)}
         //checked={props.type === 'checkbox' ? false : false}
       />
-      {Label(props)}
+      {props.type !== 'submit' ? Label(props) : ''}
     </li>
   )
 };
@@ -66,6 +66,14 @@ const Label = (props) => {
   )
 };
 
+const FormColumn = (props) => {
+  return (
+    <ul>
+      {props.render(props.fields)}
+    </ul>
+  )
+};
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +85,9 @@ class Form extends Component {
   defValues () {
     let v = {};
     this.props.fields.map(ob => {
-      v[ob.name] = ob.defVal;
+      if (!/^submit/.test(ob.type)) {
+        v[ob.name] = ob.defVal;
+      }
       return false;
     });
     return {formData: v};
@@ -100,20 +110,44 @@ class Form extends Component {
 
   renderFields = (fields) => {
     let formFields = [];
-    fields.forEach(ob => {
+    fields.forEach((ob, i) => {
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
       ob.doStyle = n => this.doStyle(n);
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target, e);
       ob.onblur = e => this.handleSubmit(e);
       if (ob.type === 'select') {
-        formFields.push(Select(ob))
+        formFields.push(Select(ob));
       }
       else {
         formFields.push(Input(ob));
       }
     });
     return formFields;
+  };
+
+  renderFieldCols = (cols) => {
+
+    const arrLength = Math.ceil(this.props.fields.length / 2);
+    let left = this.props.fields.slice(0);
+    const right = left.splice(arrLength);
+    console.log(left);
+    console.log(right);
+    console.log(arrLength, this.props.fields.length)
+
+    return [
+      <FormColumn
+        key="1"
+        fields={left}
+        render={this.renderFields}
+      />,
+      <FormColumn
+        key="2"
+        fields={right}
+        render={this.renderFields}
+      />
+      ]
+
   };
 
   handleChange = (t) => {
@@ -129,9 +163,12 @@ class Form extends Component {
       default:
         val = t.value || '';
     }
-    newValObject[t.name] = val;
-    newFormData = Object.assign(this.state.formData, newValObject);
-    this.setState({formData: newFormData});
+    if (!/^submit/.test(t.type)) {
+      newValObject[t.name] = val;
+      newFormData = Object.assign(this.state.formData, newValObject);
+      this.setState({formData: newFormData});
+    }
+
   };
 
   handleSubmit(e) {
@@ -143,7 +180,7 @@ class Form extends Component {
     this.setState(this.defValues());
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     console.log(prevProps);
     console.log(prevState);
     console.log(this.state);
@@ -156,7 +193,9 @@ class Form extends Component {
       id={this.props.name}
       onSubmit={(e)=>this.handleSubmit(e)}
     >
-      {this.renderFields(this.state.fields)}
+
+        {this.props.cols === '2' ? this.renderFieldCols() : this.renderFields(this.props.fields)}
+
     </form>
   }
 }

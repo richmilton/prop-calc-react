@@ -67,6 +67,7 @@ class App extends Component {
             <Form
               name={'login'}
               fields={fields}
+              cols="2"
               onsubmit={this.handleSubmit}
             />
           </div>

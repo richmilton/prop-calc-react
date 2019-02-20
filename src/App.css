@@ -20,7 +20,7 @@ li {
   font-style: italic;
   text-align: left;
   width: 100%;
-  min-height: 1.4em;
+  min-height: 1.8em;
   line-height: 0.9em;
   padding-left: 10px;
 }
@@ -31,10 +31,6 @@ input, select {
 
 input[type=checkbox] {
   width: 50px
-}
-
-input[type=submit] {
-  display: none;
 }
 
 label {
@@ -70,8 +66,6 @@ option {
   color: black;
 }
 
-form {width: 20em;}
-
 div.label {
   float:left;
   width:70%;
@@ -88,14 +82,21 @@ div.column {
   padding: 0.5em;
   font-size: 0.9em;
   float:left;
-  text-align: left
+  text-align: left;
+  width: 40em
+}
+
+div.res-block {
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 1em;
 }
 
 div.results {
   width: 20em
 }
-div.res-block {
-  display: inline-block;
-  width: 100%;
-  padding-bottom: 1em;
+
+form>ul {
+  float: left;
+  width: 50%;
 }

@@ -144,8 +144,8 @@ const fields = [
   {
     name: 'submit',
     type: 'submit',
-    label: 'log in',
-    className: 'btn-primary form-control'
+    className: 'btn-primary form-control',
+    defVal: 'update'
   }
 
 ];
