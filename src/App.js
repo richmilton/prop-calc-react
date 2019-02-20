@@ -38,14 +38,22 @@ class App extends Component {
   doResults = () => {
     return (
       <React.Fragment>
-        <h4>Deal finance</h4>
-        <ResultList id="1" data={this.state.data.dealFinance}/>
-        <h4>Buy to let</h4>
-        <ResultList id="2" data={this.state.data.buyToLet}/>
-        <h4>Stress test</h4>
-        <ResultList id="4" data={this.state.data.stress}/>
-        <h4>Flip</h4>
-        <ResultList id="3" data={this.state.data.flip}/>
+        <div className="res-block">
+          <h4>Deal finance</h4>
+          <ResultList id="1" data={this.state.data.dealFinance}/>
+        </div>
+        <div className="res-block">
+          <h4>Buy to let</h4>
+          <ResultList id="2" data={this.state.data.buyToLet}/>
+        </div>
+        <div className="res-block">
+          <h4>Stress test</h4>
+          <ResultList id="4" data={this.state.data.stress}/>
+        </div>
+        <div className="res-block">
+          <h4>Flip</h4>
+          <ResultList id="3" data={this.state.data.flip}/>
+        </div>
       </React.Fragment>
     )
   };
@@ -62,7 +70,7 @@ class App extends Component {
               onsubmit={this.handleSubmit}
             />
           </div>
-          <div className="column">
+          <div className="column results">
             {this.doResults()}
           </div>
 

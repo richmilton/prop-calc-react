@@ -83,7 +83,7 @@ const flip = ( {sellingLegalFee, agentSellingFee, initSurveyorsFee, initLegalFee
     {label: labels[3], value:  (doneUpValue - (totCost + fees) || 0), col},
     {label: labels[4], value: flipGain || 0, col}
   ];
-}
+};
 
 const stressTest = ( {doneUpValue, monthlyRent, loanToValue,
                        mortgageStressInterestRatePercent, mortgageStressMultipePercent} ) => {
@@ -101,7 +101,7 @@ const stressTest = ( {doneUpValue, monthlyRent, loanToValue,
     {label: labels[0], value: pass ? 'pass' : 'fail'},
     {label: labels[1], value: minRent}
   ];
-}
+};
 
 const allInputCosts = (initSurveyorsFee, initLegalFee, initMortgageFee,
                          refurbCost, otherCost, propertyValue, stampDutyType) => {
