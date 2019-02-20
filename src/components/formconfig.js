@@ -1,7 +1,7 @@
 const fields = [
   {
-    label: 'Property name',
-    name: 'propertyName',
+    label: 'Project name',
+    name: 'projectName',
     type: 'text',
   },
   {
