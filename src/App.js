@@ -11,57 +11,61 @@ class App extends Component {
     this.state = {
       data: {
         dealFinance: [],
-        buyToLet: []
-      },
-      show: 'form'
+        buyToLet: [],
+        stress: [],
+        flip: []
+      }
     };
   }
 
   handleSubmit = (inputData) => {
     console.log(inputData);
     const dfResult = calculations.initialFinance(inputData);
-    const btlResult = calculations.freeCash(inputData)
+    const btlResult = calculations.freeCash(inputData);
+    const flip = calculations.flip(inputData);
+    const stress = calculations.stressTest(inputData);
     //this.setState({});
-    this.setState({data: {dealFinance: dfResult, buyToLet: btlResult}, show: 'results'})
+    this.setState({
+      data: {
+        dealFinance: dfResult,
+        buyToLet: btlResult,
+        stress: stress,
+        flip: flip
+      }
+    });
   };
 
-  handleGoBack = () => {
-    this.setState({show: 'form'})
-  }
-
-  doContent () {
-    if (this.state.show === 'results') {
-      return (
-        <React.Fragment>
-          <button
-            className='btn-primary form-control'
-            onClick={this.handleGoBack}
-          >
-            Go Back
-          </button>
-          <ResultList id="1" data={this.state.data.dealFinance}/>
-          <ResultList id="2" data={this.state.data.buyToLet}/>
-        </React.Fragment>
-      )
-    }
-    else {
-      return (
-        <Form
-          name={'login'}
-          fields={fields}
-          onsubmit={this.handleSubmit}
-        />
-      )
-    }
+  doResults = () => {
+    return (
+      <React.Fragment>
+        <h4>Deal finance</h4>
+        <ResultList id="1" data={this.state.data.dealFinance}/>
+        <h4>Buy to let</h4>
+        <ResultList id="2" data={this.state.data.buyToLet}/>
+        <h4>Stress test</h4>
+        <ResultList id="4" data={this.state.data.stress}/>
+        <h4>Flip</h4>
+        <ResultList id="3" data={this.state.data.flip}/>
+      </React.Fragment>
+    )
   };
 
   render() {
 
     return (
       <div className="App">
-        <header className="App-header">
-          {this.doContent()}
-        </header>
+
+          <div className="column">
+            <Form
+              name={'login'}
+              fields={fields}
+              onsubmit={this.handleSubmit}
+            />
+          </div>
+          <div className="column">
+            {this.doResults()}
+          </div>
+
       </div>
     );
   }

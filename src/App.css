@@ -55,14 +55,20 @@ input[type=checkbox] {
   width: 50px
 }
 
+input[type=submit] {
+  display: none;
+}
+
 label {
-  border-right: 1px solid #fff;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  border-right: 1px solid #999;
+  border-left: 1px solid #999;
+  border-bottom: 1px solid #999;
   border-radius: 0 0 4px 4px;
   padding-right: 10px;
   padding-left: 10px;
   font-weight: bold;
+  background-color: #fff;
+  color: #666
 }
 
 .show {
@@ -90,3 +96,5 @@ form {width: 11.5em;}
 
 div.label {float:left; width:70%; text-align: left}
 div.value {float:left; width:30%; text-align: right}
+div.column {margin: 0.5em; float:left; width:15em; text-align: left}
+ul {margin-top: 0.5em}

@@ -1,30 +1,13 @@
 import calculateStampDuty from './stampduty/stampduty-calculator';
+import calculationsLabels from "../labels/calculations-labels";
 
-// eslint-disable-next-line
-const state = {
-  buyingCash: "yes",
-  doneUpValue: 400000,
-  agentSellingFee: 0,
-  repairingLease: "no",
-  mortgageInterestRatePercent: 3,
-  initLegalFee: 1500, agentsPercent: 10, sellingLegalFee: 0,
-  loanToValue: 75, initMortgageFee: 100, moePercent: 15,
-  mortgageStressInterestRatePercent: 5,
-  mortgageStressMultipePercent: 125, otherCost: 0, refurbCost: 0,
-  monthlyRent: 2400, remortgageFee: 150, remortgageLegalFee: 300,
-  remortgageValuationFee: 200, initSurveyorsFee: 100, stampDutyType: "residential",
-  propertyValue: 350000
-};
-
-const freeCash = ({loanToValue, buyingCash, propertyValue, doneUpValue,
+const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
                     mortgageInterestRatePercent, monthlyRent, moePercent,
                     agentsPercent, refurbCost, otherCost, stampDutyType,
                     remortgageFee, remortgageValuationFee, remortgageLegalFee,
-                    initMortgageFee, initLegalFee, initSurveyorsFee, repairingLease}) => {
+                    initMortgageFee, initLegalFee, initSurveyorsFee, repairingLease} ) => {
 
   const loanToVal = loanToValue / 100;
-  //const isCash = buyingCash === 'yes';
-  //const initialMortgageAdvance = isCash ? 0 : Math.round(propertyValue * loanToVal);
   const remortgageAdvance = Math.round(doneUpValue * loanToVal);
   const remortgageDeposit = Math.round(doneUpValue * (1 - loanToVal));
   const remortgageMonthlyInterest = Math.round(remortgageAdvance * mortgageInterestRatePercent / 1200);
@@ -38,25 +21,25 @@ const freeCash = ({loanToValue, buyingCash, propertyValue, doneUpValue,
   const initialCost = initialFees + totalOtherCosts + sdltTotal + propertyValue;
   const totFrlCost = repairingLease === 'yes' ? initialCost - totalOtherCosts : initialCost;
   const col = (freeCashFlowMonthly >= 100) ? 'green' : 'red';
+  const labels = calculationsLabels.freeCashLabels;
 
   return [
-    {label: 'Re-mortgage advance', value: remortgageAdvance},
-    {label: 'Re-mortgage deposit', value: remortgageDeposit},
-    {label: 'Re-mortgage fees', value: remortgageFees},
-    {label: 'Money in', value: totFrlCost},
-    {label: 'Money out', value: remortgageAdvance - remortgageFees},
-    {label: 'Money left in', value: totFrlCost - (remortgageAdvance - remortgageFees)},
-    {label: 'hr'},
-    {label: 'Monthly rental', value: monthlyRent},
-    {label: 'Mortgage monthly payment', value: remortgageMonthlyInterest},
-    {label: 'MOE', value: moe},
-    {label: 'Letting agent fees', value: lettingAgentsFees},
-    {label: 'Monthly free cashflow', value: freeCashFlowMonthly, colour: col}
+    {label: labels[0], value: remortgageAdvance},
+    {label: labels[1], value: remortgageDeposit},
+    {label: labels[2], value: remortgageFees},
+    {label: labels[3], value: totFrlCost},
+    {label: labels[4], value: remortgageAdvance - remortgageFees},
+    {label: labels[5], value: totFrlCost - (remortgageAdvance - remortgageFees)},
+    {label: labels[6], value: monthlyRent},
+    {label: labels[7], value: remortgageMonthlyInterest},
+    {label: labels[8], value: moe},
+    {label: labels[9], value: lettingAgentsFees},
+    {label: labels[10], value: freeCashFlowMonthly, colour: col}
     ];
 };
 
-const initialFinance = ({buyingCash, loanToValue, propertyValue, initSurveyorsFee, initLegalFee, initMortgageFee,
-                          refurbCost, otherCost, stampDutyType}) => {
+const initialFinance = ( {buyingCash, loanToValue, propertyValue, initSurveyorsFee,
+                           initLegalFee, initMortgageFee, refurbCost, otherCost, stampDutyType} ) => {
 
   const isCash = buyingCash === 'yes';
   const loanToVal = loanToValue / 100;
@@ -65,43 +48,83 @@ const initialFinance = ({buyingCash, loanToValue, propertyValue, initSurveyorsFe
   const other = refurbCost + otherCost;
   const initialDeposit = isCash ? propertyValue : Math.round(propertyValue * (1 - loanToVal));
   const sdltTotal = calculateStampDuty(propertyValue, stampDutyType);
-  const totCost = initFees + other + sdltTotal + initialDeposit + initMortgageAdvance;
+  const totCost = allInputCosts(initSurveyorsFee, initLegalFee, initMortgageFee,
+    refurbCost, otherCost, propertyValue, stampDutyType);
   const totIn = totCost-initMortgageAdvance;
+  const labels = calculationsLabels.initialFinanceLabels;
+
 
   return [
-    {label: 'Mortgage advance', value:initMortgageAdvance},
-    {label: 'hr'},
-    {label: 'Deposit', value: initialDeposit},
-    {label: 'Stamp duty', value: sdltTotal},
-    {label: 'Professional fees', value: initFees},
-    {label: 'Refurb/other costs', value: other},
-    {label: 'Total money in', value: totIn},
-    {label: 'hr'},
-    {label: 'Total cost', value: totCost}];
+    {label: labels[0], value: initMortgageAdvance},
+    {label: labels[1], value: initialDeposit},
+    {label: labels[2], value: sdltTotal},
+    {label: labels[3], value: initFees},
+    {label: labels[4], value: other},
+    {label: labels[5], value: totIn},
+    {label: labels[6], value: totCost}
+    ];
 };
 
-/*function flip(data) {
-  var col = 'red', sp = parseFloat(data.form.duv), f = parseFloat(data.form.lsFee) + parseFloat(data.form.eFee);
-  data.flipGain = Math.round((sp-data.totCost)/data.totCost*10000)/100;
-  data.flipgood = data.flipGain >= 20;
-  if (data.flipGain >= 20) col = 'green';
-  return [['Sale price',sp||0],['Selling costs',f||0],['Total input costs',data.totCost||0],['<b>Profit</b>','<b>' + (sp-(data.totCost+f))||0 + '</b>',col],['<b>Gain</b>','<b>' + (data.flipGain||0)+'&#37;</b>',col]];
+const flip = ( {sellingLegalFee, agentSellingFee, initSurveyorsFee, initLegalFee,
+                 initMortgageFee, refurbCost, otherCost, propertyValue, stampDutyType, doneUpValue} ) => {
+
+  const totCost = allInputCosts(initSurveyorsFee, initLegalFee, initMortgageFee,
+    refurbCost, otherCost, propertyValue, stampDutyType);
+
+  const fees = sellingLegalFee + agentSellingFee;
+  const flipGain = Math.round((doneUpValue-totCost)/totCost*10000)/100;
+  const col = (flipGain >= 20) ? 'green' : 'red';
+  const labels = calculationsLabels.flipLabels;
+
+  return [
+    {label: labels[0], value: doneUpValue},
+    {label: labels[1], value: fees},
+    {label: labels[2], value: totCost||0},
+    {label: labels[3], value:  (doneUpValue - (totCost + fees) || 0), col},
+    {label: labels[4], value: flipGain || 0, col}
+  ];
 }
 
-function stressTest(value, rental, ltvPercent, rate, stress) {
-  var M = value * ltvPercent, m = M * rate/1200, pass = rental >= minRent(value, rental, ltvPercent, rate, stress);
-  return pass;
+const stressTest = ( {doneUpValue, monthlyRent, loanToValue,
+                       mortgageStressInterestRatePercent, mortgageStressMultipePercent} ) => {
+
+  const minRent = Math.ceil(
+    doneUpValue *
+    loanToValue / 100 *
+    mortgageStressInterestRatePercent / 1200 *
+    mortgageStressMultipePercent / 100
+  );
+  const pass = monthlyRent >= minRent;
+  const labels = calculationsLabels.stressLabels;
+
+  return [
+    {label: labels[0], value: pass ? 'pass' : 'fail'},
+    {label: labels[1], value: minRent}
+  ];
 }
 
-function minRent(value, rental, ltvPercent, rate, stress) {
-  var M = value * ltvPercent, m = M * rate/1200;
-  return Math.ceil(m * stress/100);
-}
-*/
+const allInputCosts = (initSurveyorsFee, initLegalFee, initMortgageFee,
+                         refurbCost, otherCost, propertyValue, stampDutyType) => {
+
+  const stampDuty = calculateStampDuty(propertyValue, stampDutyType);
+
+  return (
+    initSurveyorsFee +
+    initLegalFee +
+    initMortgageFee +
+    refurbCost +
+    otherCost +
+    stampDuty
+    + propertyValue
+  );
+};
 
 const calculations = {
   freeCash: freeCash,
-  initialFinance: initialFinance
+  initialFinance: initialFinance,
+  flip: flip,
+  allInputCosts: allInputCosts,
+  stressTest: stressTest
 };
 
 export default calculations;

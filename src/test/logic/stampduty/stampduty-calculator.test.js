@@ -1,8 +1,8 @@
 import calculateStampDuty from '../../../logic/stampduty/stampduty-calculator';
 const {expect} = require('chai');
 
-describe('calculations.calculateStampDuty(val, "residential")', function () {
-  it('should return correct values for residential', function () {
+describe('calculateStampDuty()', () => {
+  it('should return correct values for residential', () => {
 
     let sd = calculateStampDuty(100000, 'residential');
     expect(sd).to.be.equal(3000);
@@ -39,7 +39,7 @@ describe('calculations.calculateStampDuty(val, "residential")', function () {
   });
 });
 
-describe('calculations.calculateStampDuty()', function () {
+describe('calculations.calculateStampDuty()', () => {
   it('should return correct values for commercial', function () {
 
     let sd = calculateStampDuty(100000, 'commercial');

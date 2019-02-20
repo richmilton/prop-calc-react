@@ -16,6 +16,7 @@ const Input = (props) => {
         autoComplete={'off'}
         placeholder={props.placeholder || props.label || `${props.name} [${props.type}]`}
         defaultValue={props.defVal || ''}
+        onBlur={(e)=>props.onblur(e)}
         //checked={props.type === 'checkbox' ? false : false}
       />
       {Label(props)}
@@ -34,6 +35,7 @@ const Select = (props) => {
         name={props.name}
         id={props.name}
         onChange={(ev) => props.onInput(ev)}
+        onBlur={(e)=>props.onblur(e)}
         //placeholder={props.placeholder || props.label || props.name}
       >
         <option value="" disabled>{props.placeholder || props.label || props.name}</option>
@@ -101,6 +103,7 @@ class Form extends Component {
       ob.doStyle = n => this.doStyle(n);
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target, e);
+      ob.onblur = e => this.handleSubmit(e);
       if (ob.type === 'select') {
         formFields.push(Select(ob))
       }
