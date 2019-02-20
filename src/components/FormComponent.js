@@ -76,12 +76,11 @@ class Form extends Component {
 
   defValues () {
     let v = {};
-    this.props.fields.forEach(ob => {
-
+    this.props.fields.map(ob => {
       v[ob.name] = ob.defVal;
-
+      return false;
     });
-    return v;
+    return {formData: v};
   }
 
   doLabel (fname, label) {
@@ -116,6 +115,7 @@ class Form extends Component {
 
   handleChange = (t) => {
     let newValObject = {}, val;
+    let newFormData;
     switch(t.type) {
       case 'number':
         val = isNaN(t.value) ? 0 : (parseFloat(t.value) || 0);
@@ -127,21 +127,24 @@ class Form extends Component {
         val = t.value || '';
     }
     newValObject[t.name] = val;
-    this.setState(newValObject);
+    newFormData = Object.assign(this.state.formData, newValObject);
+    this.setState({formData: newFormData});
   };
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onsubmit(this.state);
+    this.props.onsubmit(this.state.formData);
   }
 
   componentDidMount() {
     this.setState(this.defValues());
   }
 
-  componentDidUpdate () {
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps);
+    console.log(prevState);
     console.log(this.state);
-  }
+  };
 
   render() {
 
