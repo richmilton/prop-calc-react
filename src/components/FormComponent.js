@@ -110,7 +110,7 @@ class Form extends Component {
 
   renderFields = (fields) => {
     let formFields = [];
-    fields.forEach((ob, i) => {
+    fields.forEach((ob) => {
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
       ob.doStyle = n => this.doStyle(n);
       ob.doLabelClass = n => this.doLabelClass(n);
@@ -126,14 +126,11 @@ class Form extends Component {
     return formFields;
   };
 
-  renderFieldCols = (cols) => {
+  renderFieldCols = () => {
 
     const arrLength = Math.ceil(this.props.fields.length / 2);
     let left = this.props.fields.slice(0);
     const right = left.splice(arrLength);
-    console.log(left);
-    console.log(right);
-    console.log(arrLength, this.props.fields.length)
 
     return [
       <FormColumn
@@ -194,7 +191,7 @@ class Form extends Component {
       onSubmit={(e)=>this.handleSubmit(e)}
     >
 
-        {this.props.cols === '2' ? this.renderFieldCols() : this.renderFields(this.props.fields)}
+        {this.props['twocols'] === 'yes' ? this.renderFieldCols() : this.renderFields(this.props.fields)}
 
     </form>
   }
