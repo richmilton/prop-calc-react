@@ -84,15 +84,18 @@ class Form extends Component {
   }
 
   doLabel (fname, label) {
-    return this.state[fname] ? label || fname : '';
+    const fData = this.state.formData;
+    return fData && fData[fname] ? label || fname : '';
   }
 
   doLabelClass (fname) {
-    return (this.state[fname]) ? 'show' : 'hide';
+    const fData = this.state.formData;
+    return fData && fData[fname] ? 'show' : 'hide';
   }
 
   doStyle (fname) {
-    return this.state[fname] ? {width:'60%'} : {width:'100%'};
+    const fData = this.state.formData;
+    return fData && fData[fname] ? {width:'60%'} : {width:'100%'};
   }
 
   renderFields = (fields) => {
