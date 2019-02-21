@@ -96,7 +96,7 @@ class Form extends Component {
       newValObject[t.name] = val;
       newFormData = Object.assign(this.state.formData, newValObject);
       this.setState({formData: newFormData});
-      if (/^select-one$/.test(t.type)) {
+      if (/^select-one$|^checkbox$/.test(t.type)) {
         this.props.onsubmit(this.state.formData);
       }
     }
