@@ -23,7 +23,7 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Cash purchase(£)',
+    label: 'Cash purchase',
     name: 'buyingCash',
     type: 'checkbox',
     defVal: 'no'
@@ -145,7 +145,7 @@ const fields = [
     name: 'submit',
     type: 'submit',
     className: 'btn-primary form-control',
-    defVal: 'update'
+    value: 'update'
   }
 
 ];

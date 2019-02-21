@@ -30,7 +30,10 @@ input, select {
 }
 
 input[type=checkbox] {
-  width: 50px
+  width: 50px;
+  float: left;
+  font-size: 0.7em;
+  margin-top: 1.2em;
 }
 
 label {
@@ -99,4 +102,18 @@ div.results {
 form>ul {
   float: left;
   width: 50%;
+}
+
+.checkbox-label {
+  min-height: 2.6em;
+  margin-bottom: 1em
+}
+
+.checkbox-label>label {
+  border: none;
+  margin-top: 1em;
+  font-weight: normal;
+  font-size: 1.1em;
+  color: #666;
+  background-color: transparent;
 }

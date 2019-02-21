@@ -14,8 +14,6 @@ const ListItem = (props) => {
 
 const ResultList = (props) => {
 
-  console.log(props.id);
-
   return (
     <ul key={props.id}>
       {props.data.map((ob, ind) => <ListItem key={`li-${props.id}-${ind}`} label={ob.label} value={ob.value}/>)}

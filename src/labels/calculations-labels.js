@@ -7,7 +7,7 @@ const freeCashLabels = [
   "Money out",
   "Money left in",
   "Monthly rental",
-  "Mortgage monthly payment",
+  "Monthly mortgage payment",
   "MOE",
   "Letting agent fees",
   "Monthly free cashflow"
