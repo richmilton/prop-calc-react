@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import StatelessComponents from './StatelessFormComponents';
 
-const Input = StatelessComponents.Input;
-const Select = StatelessComponents.Select;
+const {Input, Select} = StatelessComponents;
 
 const FormColumn = ({render, fields}) => {
   return (
