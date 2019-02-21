@@ -3,9 +3,9 @@ import StatelessComponents from './StatelessFormComponents';
 
 const {Input, Select} = StatelessComponents;
 
-const FormColumn = ({render, fields}) => {
+const FormColumn = ({render, fields, className}) => {
   return (
-    <ul>
+    <ul className={className}>
       {render(fields)}
     </ul>
   )
@@ -60,7 +60,7 @@ class Form extends Component {
 
   renderFieldCols = () => {
 
-    const arrLength = Math.ceil(this.props.fields.length / 2);
+    const arrLength = Math.floor(this.props.fields.length / 2);
     let left = this.props.fields.slice(0);
     const right = left.splice(arrLength);
 
@@ -68,10 +68,12 @@ class Form extends Component {
       <FormColumn
         key="1"
         fields={left}
+        className='left'
         render={this.renderFields}
       />,
       <FormColumn
         key="2"
+        className={right}
         fields={right}
         render={this.renderFields}
       />

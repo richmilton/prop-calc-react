@@ -69,19 +69,25 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Re-mortgage fee(£)',
+    label: 'Initial LTV(%)',
+    name: 'initialLoanToValue',
+    type: 'number',
+    defVal: 75
+  },
+  {
+    label: 'Remortgage fee(£)',
     name: 'remortgageFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Re-mortgage valuation fee(£)',
+    label: 'Remortgage valuation fee(£)',
     name: 'remortgageValuationFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Re-mortgage solicitors fee(£)',
+    label: 'Remortgage solicitors fee(£)',
     name: 'remortgageLegalFee',
     type: 'number',
     defVal: 0
@@ -111,7 +117,7 @@ const fields = [
     defVal: 6.0
   },
   {
-    label: 'Loan to Value(%)',
+    label: 'Remortgage LTV(%)',
     name: 'loanToValue',
     type: 'number',
     defVal: 75
