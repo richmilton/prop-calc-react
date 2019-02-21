@@ -38,11 +38,11 @@ const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
     ];
 };
 
-const initialFinance = ( {buyingCash, loanToValue, propertyValue, initSurveyorsFee,
+const initialFinance = ( {buyingCash, initialLoanToValue, propertyValue, initSurveyorsFee,
                            initLegalFee, initMortgageFee, refurbCost, otherCost, stampDutyType} ) => {
 
   const isCash = buyingCash === 'yes';
-  const loanToVal = loanToValue / 100;
+  const loanToVal = initialLoanToValue / 100;
   const initMortgageAdvance = isCash ? 0 : Math.round(propertyValue * loanToVal);
   const initFees = initSurveyorsFee + initLegalFee + initMortgageFee;
   const other = refurbCost + otherCost;
