@@ -112,10 +112,13 @@ class Form extends Component {
 
   componentDidMount() {
     this.setState(this.defValues());
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    //
+    const projName = this.state.formData['projectName'];
+    const newTitle = projName ? projName.replace(/ /g, '-') : 'Untitled';
+    document.getElementById('doc-title').text = newTitle;
   };
 
   render() {
