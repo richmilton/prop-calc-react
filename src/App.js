@@ -65,7 +65,7 @@ class App extends Component {
 
           <div className="column">
             <Form
-              name={'login'}
+              name={'propcalc'}
               fields={fields}
               twocols="yes"
               onsubmit={this.handleSubmit}

@@ -2,44 +2,46 @@ import React, { Component } from 'react';
 
 //stateless component Input. Currently handles types text, number, checkbox
 // passed through props
-const Input = (props) => {
+const Input = ({className, name, type, onInput,
+                 placeholder, label, defVal, onblur, doLabelClass, dynamicLabel}) => {
 
   return (
-    <li key={props.name}>
+    <li key={name}>
       <input
-        className={props.className || 'form-control'}
-        key={props.name}
-        type={props.type}
-        name={props.name}
-        id={props.name}
-        onChange={(ev) => props.onInput(ev)}
+        className={className || 'form-control'}
+        key={name}
+        type={type}
+        name={name}
+        id={name}
+        onChange={(ev) => onInput(ev)}
         autoComplete={'off'}
-        placeholder={props.placeholder || props.label || `${props.name} [${props.type}]`}
-        defaultValue={props.defVal || ''}
-        onBlur={(e)=>props.onblur(e)}
-        //checked={props.type === 'checkbox' ? false : false}
+        placeholder={placeholder || label || `${name} [${type}]`}
+        defaultValue={defVal || ''}
+        onBlur={(e)=>onblur(e)}
+        //checked={type === 'checkbox' ? false : false}
       />
-      {props.type !== 'submit' ? Label(props) : ''}
+      {type !== 'submit' ? Label({name, doLabelClass, dynamicLabel, label, type}) : ''}
     </li>
   )
 };
 
 //stateless component Select
-const Select = (props) => {
+const Select = ({className, name, type, onInput,
+                  placeholder, label, defVal, onblur, options, doLabelClass, dynamicLabel}) => {
   return (
-    <li key={props.name}>
+    <li key={name}>
       <select
-        //defaultValue={props.defVal}
-        className={props.className || 'form-control'}
-        key={props.name}
-        name={props.name}
-        id={props.name}
-        onChange={(ev) => props.onInput(ev)}
-        onBlur={(e)=>props.onblur(e)}
-        //placeholder={props.placeholder || props.label || props.name}
+        //defaultValue={defVal}
+        className={className || 'form-control'}
+        key={name}
+        name={name}
+        id={name}
+        onChange={(ev) => onInput(ev)}
+        onBlur={(e)=>onblur(e)}
+        //placeholder={placeholder || label || name}
       >
-        <option value="" disabled>{props.placeholder || props.label || props.name}</option>
-        {props.options.map(
+        <option value="" disabled>{placeholder || label || name}</option>
+        {options.map(
           opt =>
             <option
               key={opt.value}
@@ -48,28 +50,28 @@ const Select = (props) => {
             </option>
         )}
       </select>
-      {Label(props)}
+      {Label({name, doLabelClass, dynamicLabel, label, type})}
     </li>
   )
 };
 
 //stateless component Label
-const Label = (props) => {
+const Label = ({name, doLabelClass, dynamicLabel, label, type}) => {
   return (
-    <div className={'inputLabel'} >
+    <div className={type === 'checkbox' ? 'checkbox-label' : 'input-label'} >
       <label
-        htmlFor={props.name}
-        className={props.doLabelClass(props.name)}>
-        {props.dynamicLabel(props.name, props.label)}
+        htmlFor={name}
+        className={doLabelClass(name)}>
+        {dynamicLabel(name, label)}
       </label>
     </div>
   )
 };
 
-const FormColumn = (props) => {
+const FormColumn = ({render, fields}) => {
   return (
     <ul>
-      {props.render(props.fields)}
+      {render(fields)}
     </ul>
   )
 };
@@ -103,16 +105,11 @@ class Form extends Component {
     return fData && fData[fname] ? 'show' : 'hide';
   }
 
-  doStyle (fname) {
-    const fData = this.state.formData;
-    return fData && fData[fname] ? {width:'60%'} : {width:'100%'};
-  }
-
   renderFields = (fields) => {
     let formFields = [];
     fields.forEach((ob) => {
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
-      ob.doStyle = n => this.doStyle(n);
+      //ob.doStyle = n => this.doStyle(n);
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target, e);
       ob.onblur = e => this.handleSubmit(e);
