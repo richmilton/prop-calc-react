@@ -22,7 +22,7 @@ li {
   padding-left: 10px;
 }
 
-input, select {
+.form-control {
   font-size: 0.8em;
 }
 
@@ -88,7 +88,7 @@ div.column {
   font-size: 0.9em;
   float:left;
   text-align: left;
-  width: 36em;
+  width: 32em;
   padding: 0.5em
 }
 
@@ -100,10 +100,6 @@ div.res-block {
   padding: 0.5em;
   border-radius: 4px;
   background-color: #f8f8f8;
-}
-
-div.results {
-  width: 36em
 }
 
 form>ul {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Form from './components/FormComponent';
 import fields from './components/formconfig';
-import './App.css';
+import './css/app.css';
 import ResultList from './components/ResultListComponent';
 import calculations from './logic/calculations';
 

@@ -73,7 +73,7 @@ class Form extends Component {
       />,
       <FormColumn
         key="2"
-        className={right}
+        className='right'
         fields={right}
         render={this.renderFields}
       />
@@ -115,9 +115,7 @@ class Form extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps);
-    console.log(prevState);
-    console.log(this.state);
+    //
   };
 
   render() {

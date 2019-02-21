@@ -11,15 +11,15 @@ const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
   const remortgageAdvance = Math.round(doneUpValue * loanToVal);
   const remortgageDeposit = Math.round(doneUpValue * (1 - loanToVal));
   const remortgageMonthlyInterest = Math.round(remortgageAdvance * mortgageInterestRatePercent / 1200);
-  const moe = monthlyRent * moePercent / 100;
+  const moe = repairingLease === 'yes' ? 0 : (monthlyRent * moePercent / 100);
   const lettingAgentsFees = monthlyRent * agentsPercent / 100;
-  const freeCashFlowMonthly = monthlyRent - moe - remortgageMonthlyInterest - lettingAgentsFees;
+  const freeCashFlowMonthly = monthlyRent - (repairingLease === 'yes' ? 0 : moe) - remortgageMonthlyInterest - lettingAgentsFees;
   const totalOtherCosts = refurbCost + otherCost;
   const sdltTotal = calculateStampDuty(propertyValue, stampDutyType);
   const remortgageFees = remortgageFee + remortgageValuationFee + remortgageLegalFee;
   const initialFees = initMortgageFee + initLegalFee + initSurveyorsFee;
   const initialCost = initialFees + totalOtherCosts + sdltTotal + propertyValue;
-  const totFrlCost = repairingLease === 'yes' ? initialCost - totalOtherCosts : initialCost;
+  //const totFrlCost = repairingLease === 'yes' ? initialCost - totalOtherCosts : initialCost;
   const col = (freeCashFlowMonthly >= 100) ? 'green' : 'red';
   const labels = calculationsLabels.freeCashLabels;
 
@@ -27,9 +27,9 @@ const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
     {label: labels[0], value: remortgageAdvance},
     {label: labels[1], value: remortgageDeposit},
     {label: labels[2], value: remortgageFees},
-    {label: labels[3], value: totFrlCost},
+    {label: labels[3], value: initialCost},
     {label: labels[4], value: remortgageAdvance - remortgageFees},
-    {label: labels[5], value: totFrlCost - (remortgageAdvance - remortgageFees)},
+    {label: labels[5], value: initialCost - (remortgageAdvance - remortgageFees)},
     {label: labels[6], value: monthlyRent},
     {label: labels[7], value: remortgageMonthlyInterest},
     {label: labels[8], value: moe},
