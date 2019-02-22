@@ -23,6 +23,12 @@ const fields = [
     defVal: 0
   },
   {
+    label: 'Initial LTV(%)',
+    name: 'initialLoanToValue',
+    type: 'number',
+    defVal: 75
+  },
+  {
     label: 'Cash purchase',
     name: 'buyingCash',
     type: 'checkbox',
@@ -67,12 +73,6 @@ const fields = [
     name: 'otherCost',
     type: 'number',
     defVal: 0
-  },
-  {
-    label: 'Initial LTV(%)',
-    name: 'initialLoanToValue',
-    type: 'number',
-    defVal: 75
   },
   {
     label: 'Remortgage fee(£)',

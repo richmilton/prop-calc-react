@@ -1,8 +1,8 @@
 
 const freeCashLabels = [
-  "Re-mortgage advance",
-  "Re-mortgage deposit",
-  "Re-mortgage fees",
+  "Remortgage advance",
+  "Remortgage deposit",
+  "Remortgage fees",
   "Money in",
   "Money out",
   "Money left in",
@@ -27,7 +27,7 @@ const flipLabels = [
   'Sale price',
   'Selling costs',
   'Total input costs',
-  'Profit',
+  'Profit (before tax)',
   'Gain(%)'
 ];
 
