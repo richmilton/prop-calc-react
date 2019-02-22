@@ -1,22 +1,22 @@
 // eslint-disable-next-line
 import React, { Component } from 'react';
 
-const ListItem = (props) => {
+const ListItem = ({label, value, data}) => {
 
   return (
     <li>
-      <div className="label">{props.label}</div>
-      <div className="value">{props.value}</div>
+      <div className="label">{label}</div>
+      <div className="value">{value}</div>
     </li>
   )
 
 };
 
-const ResultList = (props) => {
+const ResultList = ({data, id}) => {
 
   return (
-    <ul key={props.id}>
-      {props.data.map((ob, ind) => <ListItem key={`li-${props.id}-${ind}`} label={ob.label} value={ob.value}/>)}
+    <ul>
+      {data.map(({label, value}, ind) => <ListItem key={`li-${id}-${ind}`} label={label} value={value}/>)}
     </ul>
   )
 

@@ -36,23 +36,26 @@ class App extends Component {
   };
 
   doResults = () => {
+
+    const {dealFinance, buyToLet, stress, flip} = this.state.data;
+
     return (
       <React.Fragment>
         <div className="res-block">
           <h4>Deal finance</h4>
-          <ResultList id="1" data={this.state.data.dealFinance}/>
+          <ResultList id="1" data={dealFinance}/>
         </div>
         <div className="res-block">
           <h4>Buy to let</h4>
-          <ResultList id="2" data={this.state.data.buyToLet}/>
+          <ResultList id="2" data={buyToLet}/>
         </div>
         <div className="res-block">
           <h4>Stress test</h4>
-          <ResultList id="3" data={this.state.data.stress}/>
+          <ResultList id="3" data={stress}/>
         </div>
         <div className="res-block">
           <h4>Flip</h4>
-          <ResultList id="4" data={this.state.data.flip}/>
+          <ResultList id="4" data={flip}/>
         </div>
       </React.Fragment>
     )

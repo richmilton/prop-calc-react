@@ -71,32 +71,32 @@ class Form extends Component {
       />,
       <FormColumn
         key="2"
-        className='right'
         fields={right}
+        className='right'
         render={this.renderFields}
       />
       ]
 
   };
 
-  handleChange = (t) => {
+  handleChange = ({type, value, checked, name}) => {
     let newValObject = {}, val;
     let newFormData;
-    switch(t.type) {
+    switch(type) {
       case 'number':
-        val = isNaN(t.value) ? 0 : (parseFloat(t.value) || 0);
+        val = isNaN(value) ? 0 : (parseFloat(value) || 0);
         break;
       case 'checkbox':
-        val = t.checked ? 'yes' : 'no';
+        val = checked ? 'yes' : 'no';
         break;
       default:
-        val = t.value || '';
+        val = value || '';
     }
 
-    newValObject[t.name] = val;
+    newValObject[name] = val;
     newFormData = Object.assign(this.state.formData, newValObject);
     this.setState({formData: newFormData});
-    if (/^select-one$|^checkbox$|^number$/.test(t.type)) {
+    if (/^select-one$|^checkbox$|^number$/.test(type)) {
       this.props.calculate(this.state.formData);
     }
 
