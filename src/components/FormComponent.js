@@ -19,7 +19,7 @@ class Form extends Component {
     };
   }
 
-  defValues () {
+  defValues = () => {
     let v = {};
     this.props.fields.map(ob => {
       v[ob.name] = ob.defVal;
@@ -28,12 +28,12 @@ class Form extends Component {
     return {formData: v};
   }
 
-  doLabel (fname, label) {
+  doLabel = (fname, label) => {
     const fData = this.state.formData;
     return fData && fData[fname] ? label || fname : '';
   }
 
-  doLabelClass (fname) {
+  doLabelClass = (fname) => {
     const fData = this.state.formData;
     return fData && fData[fname] ? 'show' : 'hide';
   }
