@@ -25,7 +25,7 @@ describe('calculations.freeCash()', () => {
     console.log(fc);
 
     fc.map((ob, i) => {
-      expect(ob.value).to.be.equal(expextedValues[i]);
+      expect(ob.value).to.be.equal(expextedValues[i].toFixed(2));
     });
   });
 });
@@ -39,7 +39,7 @@ describe('calculations.initialFinance()', () => {
     console.log(initF);
 
     initF.map((ob, i) => {
-      expect(ob.value).to.be.equal(expextedValues[i]);
+      expect(ob.value).to.be.equal(expextedValues[i].toFixed(2));
     });
   });
 });
@@ -69,13 +69,13 @@ describe('calculations.flip()', () => {
     console.log(f);
 
     f.map((ob, i) => {
-      expect(ob.value).to.be.equal(expextedValues[i]);
+      expect(ob.value).to.be.equal(expextedValues[i].toFixed(2));
     });
 
   });
 });
 
-describe('calculations.flip()', () => {
+describe('calculations.stressTest()', () => {
   it('should return expected values', () => {
 
     const s = calculations.stressTest(testState);
