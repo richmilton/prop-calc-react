@@ -38,7 +38,7 @@ class App extends Component {
   doResults = () => {
 
     const {dealFinance, buyToLet, stress, flip} = this.state.data;
-    
+
     return (
       <React.Fragment>
         <div className="res-block">
