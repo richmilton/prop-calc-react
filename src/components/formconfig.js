@@ -5,7 +5,7 @@ const fields = [
     type: 'text',
   },
   {
-    label: 'Price(£)',
+    label: 'Purchase price(£)',
     name: 'propertyValue',
     type: 'number',
     defVal: 0
@@ -32,7 +32,7 @@ const fields = [
     label: 'Surveyors fee(£)',
     name: 'initSurveyorsFee',
     type: 'number',
-    defVal: 0
+    defVal: 600
   },
   {
     label: 'Mortgage fee(£)',
@@ -44,7 +44,7 @@ const fields = [
     label: 'Solicitors fee(£)',
     name: 'initLegalFee',
     type: 'number',
-    defVal: 0
+    defVal: 1500
   },
   {
     label: 'Stamp duty',
