@@ -105,7 +105,7 @@ const fields = [
     defVal: 15
   },
   {
-    label: 'Full repairing lease',
+    label: 'Repairing lease',
     name: 'repairingLease',
     type: 'checkbox',
     defVal: 'no'

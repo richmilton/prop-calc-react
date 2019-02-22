@@ -24,17 +24,17 @@ const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
   const labels = calculationsLabels.freeCashLabels;
 
   return [
-    {label: labels[0], value: remortgageAdvance},
-    {label: labels[1], value: remortgageDeposit},
-    {label: labels[2], value: remortgageFees},
-    {label: labels[3], value: initialCost},
-    {label: labels[4], value: remortgageAdvance - remortgageFees},
-    {label: labels[5], value: initialCost - (remortgageAdvance - remortgageFees)},
-    {label: labels[6], value: monthlyRent},
-    {label: labels[7], value: remortgageMonthlyInterest},
-    {label: labels[8], value: moe},
-    {label: labels[9], value: lettingAgentsFees},
-    {label: labels[10], value: freeCashFlowMonthly, colour: col}
+    {label: labels[0], value: remortgageAdvance.toFixed(2)},
+    {label: labels[1], value: remortgageDeposit.toFixed(2)},
+    {label: labels[2], value: remortgageFees.toFixed(2)},
+    {label: labels[3], value: initialCost.toFixed(2)},
+    {label: labels[4], value: (remortgageAdvance - remortgageFees.toFixed(2))},
+    {label: labels[5], value: (initialCost - (remortgageAdvance - remortgageFees)).toFixed(2)},
+    {label: labels[6], value: monthlyRent.toFixed(2)},
+    {label: labels[7], value: remortgageMonthlyInterest.toFixed(2)},
+    {label: labels[8], value: moe.toFixed(2)},
+    {label: labels[9], value: lettingAgentsFees.toFixed(2)},
+    {label: labels[10], value: freeCashFlowMonthly.toFixed(2), colour: col}
     ];
 };
 
@@ -55,13 +55,13 @@ const initialFinance = ( {buyingCash, initialLoanToValue, propertyValue, initSur
 
 
   return [
-    {label: labels[0], value: initMortgageAdvance},
-    {label: labels[1], value: initialDeposit},
-    {label: labels[2], value: sdltTotal},
-    {label: labels[3], value: initFees},
-    {label: labels[4], value: other},
-    {label: labels[5], value: totIn},
-    {label: labels[6], value: totCost}
+    {label: labels[0], value: initMortgageAdvance.toFixed(2)},
+    {label: labels[1], value: initialDeposit.toFixed(2)},
+    {label: labels[2], value: sdltTotal.toFixed(2)},
+    {label: labels[3], value: initFees.toFixed(2)},
+    {label: labels[4], value: other.toFixed(2)},
+    {label: labels[5], value: totIn.toFixed(2)},
+    {label: labels[6], value: totCost.toFixed(2)}
     ];
 };
 
@@ -77,11 +77,11 @@ const flip = ( {sellingLegalFee, agentSellingFee, initSurveyorsFee, initLegalFee
   const labels = calculationsLabels.flipLabels;
 
   return [
-    {label: labels[0], value: doneUpValue},
-    {label: labels[1], value: fees},
-    {label: labels[2], value: totCost||0},
-    {label: labels[3], value:  (doneUpValue - (totCost + fees) || 0), col},
-    {label: labels[4], value: flipGain || 0, col}
+    {label: labels[0], value: doneUpValue.toFixed(2)},
+    {label: labels[1], value: fees.toFixed(2)},
+    {label: labels[2], value: totCost.toFixed(2) || '0'},
+    {label: labels[3], value:  ((doneUpValue - (totCost + fees)).toFixed(2) || '0'), col},
+    {label: labels[4], value: flipGain.toFixed(2) || 0, col}
   ];
 };
 
@@ -99,7 +99,7 @@ const stressTest = ( {doneUpValue, monthlyRent, loanToValue,
 
   return [
     {label: labels[0], value: pass ? 'pass' : 'fail'},
-    {label: labels[1], value: minRent}
+    {label: labels[1], value: minRent.toFixed(2)}
   ];
 };
 

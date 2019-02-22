@@ -88,8 +88,8 @@ div.column {
   font-size: 0.9em;
   float:left;
   text-align: left;
-  width: 32em;
-  padding: 0.5em
+  width: 29em;
+  padding: 0.25em
 }
 
 div.res-block {
@@ -124,9 +124,9 @@ ul.right {
 
 .checkbox-label>label {
   border: none;
-  margin-top: 1em;
+  margin-top: 1.1em;
   font-weight: normal;
-  font-size: 1.1em;
   color: #666;
   background-color: transparent;
+  padding: 0;
 }
