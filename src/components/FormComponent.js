@@ -25,18 +25,19 @@ class Form extends Component {
       v[ob.name] = ob.defVal;
       return false;
     });
+    this.props.calculate(v);
     return {formData: v};
-  }
+  };
 
   doLabel = (fname, label) => {
     const fData = this.state.formData;
     return fData && fData[fname] ? label || fname : '';
-  }
+  };
 
   doLabelClass = (fname) => {
     const fData = this.state.formData;
     return fData && fData[fname] ? 'show' : 'hide';
-  }
+  };
 
   renderFields = (fields) => {
     let formFields = [];

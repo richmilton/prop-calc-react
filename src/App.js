@@ -19,12 +19,12 @@ class App extends Component {
   }
 
   calculate = (inputData) => {
-    console.log(inputData);
+
     const dfResult = calculations.initialFinance(inputData);
     const btlResult = calculations.freeCash(inputData);
     const flip = calculations.flip(inputData);
     const stress = calculations.stressTest(inputData);
-    //this.setState({});
+
     this.setState({
       data: {
         dealFinance: dfResult,
@@ -38,7 +38,7 @@ class App extends Component {
   doResults = () => {
 
     const {dealFinance, buyToLet, stress, flip} = this.state.data;
-
+    
     return (
       <React.Fragment>
         <div className="res-block">
@@ -65,7 +65,6 @@ class App extends Component {
 
     return (
       <div className="App">
-
           <div className="column">
             <Form
               name={'propcalc'}
@@ -77,7 +76,6 @@ class App extends Component {
           <div className="column results">
             {this.doResults()}
           </div>
-
       </div>
     );
   }
