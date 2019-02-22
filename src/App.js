@@ -18,7 +18,7 @@ class App extends Component {
     };
   }
 
-  handleSubmit = (inputData) => {
+  calculate = (inputData) => {
     console.log(inputData);
     const dfResult = calculations.initialFinance(inputData);
     const btlResult = calculations.freeCash(inputData);
@@ -68,7 +68,7 @@ class App extends Component {
               name={'propcalc'}
               fields={fields}
               twocols="yes"
-              onsubmit={this.handleSubmit}
+              calculate={this.calculate}
             />
           </div>
           <div className="column results">

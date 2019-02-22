@@ -4,7 +4,7 @@ import React from "react";
 
 const Input = ({className, name, type, onInput,
                  placeholder, label, defVal, onblur, doLabelClass, dynamicLabel}) => {
-  
+
   return (
     <li key={name}>
       <input
@@ -18,9 +18,8 @@ const Input = ({className, name, type, onInput,
         placeholder={placeholder || label || `${name} [${type}]`}
         defaultValue={defVal || ''}
         onBlur={(e)=>onblur(e)}
-        //checked={type === 'checkbox' ? false : false}
       />
-      {type !== 'submit' ? Label({name, doLabelClass, dynamicLabel, label, type}) : ''}
+      {Label({name, doLabelClass, dynamicLabel, label, type})}
     </li>
   )
 };

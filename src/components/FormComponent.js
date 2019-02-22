@@ -22,9 +22,7 @@ class Form extends Component {
   defValues () {
     let v = {};
     this.props.fields.map(ob => {
-      if (!/^submit/.test(ob.type)) {
-        v[ob.name] = ob.defVal;
-      }
+      v[ob.name] = ob.defVal;
       return false;
     });
     return {formData: v};
@@ -46,8 +44,8 @@ class Form extends Component {
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
       //ob.doStyle = n => this.doStyle(n);
       ob.doLabelClass = n => this.doLabelClass(n);
-      ob.onInput = e => this.handleChange(e.target, e);
-      ob.onblur = e => this.handleSubmit(e);
+      ob.onInput = e => this.handleChange(e.target);
+      ob.onblur = e => this.handleChange(e.target);
       if (ob.type === 'select') {
         formFields.push(Select(ob));
       }
@@ -94,31 +92,23 @@ class Form extends Component {
       default:
         val = t.value || '';
     }
-    if (!/^submit/.test(t.type)) {
-      newValObject[t.name] = val;
-      newFormData = Object.assign(this.state.formData, newValObject);
-      this.setState({formData: newFormData});
-      if (/^select-one$|^checkbox$|^number$/.test(t.type)) {
-        this.props.onsubmit(this.state.formData);
-      }
+
+    newValObject[t.name] = val;
+    newFormData = Object.assign(this.state.formData, newValObject);
+    this.setState({formData: newFormData});
+    if (/^select-one$|^checkbox$|^number$/.test(t.type)) {
+      this.props.calculate(this.state.formData);
     }
 
   };
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onsubmit(this.state.formData);
-  }
-
   componentDidMount() {
     this.setState(this.defValues());
-
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const projName = this.state.formData['projectName'];
-    const newTitle = projName ? projName.replace(/ /g, '-') : 'Untitled';
-    document.getElementById('doc-title').text = newTitle;
+    document.getElementById('doc-title').text = projName ? projName.replace(/ /g, '-') : 'Untitled';
   };
 
   render() {
@@ -126,7 +116,6 @@ class Form extends Component {
     return <form
       name={this.props.name}
       id={this.props.name}
-      //onSubmit={(e)=>this.handleSubmit(e)}
     >
 
         {this.props['twocols'] === 'yes' ? this.renderFieldCols() : this.renderFields(this.props.fields)}
