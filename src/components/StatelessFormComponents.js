@@ -4,7 +4,7 @@ import React from "react";
 
 const Input = ({className, name, type, onInput,
                  placeholder, label, defVal, onblur, doLabelClass, dynamicLabel}) => {
-
+  
   return (
     <li key={name}>
       <input

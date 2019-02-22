@@ -126,7 +126,7 @@ class Form extends Component {
     return <form
       name={this.props.name}
       id={this.props.name}
-      onSubmit={(e)=>this.handleSubmit(e)}
+      //onSubmit={(e)=>this.handleSubmit(e)}
     >
 
         {this.props['twocols'] === 'yes' ? this.renderFieldCols() : this.renderFields(this.props.fields)}

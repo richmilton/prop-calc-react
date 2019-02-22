@@ -146,12 +146,6 @@ const fields = [
     name: 'mortgageStressInterestRatePercent',
     type: 'number',
     defVal: 5.0
-  },
-  {
-    name: 'submit',
-    type: 'submit',
-    className: 'btn-primary form-control',
-    value: 'update'
   }
 
 ];
