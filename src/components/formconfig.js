@@ -47,7 +47,7 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Solicitors fee(£)',
+    label: 'Legal fees(£)',
     name: 'initLegalFee',
     type: 'number',
     defVal: 1500
@@ -87,7 +87,7 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Remortgage solicitors fee(£)',
+    label: 'Remortgage legal fees(£)',
     name: 'remortgageLegalFee',
     type: 'number',
     defVal: 0
@@ -122,7 +122,6 @@ const fields = [
     type: 'number',
     defVal: 75
   },
-
   {
     label: 'Solicitors selling fee(£)',
     name: 'sellingLegalFee',
