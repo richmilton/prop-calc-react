@@ -19,8 +19,6 @@ const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
   const remortgageFees = remortgageFee + remortgageValuationFee + remortgageLegalFee;
   const initialFees = initMortgageFee + initLegalFee + initSurveyorsFee;
   const initialCost = initialFees + totalOtherCosts + sdltTotal + propertyValue;
-  //const totFrlCost = repairingLease === 'yes' ? initialCost - totalOtherCosts : initialCost;
-  const col = (freeCashFlowMonthly >= 100) ? 'green' : 'red';
   const labels = calculationsLabels.freeCashLabels;
 
   return [
@@ -34,7 +32,7 @@ const freeCash = ( {loanToValue, buyingCash, propertyValue, doneUpValue,
     {label: labels[7], value: remortgageMonthlyInterest.toFixed(2)},
     {label: labels[8], value: moe.toFixed(2)},
     {label: labels[9], value: lettingAgentsFees.toFixed(2)},
-    {label: labels[10], value: freeCashFlowMonthly.toFixed(2), colour: col}
+    {label: labels[10], value: freeCashFlowMonthly.toFixed(2)}
     ];
 };
 

@@ -16,7 +16,7 @@ const ResultList = ({data, id}) => {
 
   return (
     <ul>
-      {data.map(({label, value}, ind) => <ListItem key={`li-${id}-${ind}`} label={label} value={value}/>)}
+      {data.map(({label, value, colour}, ind) => <ListItem key={`li-${id}-${ind}`} label={label} value={value} />)}
     </ul>
   )
 
