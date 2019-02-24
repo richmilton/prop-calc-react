@@ -1,3 +1,6 @@
+
+const currencySign = String.fromCharCode(163);
+
 const fields = [
   {
     label: 'Project name',
@@ -5,19 +8,19 @@ const fields = [
     type: 'text',
   },
   {
-    label: 'Purchase price(£)',
+    label: `Purchase price(${currencySign})`,
     name: 'propertyValue',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Done up value(£)',
+    label: `Done up value(${currencySign})`,
     name: 'doneUpValue',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Monthly rent(£)',
+    label: `Monthly rent(${currencySign})`,
     name: 'monthlyRent',
     type: 'number',
     defVal: 0
@@ -35,19 +38,19 @@ const fields = [
     defVal: 'no'
   },
   {
-    label: 'Surveyors fee(£)',
+    label: `Surveyors fee(${currencySign})`,
     name: 'initSurveyorsFee',
     type: 'number',
     defVal: 600
   },
   {
-    label: 'Mortgage fee(£)',
+    label: `Mortgage fee(${currencySign})`,
     name: 'initMortgageFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Legal fees(£)',
+    label: `Legal fees(${currencySign})`,
     name: 'initLegalFee',
     type: 'number',
     defVal: 1500
@@ -63,31 +66,31 @@ const fields = [
     defVal: 'residential'
   },
   {
-    label: 'Refurbishment cost(£)',
+    label: `Refurbishment cost(${currencySign})`,
     name: 'refurbCost',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Other cost(£)',
+    label: `Other cost(${currencySign})`,
     name: 'otherCost',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Remortgage fee(£)',
+    label: `Remortgage fee(${currencySign})`,
     name: 'remortgageFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Remortgage valuation fee(£)',
+    label: `Remortgage valuation fee(${currencySign})`,
     name: 'remortgageValuationFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Remortgage legal fees(£)',
+    label: `Remortgage legal fees(${currencySign})`,
     name: 'remortgageLegalFee',
     type: 'number',
     defVal: 0
@@ -123,13 +126,13 @@ const fields = [
     defVal: 75
   },
   {
-    label: 'Solicitors selling fee(£)',
+    label: `Solicitors selling fee(${currencySign})`,
     name: 'sellingLegalFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: 'Agent/selling fee(£)',
+    label: `Agent/selling fee(${currencySign})`,
     name: 'agentSellingFee',
     type: 'number',
     defVal: 0
