@@ -1,5 +1,6 @@
 
 const currencySign = String.fromCharCode(163);
+const percentSign = String.fromCharCode(37);
 
 const fields = [
   {
@@ -26,7 +27,7 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Initial LTV(%)',
+    label: `Initial LTV(${percentSign})`,
     name: 'initialLoanToValue',
     type: 'number',
     defVal: 75
@@ -96,13 +97,14 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Letting agents rate(%)',
+    label: `Letting agents rate(${percentSign})`,
     name: 'agentsPercent',
     type: 'number',
     defVal: 10
   },
   {
-    label: 'MOE rate(%)',
+    label: `
+    MOE rate(${percentSign})`,
     name: 'moePercent',
     type: 'number',
     defVal: 15
@@ -114,13 +116,13 @@ const fields = [
     defVal: 'no'
   },
   {
-    label: 'Interest rate(%)',
+    label: `Interest rate(${percentSign})`,
     name: 'mortgageInterestRatePercent',
     type: 'number',
     defVal: 6.0
   },
   {
-    label: 'Remortgage LTV(%)',
+    label: `Remortgage LTV(${percentSign})`,
     name: 'loanToValue',
     type: 'number',
     defVal: 75
@@ -138,13 +140,13 @@ const fields = [
     defVal: 0
   },
   {
-    label: 'Mortgage stress test(%)',
+    label: `Mortgage stress test(${percentSign})`,
     name: 'mortgageStressMultipePercent',
     type: 'number',
     defVal: 125
   },
   {
-    label: 'Stress interest rate(%)',
+    label: `Stress interest rate(${percentSign})`,
     name: 'mortgageStressInterestRatePercent',
     type: 'number',
     defVal: 5.0
