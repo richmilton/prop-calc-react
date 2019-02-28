@@ -61,8 +61,12 @@ const fields = [
     name: 'stampDutyType',
     type: 'select',
     options: [
-      {value: 'residential', name: 'Residential'},
-      {value: 'commercial', name: 'Commercial'},
+      {value: 'residential', name: 'Residential Eng/NI'},
+      {value: 'commercial', name: 'Commercial Eng/NI'},
+      {value: 'residentialWales', name: 'Residential Wales'},
+      {value: 'commercialWales', name: 'Commercial Wales'},
+      {value: 'residentialScotland', name: 'Residential Scotland'},
+      {value: 'commercialScotland', name: 'Commercial Scotland'},
       {value: 'ireland', name: 'Ireland'}
       ],
     defVal: 'residential'
