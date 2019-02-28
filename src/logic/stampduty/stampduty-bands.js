@@ -30,7 +30,7 @@ const bands = {
 
   commercialWales: [
     {upto: 150000, rate: 0},
-    {upto: 250000, rate: 2},
+    {upto: 250000, rate: 1},
     {upto: 1000000, rate: 5},
     {upto: 'end', rate: 6}
   ],
