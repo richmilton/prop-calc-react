@@ -1,12 +1,14 @@
 //stateless component Input. Currently handles types text, number, checkbox
 // passed through props
 import React from "react";
+import {currencyPlaceholder} from './formconfig'
+
+const currRegEx = new RegExp(currencyPlaceholder, 'g');
 
 const Input = ({className, name, type, onInput,
                  placeholder, label, defVal, onblur, doLabelClass, dynamicLabel, currency}) => {
 
-  const currSymbol = String.fromCharCode(currency);
-  const labelCmp = label.replace(/##CURR##/g, currSymbol);
+  const labelWithCurrency = addCurrencySymbolToLabel(label, currency);
 
   return (
     <li key={name}>
@@ -18,7 +20,7 @@ const Input = ({className, name, type, onInput,
         id={name}
         onChange={(ev) => onInput(ev)}
         autoComplete={'off'}
-        placeholder={placeholder || labelCmp || `${name} [${type}]`}
+        placeholder={placeholder || labelWithCurrency || `${name} [${type}]`}
         defaultValue={defVal || ''}
         onBlur={(e)=>onblur(e)}
       />
@@ -60,8 +62,7 @@ const Select = ({className, name, type, onInput,
 //stateless component Label
 const Label = ({name, doLabelClass, dynamicLabel, label, type, currency}) => {
 
-  const currSymbol = String.fromCharCode(currency);
-  const labelCmp = label.replace(/##CURR##/g, currSymbol);
+  const labelWithCurrency = addCurrencySymbolToLabel(label, currency);
 
   return (
     <div className={type === 'checkbox' ? 'checkbox-label' : 'input-label'} >
@@ -69,10 +70,15 @@ const Label = ({name, doLabelClass, dynamicLabel, label, type, currency}) => {
         htmlFor={name}
         className={doLabelClass(name)}
       >
-        {dynamicLabel(name, labelCmp)}
+        {dynamicLabel(name, labelWithCurrency)}
       </label>
     </div>
   )
+};
+
+const addCurrencySymbolToLabel = (label, currencyCode) => {
+  const currSymbol = String.fromCharCode(currencyCode);
+  return label.replace(currRegEx, currSymbol);
 };
 
 const StatelessComponents = {

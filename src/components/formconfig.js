@@ -1,5 +1,5 @@
 
-const currencySign = '##CURR##';
+const currencyPlaceholder = '##CURR##';
 const percentSign = String.fromCharCode(37);
 
 const fields = [
@@ -9,19 +9,19 @@ const fields = [
     type: 'text',
   },
   {
-    label: `Purchase price(${currencySign})`,
+    label: `Purchase price(${currencyPlaceholder})`,
     name: 'propertyValue',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Done up value(${currencySign})`,
+    label: `Done up value(${currencyPlaceholder})`,
     name: 'doneUpValue',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Monthly rent(${currencySign})`,
+    label: `Monthly rent(${currencyPlaceholder})`,
     name: 'monthlyRent',
     type: 'number',
     defVal: 0
@@ -39,19 +39,19 @@ const fields = [
     defVal: 'no'
   },
   {
-    label: `Surveyors fee(${currencySign})`,
+    label: `Surveyors fee(${currencyPlaceholder})`,
     name: 'initSurveyorsFee',
     type: 'number',
     defVal: 600
   },
   {
-    label: `Mortgage fee(${currencySign})`,
+    label: `Mortgage fee(${currencyPlaceholder})`,
     name: 'initMortgageFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Legal fees(${currencySign})`,
+    label: `Legal fees(${currencyPlaceholder})`,
     name: 'initLegalFee',
     type: 'number',
     defVal: 1500
@@ -68,31 +68,31 @@ const fields = [
     defVal: 'residential'
   },
   {
-    label: `Refurbishment cost(${currencySign})`,
+    label: `Refurbishment cost(${currencyPlaceholder})`,
     name: 'refurbCost',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Other cost(${currencySign})`,
+    label: `Other cost(${currencyPlaceholder})`,
     name: 'otherCost',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Remortgage fee(${currencySign})`,
+    label: `Remortgage fee(${currencyPlaceholder})`,
     name: 'remortgageFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Remortgage valuation fee(${currencySign})`,
+    label: `Remortgage valuation fee(${currencyPlaceholder})`,
     name: 'remortgageValuationFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Remortgage legal fees(${currencySign})`,
+    label: `Remortgage legal fees(${currencyPlaceholder})`,
     name: 'remortgageLegalFee',
     type: 'number',
     defVal: 0
@@ -129,13 +129,13 @@ const fields = [
     defVal: 75
   },
   {
-    label: `Solicitors selling fee(${currencySign})`,
+    label: `Solicitors selling fee(${currencyPlaceholder})`,
     name: 'sellingLegalFee',
     type: 'number',
     defVal: 0
   },
   {
-    label: `Agent/selling fee(${currencySign})`,
+    label: `Agent/selling fee(${currencyPlaceholder})`,
     name: 'agentSellingFee',
     type: 'number',
     defVal: 0
@@ -155,4 +155,7 @@ const fields = [
 
 ];
 
-module.exports = fields;
+module.exports = {
+  fields,
+  currencyPlaceholder
+};
