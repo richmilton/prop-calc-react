@@ -1,7 +1,7 @@
 import sdltBands from './stampduty-bands';
 
 const calculateStampDuty = (val, sdltType) => {
-  const onePercentOfVal = Math.round(val / 100);
+  const onePercentOfVal = (val / 100);
   //const load = sdltType === 'residential' ? 3 : 0;
   const bands = sdltBands[sdltType];
 
