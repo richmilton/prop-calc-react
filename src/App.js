@@ -26,7 +26,7 @@ class App extends Component {
     const flip = calculations.flip(inputData);
     const stress = calculations.stressTest(inputData);
     const currSymbol = calculations.getCurrencyCode(inputData);
-    
+
     this.setState({
       data: {
         dealFinance: dfResult,

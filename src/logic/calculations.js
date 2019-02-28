@@ -122,12 +122,12 @@ const getCurrencyCode = ({stampDutyType}) => {
 };
 
 const calculations = {
-  freeCash: freeCash,
-  initialFinance: initialFinance,
-  flip: flip,
-  allInputCosts: allInputCosts,
-  stressTest: stressTest,
-  getCurrencyCode: getCurrencyCode
+  freeCash,
+  initialFinance,
+  flip,
+  allInputCosts,
+  stressTest,
+  getCurrencyCode
 };
 
 export default calculations;
