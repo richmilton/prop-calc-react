@@ -61,7 +61,7 @@ describe('calculateStampDuty()', () => {
 });
 
 describe('calculateStampDuty()', () => {
-  it('should return correct values for commercial wales', () => {
+  it('should return correct values for commercial scotland', () => {
 
     const expectedValues = [0, 500, 3500, 8500, 13500, 18500, 23500, 28500, 33500, 38500, 88500];
 

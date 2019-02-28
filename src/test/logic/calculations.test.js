@@ -79,7 +79,7 @@ describe('calculations.stressTest()', () => {
   it('should return expected values', () => {
 
     const s = calculations.stressTest(testState);
-    const expextedValues = ['pass', 1563];
+    const expextedValues = ['pass', '1563.00'];
 
     console.log(s);
 
