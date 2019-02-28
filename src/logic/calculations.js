@@ -117,12 +117,17 @@ const allInputCosts = (initSurveyorsFee, initLegalFee, initMortgageFee,
   );
 };
 
+const getCurrencyCode = ({stampDutyType}) => {
+  return stampDutyType === 'ireland' ? 8364 : 163
+};
+
 const calculations = {
   freeCash: freeCash,
   initialFinance: initialFinance,
   flip: flip,
   allInputCosts: allInputCosts,
-  stressTest: stressTest
+  stressTest: stressTest,
+  getCurrencyCode: getCurrencyCode
 };
 
 export default calculations;

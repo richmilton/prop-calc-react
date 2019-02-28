@@ -1,5 +1,5 @@
 
-const currencySign = String.fromCharCode(163);
+const currencySign = '##CURR##';
 const percentSign = String.fromCharCode(37);
 
 const fields = [
@@ -62,7 +62,8 @@ const fields = [
     type: 'select',
     options: [
       {value: 'residential', name: 'Residential'},
-      {value: 'commercial', name: 'Commercial'}
+      {value: 'commercial', name: 'Commercial'},
+      {value: 'ireland', name: 'Ireland'}
       ],
     defVal: 'residential'
   },

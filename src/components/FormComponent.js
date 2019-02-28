@@ -47,6 +47,8 @@ class Form extends Component {
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target);
       ob.onblur = e => this.handleChange(e.target);
+      //console.log(this.state.currency);
+      ob.currency = this.props['currsymbol'];
       if (ob.type === 'select') {
         formFields.push(Select(ob));
       }
@@ -118,9 +120,7 @@ class Form extends Component {
       name={this.props.name}
       id={this.props.name}
     >
-
-        {this.props['twocols'] === 'yes' ? this.renderFieldCols() : this.renderFields(this.props.fields)}
-
+      {this.props['twocols'] === 'yes' ? this.renderFieldCols() : this.renderFields(this.props.fields)}
     </form>
   }
 }

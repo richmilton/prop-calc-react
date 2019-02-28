@@ -3,7 +3,10 @@
 import React from "react";
 
 const Input = ({className, name, type, onInput,
-                 placeholder, label, defVal, onblur, doLabelClass, dynamicLabel}) => {
+                 placeholder, label, defVal, onblur, doLabelClass, dynamicLabel, currency}) => {
+
+  const currSymbol = String.fromCharCode(currency);
+  const labelCmp = label.replace(/##CURR##/g, currSymbol);
 
   return (
     <li key={name}>
@@ -15,11 +18,11 @@ const Input = ({className, name, type, onInput,
         id={name}
         onChange={(ev) => onInput(ev)}
         autoComplete={'off'}
-        placeholder={placeholder || label || `${name} [${type}]`}
+        placeholder={placeholder || labelCmp || `${name} [${type}]`}
         defaultValue={defVal || ''}
         onBlur={(e)=>onblur(e)}
       />
-      {Label({name, doLabelClass, dynamicLabel, label, type})}
+      {Label({name, doLabelClass, dynamicLabel, label, type, currency})}
     </li>
   )
 };
@@ -55,13 +58,18 @@ const Select = ({className, name, type, onInput,
 };
 
 //stateless component Label
-const Label = ({name, doLabelClass, dynamicLabel, label, type}) => {
+const Label = ({name, doLabelClass, dynamicLabel, label, type, currency}) => {
+
+  const currSymbol = String.fromCharCode(currency);
+  const labelCmp = label.replace(/##CURR##/g, currSymbol);
+
   return (
     <div className={type === 'checkbox' ? 'checkbox-label' : 'input-label'} >
       <label
         htmlFor={name}
-        className={doLabelClass(name)}>
-        {dynamicLabel(name, label)}
+        className={doLabelClass(name)}
+      >
+        {dynamicLabel(name, labelCmp)}
       </label>
     </div>
   )

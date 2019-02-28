@@ -14,7 +14,8 @@ class App extends Component {
         buyToLet: [],
         stress: [],
         flip: []
-      }
+      },
+      currency: 163
     };
   }
 
@@ -24,6 +25,9 @@ class App extends Component {
     const btlResult = calculations.freeCash(inputData);
     const flip = calculations.flip(inputData);
     const stress = calculations.stressTest(inputData);
+    const currSymbol = calculations.getCurrencyCode(inputData);
+
+    console.log(inputData);
 
     this.setState({
       data: {
@@ -31,7 +35,8 @@ class App extends Component {
         buyToLet: btlResult,
         stress: stress,
         flip: flip
-      }
+      },
+      currency: currSymbol
     });
   };
 
@@ -71,6 +76,7 @@ class App extends Component {
               fields={fields}
               twocols="yes"
               calculate={this.calculate}
+              currsymbol={this.state.currency}
             />
           </div>
           <div className="column results">

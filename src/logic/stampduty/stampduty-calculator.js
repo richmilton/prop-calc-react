@@ -2,17 +2,20 @@ import sdltBands from './stampduty-bands';
 
 const calculateStampDuty = (val, sdltType) => {
   const onePercentOfVal = Math.round(val / 100);
-  const load = sdltType === 'commercial' ? 0 : 3;
+  //const load = sdltType === 'residential' ? 3 : 0;
   const bands = sdltBands[sdltType];
 
   let tax = 0;
   let bandLimit;
   let rate;
   let previousBandLimit;
+  let load;
 
   if (!sdltType) return 0;
 
   for (let idx = 0; idx < bands.length; idx++) {
+
+    load = bands[idx].load || 0;
 
     bandLimit = bands[idx].upto;
     rate = bands[idx].rate;
