@@ -98,11 +98,11 @@ class Form extends Component {
 
     newFormData = {...this.state.formData, [name]: val};
 
-    this.setState({formData: newFormData});
-    if (/^select-one$|^checkbox$|^number$/.test(type)) {
-      this.props.calculate(newFormData);
-    }
-
+    this.setState({formData: newFormData}, () => {
+      if (/^select-one$|^checkbox$|^number$/.test(type)) {
+        this.props.calculate(this.state.formData);
+      }
+    });
   };
 
   componentDidMount() {
