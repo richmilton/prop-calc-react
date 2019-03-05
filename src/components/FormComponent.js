@@ -83,7 +83,7 @@ class Form extends Component {
   };
 
   handleChange = ({type, value, checked, name}) => {
-    let newValObject = {}, val;
+    let val;
     let newFormData;
     switch(type) {
       case 'number':
@@ -96,11 +96,11 @@ class Form extends Component {
         val = value || '';
     }
 
-    newValObject[name] = val;
-    newFormData = Object.assign(this.state.formData, newValObject);
+    newFormData = {...this.state.formData, [name]: val};
+
     this.setState({formData: newFormData});
     if (/^select-one$|^checkbox$|^number$/.test(type)) {
-      this.props.calculate(this.state.formData);
+      this.props.calculate(newFormData);
     }
 
   };
