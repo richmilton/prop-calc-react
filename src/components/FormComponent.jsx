@@ -25,6 +25,7 @@ class Form extends Component {
     this.renderFields = this.renderFields.bind(this);
     this.renderFieldCols = this.renderFieldCols.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   componentDidMount() {
