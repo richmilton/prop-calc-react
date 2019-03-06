@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import { expect } from 'chai';
 import calculations from '../../logic/calculations';
 
@@ -31,8 +32,6 @@ describe('calculations.freeCash()', () => {
     const fc = calculations.freeCash(testState);
     const expextedValues = [300000, 100000, 650, 369700, 299350, 70350, 2400, 750, 360, 240, 1050];
 
-    console.log(fc);
-
     fc.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i].toFixed(2)));
   });
 });
@@ -41,8 +40,6 @@ describe('calculations.initialFinance()', () => {
   it('should return expected values', () => {
     const initF = calculations.initialFinance(testState);
     const expextedValues = [0, 350000, 18000, 1700, 0, 369700, 369700];
-
-    console.log(initF);
 
     initF.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i].toFixed(2)));
   });
@@ -70,8 +67,6 @@ describe('calculations.allInputCosts()', () => {
       stampDutyType,
     );
 
-    console.log(ti);
-
     expect(ti).to.be.equal(369700);
   });
 });
@@ -81,8 +76,6 @@ describe('calculations.flip()', () => {
     const f = calculations.flip(testState);
     const expextedValues = [400000, 5500, 369700, 24800, 8.2];
 
-    console.log(f);
-
     f.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i].toFixed(2)));
   });
 });
@@ -91,8 +84,6 @@ describe('calculations.stressTest()', () => {
   it('should return expected values', () => {
     const s = calculations.stressTest(testState);
     const expextedValues = ['pass', '1563.00'];
-
-    console.log(s);
 
     s.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i]));
   });
