@@ -48,13 +48,13 @@ class App extends Component {
   }
 
   doResults() {
-    const { state } = this;
+    const { data } = this.state;
     const {
       dealFinance,
       buyToLet,
       stress,
       flip,
-    } = state.data;
+    } = data;
 
     return (
       <React.Fragment>
@@ -95,6 +95,7 @@ class App extends Component {
           {this.doResults()}
         </div>
         <div className="column states">
+          <ResultList id="5" data={{ test: 'penis' }} />
           {JSON.stringify(savedStates)}
         </div>
       </div>
