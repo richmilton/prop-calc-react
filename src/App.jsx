@@ -26,7 +26,8 @@ class App extends Component {
   componentDidMount() {
     fetch('http://localhost:3000/comparisons')
       .then(response => response.json())
-      .then(data => this.setState({ savedStates: data }));
+      .then(data => this.setState({ savedStates: data }))
+      .catch(err => this.setState({ savedStates: { Items: 'No saved items avaialable' } }));
   }
 
   calculate(inputData) {
@@ -80,6 +81,7 @@ class App extends Component {
 
   render() {
     const { currency, savedStates } = this.state;
+    const { Items } = savedStates;
     return (
       <div className="App">
         <div className="column">
@@ -95,8 +97,7 @@ class App extends Component {
           {this.doResults()}
         </div>
         <div className="column states">
-          <ResultList id="5" data={{ test: 'penis' }} />
-          {JSON.stringify(savedStates)}
+          {JSON.stringify(Items)}
         </div>
       </div>
     );
