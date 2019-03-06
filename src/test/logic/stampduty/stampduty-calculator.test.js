@@ -1,4 +1,4 @@
-import { expect, describe, it } from 'chai';
+import { expect } from 'chai';
 import calculateStampDuty from '../../../logic/stampduty/stampduty-calculator';
 
 const testValues = [
