@@ -70,18 +70,23 @@ option {
   color: black;
 }
 
-div.label {
+div.label, div.state {
   float:left;
   width:70%;
   text-align: left;
   border-bottom: 1px solid #dfdfdf
 }
 
-div.value {
+div.value, div.remove-state {
   float:left;
   width:30%;
   text-align: right;
   border-bottom: 1px solid #dfdfdf
+}
+
+div.state, div.remove-state {
+  padding: 0.1em;
+  min-height: 2.6em;
 }
 
 div.column {

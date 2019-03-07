@@ -32,6 +32,7 @@ class Form extends Component {
     this.setState(this.defValues());
   }
 
+  // noinspection JSCheckFunctionSignatures
   componentDidUpdate() {
     const { state } = this;
     const { projName } = state.formData;
@@ -90,19 +91,10 @@ class Form extends Component {
 
   handleSave(e) {
     e.preventDefault();
-    const { formData } = this.state;
-    fetch('http://localhost:3000/comparisons', {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => response.json())
-      .then((r) => {
-        alert(`saved ${r.id}`);
-      });
+    const { state, props } = this;
+    const { onsave } = props;
+    onsave(state.formData);
+    e.target.blur();
   }
 
   renderFields(fields) {
