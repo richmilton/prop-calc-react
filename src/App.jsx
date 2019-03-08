@@ -24,10 +24,10 @@ class App extends Component {
     };
     this.doResults = this.doResults.bind(this);
     this.calculate = this.calculate.bind(this);
-    this.setFormData = this.setFormData.bind(this);
+    this.setDefaultFormData = this.setDefaultFormData.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
-    this.selectState = this.selectState.bind(this);
+    this.findState = this.findState.bind(this);
   }
 
   componentDidMount() {
@@ -39,23 +39,25 @@ class App extends Component {
     fetch('http://localhost:3000/comparisons')
       .then(response => response.json())
       .then((data) => {
+        let formData;
+        if (selectedStateId !== '') {
+          formData = this.findState(data, selectedStateId);
+        }
+        formData = formData || this.setDefaultFormData();
         this.setState({
           savedStates: data,
-          selectedState: this.selectState(data, selectedStateId),
+          selectedState: formData,
         });
       })
       .catch(() => this.setState({
         savedStates: { Items: 'No saved items avaialable' },
-        selectedState: this.setFormData(),
+        selectedState: this.setDefaultFormData(),
       }));
   }
 
-  setFormData() {
+  setDefaultFormData() {
     const defaults = {};
     const { state } = this;
-    if (state.selectedState) {
-      return state.selectedState;
-    }
     state.fields.map((ob) => {
       defaults[ob.name] = ob.defVal;
       return false;
@@ -145,7 +147,7 @@ class App extends Component {
       }).catch(() => this.setState({ savedStates: { Items: 'No delete service avaialable' } }));
   }
 
-  selectState(savedStates, stateId) {
+  findState(savedStates, stateId) {
     // find state
     // const { savedStates } = this.state;
     const foundState = savedStates.Items.find((state, idx) => {
@@ -154,7 +156,7 @@ class App extends Component {
       }
       return null;
     });
-    return foundState || this.setFormData();
+    return foundState || this.setDefaultFormData();
     // this.setState({ selectedState: foundState });
   }
 
@@ -175,7 +177,7 @@ class App extends Component {
           <Form
             name="propcalc"
             fields={fields}
-            formData={this.setFormData()}
+            formData={selectedState}
             twocols="yes"
             calculate={this.calculate}
             currsymbol={currency}
