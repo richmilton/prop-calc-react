@@ -47,6 +47,7 @@ function Input({
         autoComplete="off"
         placeholder={placeholder || labelWithCurrency || `${name} [${type}]`}
         defaultValue={defVal || ''}
+        defaultChecked={defVal === 'yes'}
         onBlur={e => onblur(e)}
       />
       {Label({
@@ -63,7 +64,7 @@ function Select({
   return (
     <li key={name}>
       <select
-        defaultValue={defVal}
+        value={defVal}
         className={className || 'form-control'}
         key={name}
         name={name}

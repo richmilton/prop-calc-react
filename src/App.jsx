@@ -8,6 +8,15 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations';
 
 class App extends Component {
+  static findState(savedStates, stateId) {
+    return savedStates.Items.find((state, idx) => {
+      if (state.id === stateId) {
+        return idx;
+      }
+      return null;
+    });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +36,6 @@ class App extends Component {
     this.setDefaultFormData = this.setDefaultFormData.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
-    this.findState = this.findState.bind(this);
   }
 
   componentDidMount() {
@@ -41,18 +49,28 @@ class App extends Component {
       .then((data) => {
         let formData;
         if (selectedStateId !== '') {
-          formData = this.findState(data, selectedStateId);
+          formData = App.findState(data, selectedStateId);
+          if (!formData) {
+            window.location = '/';
+          }
+        } else {
+          formData = this.setDefaultFormData();
         }
-        formData = formData || this.setDefaultFormData();
         this.setState({
           savedStates: data,
           selectedState: formData,
         });
       })
-      .catch(() => this.setState({
-        savedStates: { Items: 'No saved items avaialable' },
-        selectedState: this.setDefaultFormData(),
-      }));
+      .catch(() => {
+        if (selectedStateId !== '') {
+          window.location = '/';
+        } else {
+          this.setState({
+            savedStates: { Items: 'No saved items avaialable' },
+            selectedState: this.setDefaultFormData(),
+          });
+        }
+      });
   }
 
   setDefaultFormData() {
@@ -145,19 +163,6 @@ class App extends Component {
           throw new Error('delete failed');
         }
       }).catch(() => this.setState({ savedStates: { Items: 'No delete service avaialable' } }));
-  }
-
-  findState(savedStates, stateId) {
-    // find state
-    // const { savedStates } = this.state;
-    const foundState = savedStates.Items.find((state, idx) => {
-      if (state.id === stateId) {
-        return idx;
-      }
-      return null;
-    });
-    return foundState || this.setDefaultFormData();
-    // this.setState({ selectedState: foundState });
   }
 
   render() {
