@@ -17,14 +17,17 @@ class App extends Component {
         stress: [],
         flip: [],
       },
+      fields,
       currency: 163,
-      savedStates: [],
+      savedStates: { Items: [] },
+      selectedState: null,
     };
     this.doResults = this.doResults.bind(this);
     this.calculate = this.calculate.bind(this);
+    this.setFormData = this.setFormData.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
-    // this.selectState = this.selectState.bind(this);
+    this.selectState = this.selectState.bind(this);
   }
 
   componentDidMount() {
@@ -32,10 +35,32 @@ class App extends Component {
   }
 
   getSavedStates() {
+    const selectedStateId = window.location.pathname.substr(1);
     fetch('http://localhost:3000/comparisons')
       .then(response => response.json())
-      .then(data => this.setState({ savedStates: data }))
-      .catch(() => this.setState({ savedStates: { Items: 'No saved items avaialable' } }));
+      .then((data) => {
+        this.setState({
+          savedStates: data,
+          selectedState: this.selectState(data, selectedStateId),
+        });
+      })
+      .catch(() => this.setState({
+        savedStates: { Items: 'No saved items avaialable' },
+        selectedState: this.setFormData(),
+      }));
+  }
+
+  setFormData() {
+    const defaults = {};
+    const { state } = this;
+    if (state.selectedState) {
+      return state.selectedState;
+    }
+    state.fields.map((ob) => {
+      defaults[ob.name] = ob.defVal;
+      return false;
+    });
+    return defaults;
   }
 
   calculate(inputData) {
@@ -120,28 +145,37 @@ class App extends Component {
       }).catch(() => this.setState({ savedStates: { Items: 'No delete service avaialable' } }));
   }
 
-  selectState(stateId) {
-    alert(stateId);
+  selectState(savedStates, stateId) {
+    // find state
+    // const { savedStates } = this.state;
+    const foundState = savedStates.Items.find((state, idx) => {
+      if (state.id === stateId) {
+        return idx;
+      }
+      return null;
+    });
+    return foundState || this.setFormData();
+    // this.setState({ selectedState: foundState });
   }
 
   render() {
-    const { currency, savedStates } = this.state;
+    const { currency, savedStates, selectedState } = this.state;
     const { Items } = savedStates;
     const savedStateList = (
       <SavedStateList
         data={Items}
         ondelete={this.deleteState}
-        onselect={this.selectState}
       />
     );
     const savedList = Items ? savedStateList : '';
 
-    return (
+    return selectedState ? (
       <div className="App">
         <div className="column">
           <Form
             name="propcalc"
             fields={fields}
+            formData={this.setFormData()}
             twocols="yes"
             calculate={this.calculate}
             currsymbol={currency}
@@ -155,7 +189,7 @@ class App extends Component {
           {savedList}
         </div>
       </div>
-    );
+    ) : '';
   }
 }
 export default App;

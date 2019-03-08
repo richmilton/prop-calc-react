@@ -18,8 +18,8 @@ class Form extends Component {
     super(props);
     this.state = {
       fields: props.fields,
+      formData: props.formData,
     };
-    this.defValues = this.defValues.bind(this);
     this.doLabel = this.doLabel.bind(this);
     this.doLabelClass = this.doLabelClass.bind(this);
     this.renderFields = this.renderFields.bind(this);
@@ -29,7 +29,8 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    this.setState(this.defValues());
+    const { props, state } = this;
+    props.calculate(state.formData);
   }
 
   // noinspection JSCheckFunctionSignatures
@@ -37,17 +38,6 @@ class Form extends Component {
     const { state } = this;
     const { projName } = state.formData;
     document.getElementById('doc-title').text = projName ? projName.replace(/ /g, '-') : 'Untitled';
-  }
-
-  defValues() {
-    const v = {};
-    const { props } = this;
-    props.fields.map((ob) => {
-      v[ob.name] = ob.defVal;
-      return false;
-    });
-    props.calculate(v);
-    return { formData: v };
   }
 
   doLabel(fname, label) {
@@ -107,6 +97,7 @@ class Form extends Component {
       ob.onInput = e => this.handleChange(e.target);
       ob.onblur = e => this.handleChange(e.target);
       ob.currency = props.currsymbol;
+      ob.defVal = props.formData[ob.name];
       if (ob.type === 'select') {
         formFields.push(Select(ob));
       } else {

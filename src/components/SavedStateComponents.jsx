@@ -4,20 +4,20 @@ import React, { Component } from 'react';
 
 const handleClick = (e, callback) => {
   e.preventDefault();
-  callback(e.target.id || e.target.href);
+  callback(e.target.id.split('-')[1]);
 };
 
 const SavedStateListItem = ({
   label,
   value,
   ondelete,
-  onselect,
 }) => (
   <li>
     <div className="state">
       <a
         href={value}
-        onClick={e => handleClick(e, onselect)}
+        type="submit"
+        id={`select-${value}`}
       >
         {label}
       </a>
@@ -26,7 +26,7 @@ const SavedStateListItem = ({
       <button
         className="btn-primary form-control"
         type="submit"
-        id={value}
+        id={`delete-${value}`}
         onClick={e => handleClick(e, ondelete)}
       >
         delete
@@ -35,19 +35,26 @@ const SavedStateListItem = ({
   </li>
 );
 
-const SavedStateList = ({ data, ondelete, onselect }) => (
-  <ul>
-    {data.map(({ projectName, id }, ind) => {
-      const key = `li-${id}-${ind}`;
-      return <SavedStateListItem
-        ondelete={ondelete}
-        key={`li-${key}`}
-        label={projectName || 'untitled'}
-        value={id}
-        onselect={onselect}
-      />;
-    })}
-  </ul>
-);
+const SavedStateList = ({ data, ondelete, onselect }) => {
+  if (data.map) {
+    return (
+      <ul>
+        {data.map(({ projectName, id }, ind) => {
+          const key = `li-${id}-${ind}`;
+          return (
+            <SavedStateListItem
+              ondelete={ondelete}
+              key={`li-${key}`}
+              label={projectName || 'untitled'}
+              value={id}
+              onselect={onselect}
+            />
+          );
+        })}
+      </ul>
+    );
+  }
+  return '';
+};
 
 export default SavedStateList;

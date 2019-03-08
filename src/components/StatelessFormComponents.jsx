@@ -58,13 +58,12 @@ function Input({
 
 // stateless component Select
 function Select({
-  className, name, type, onInput,
-  placeholder, label, onblur, options, doLabelClass, dynamicLabel,
+  className, name, type, onInput, label, defVal, onblur, options, doLabelClass, dynamicLabel,
 }) {
   return (
     <li key={name}>
       <select
-        // defaultValue={defVal}
+        defaultValue={defVal}
         className={className || 'form-control'}
         key={name}
         name={name}
@@ -72,7 +71,6 @@ function Select({
         onChange={ev => onInput(ev)}
         onBlur={e => onblur(e)}
       >
-        <option value="" disabled>{placeholder || label || name}</option>
         {options.map(
           opt => (
             <option
