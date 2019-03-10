@@ -88,16 +88,16 @@ class App extends Component {
   }
 
   calculate(inputData) {
-    const dfResult = calculations.initialFinance(inputData);
-    const btlResult = calculations.freeCash(inputData);
+    const dealFinance = calculations.initialFinance(inputData);
+    const buyToLet = calculations.freeCash(inputData);
     const flip = calculations.flip(inputData);
     const stress = calculations.stressTest(inputData);
     const currSymbol = calculations.getCurrencyCode(inputData);
 
     this.setState({
       data: {
-        dealFinance: dfResult,
-        buyToLet: btlResult,
+        dealFinance,
+        buyToLet,
         stress,
         flip,
       },
