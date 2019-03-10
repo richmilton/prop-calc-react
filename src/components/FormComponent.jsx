@@ -137,7 +137,13 @@ class Form extends Component {
         id={props.name}
       >
         {props.twocols === 'yes' ? this.renderFieldCols() : this.renderFields(props.fields)}
-        <button type="submit" className="btn-primary form-control" onClick={this.handleSave}>save this</button>
+        <button
+          type="submit"
+          className="btn-primary form-control"
+          onClick={this.handleSave}
+        >
+          save this
+        </button>
       </form>
     );
   }

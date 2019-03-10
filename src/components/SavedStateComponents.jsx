@@ -15,6 +15,8 @@ const SavedStateListItem = ({
   <li>
     <div className="state">
       <a
+        className="btn-sm btn-warning"
+        style={{ width: '100%' }}
         href={value}
         type="submit"
         id={`select-${value}`}
@@ -24,7 +26,7 @@ const SavedStateListItem = ({
     </div>
     <div className="remove-state">
       <button
-        className="btn-primary form-control"
+        className="btn-sm btn-primary btn-warning"
         type="submit"
         id={`delete-${value}`}
         onClick={e => handleClick(e, ondelete)}

@@ -89,6 +89,14 @@ div.state, div.remove-state {
   min-height: 2.6em;
 }
 
+div.state {
+  width: 85%;
+}
+
+div.remove-state {
+  width: 15%;
+}
+
 div.column {
   font-size: 0.9em;
   float:left;

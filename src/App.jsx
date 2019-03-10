@@ -8,8 +8,10 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations';
 
 class App extends Component {
+  // TODO fix first item not found
   static findState(savedStates, stateId) {
     return savedStates.Items.find((state, idx) => {
+      // console.log(state.id, stateId);
       if (state.id === stateId) {
         return idx;
       }
@@ -51,6 +53,7 @@ class App extends Component {
         if (selectedStateId !== '') {
           formData = App.findState(data, selectedStateId);
           if (!formData) {
+            // TODO change to React router
             window.location = '/';
           }
         } else {
@@ -63,6 +66,7 @@ class App extends Component {
       })
       .catch(() => {
         if (selectedStateId !== '') {
+          // TODO change to React router
           window.location = '/';
         } else {
           this.setState({
