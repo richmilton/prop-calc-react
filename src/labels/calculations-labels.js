@@ -1,4 +1,3 @@
-
 const freeCashLabels = [
   'Remortgage advance',
   'Remortgage deposit',
