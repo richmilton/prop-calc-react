@@ -1,26 +1,26 @@
 
 const freeCashLabels = [
-  "Remortgage advance",
-  "Remortgage deposit",
-  "Remortgage fees",
-  "Money in",
-  "Money out",
-  "Money left in",
-  "Monthly rental",
-  "Monthly mortgage payment",
-  "MOE",
-  "Letting agent fees",
-  "Monthly free cashflow"
+  'Remortgage advance',
+  'Remortgage deposit',
+  'Remortgage fees',
+  'Money in',
+  'Money out',
+  'Money left in',
+  'Monthly rental',
+  'Monthly mortgage payment',
+  'MOE',
+  'Letting agent fees',
+  'Monthly free cashflow',
 ];
 
 const initialFinanceLabels = [
-  "Mortgage advance",
-  "Deposit",
-  "Stamp duty",
-  "Professional fees",
-  "Refurb/other costs",
-  "Total money in",
-  "Total cost"
+  'Mortgage advance',
+  'Deposit',
+  'Stamp duty',
+  'Professional fees',
+  'Refurb/other costs',
+  'Total money in',
+  'Total cost',
 ];
 
 const flipLabels = [
@@ -28,7 +28,7 @@ const flipLabels = [
   'Selling costs',
   'Total input costs',
   'Profit (before tax)',
-  'Gain(%)'
+  'Gain(%)',
 ];
 
 const stressLabels = [
@@ -36,8 +36,8 @@ const stressLabels = [
   'Minimum rent'];
 
 export default {
-  freeCashLabels: freeCashLabels,
-  initialFinanceLabels: initialFinanceLabels,
-  flipLabels: flipLabels,
-  stressLabels: stressLabels
+  freeCashLabels,
+  initialFinanceLabels,
+  flipLabels,
+  stressLabels,
 };
