@@ -1,4 +1,5 @@
 /* eslint-env browser */
+/* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
 import Form from './components/FormComponent';
 import { fields } from './components/formconfig';
@@ -8,15 +9,8 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations';
 
 class App extends Component {
-  // TODO fix first item not found
   static findState(savedStates, stateId) {
-    return savedStates.Items.find((state, idx) => {
-      // console.log(state.id, stateId);
-      if (state.id === stateId) {
-        return idx;
-      }
-      return null;
-    });
+    return savedStates.Items.find(state => state.id === stateId);
   }
 
   constructor(props) {

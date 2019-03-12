@@ -15,7 +15,7 @@ const SavedStateListItem = ({
   <li>
     <div className="state">
       <a
-        className="btn-sm btn-warning"
+        className="btn-sm btn-primary"
         style={{ width: '100%' }}
         href={value}
         type="submit"
