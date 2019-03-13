@@ -19,7 +19,7 @@ li {
   width: 100%;
   min-height: 1.8em;
   line-height: 0.9em;
-  padding-left: 10px;
+  padding-left: 0.5em;
 }
 
 .form-control {
@@ -90,7 +90,7 @@ div.state, div.remove-state {
 }
 
 div.state {
-  width: 85%;
+  width: 83%;
 }
 
 div.remove-state {
@@ -98,17 +98,17 @@ div.remove-state {
 }
 
 div.column {
-  font-size: 0.9em;
+  font-size: 0.85em;
   float:left;
   text-align: left;
-  width: 29em;
-  padding: 0.25em
+  width: 26.5em;
+  padding: 0.05em
 }
 
 div.res-block {
   display: inline-block;
   width: 100%;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.1em;
   border: 1px solid #ccc;
   padding: 0.5em;
   border-radius: 4px;
@@ -123,11 +123,11 @@ form>ul {
 }
 
 ul.left {
-  padding-right: 0.2em;
+  padding-right: 0.05em;
 }
 
 ul.right {
-  padding-left: 0.2em;
+  padding-left: 0.05em;
 }
 
 .checkbox-label {

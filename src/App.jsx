@@ -8,6 +8,8 @@ import ResultList from './components/ResultListComponent';
 import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations';
 
+const url = 'http://192.168.0.12:3000/comparisons';
+
 class App extends Component {
   static findState(savedStates, stateId) {
     return savedStates.Items.find(state => state.id === stateId);
@@ -25,7 +27,8 @@ class App extends Component {
       fields,
       currency: 163,
       savedStates: { Items: [] },
-      selectedState: null,
+      currentState: null,
+      hasWorkingAPI: false,
     };
     this.doResults = this.doResults.bind(this);
     this.calculate = this.calculate.bind(this);
@@ -40,22 +43,23 @@ class App extends Component {
 
   getSavedStates() {
     const selectedStateId = window.location.pathname.substr(1);
-    fetch('http://localhost:3000/comparisons')
+    fetch(url)
       .then(response => response.json())
       .then((data) => {
-        let formData;
+        let stateToLoad;
         if (selectedStateId !== '') {
-          formData = App.findState(data, selectedStateId);
-          if (!formData) {
+          stateToLoad = App.findState(data, selectedStateId);
+          if (!stateToLoad) {
             // TODO change to React router
             window.location = '/';
           }
         } else {
-          formData = this.setDefaultFormData();
+          stateToLoad = this.setDefaultFormData();
         }
         this.setState({
           savedStates: data,
-          selectedState: formData,
+          currentState: stateToLoad,
+          hasWorkingAPI: true,
         });
       })
       .catch(() => {
@@ -65,7 +69,8 @@ class App extends Component {
         } else {
           this.setState({
             savedStates: { Items: 'No saved items avaialable' },
-            selectedState: this.setDefaultFormData(),
+            currentState: this.setDefaultFormData(),
+            hasWorkingAPI: false,
           });
         }
       });
@@ -81,12 +86,18 @@ class App extends Component {
     return defaults;
   }
 
-  calculate(inputData) {
+  calculate(changedField, newValue) {
+    const { currentState } = this.state;
+    const inputData = { ...currentState, [changedField]: newValue };
     const dealFinance = calculations.initialFinance(inputData);
     const buyToLet = calculations.freeCash(inputData);
     const flip = calculations.flip(inputData);
     const stress = calculations.stressTest(inputData);
     const currSymbol = calculations.getCurrencyCode(inputData);
+
+    if (changedField === 'projectName') {
+      document.getElementById('doc-title').text = newValue.replace(/ /g, '-');
+    }
 
     this.setState({
       data: {
@@ -96,6 +107,7 @@ class App extends Component {
         flip,
       },
       currency: currSymbol,
+      currentState: inputData,
     });
   }
 
@@ -130,14 +142,19 @@ class App extends Component {
     );
   }
 
-  saveState(formData) {
-    fetch('http://localhost:3000/comparisons', {
+  saveState() {
+    const { currentState } = this.state;
+    if (currentState.projectName === '') {
+      alert('you must supply a project name');
+      return;
+    }
+    fetch(url, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(currentState),
     })
       .then(response => response.json())
       .then(() => {
@@ -146,7 +163,7 @@ class App extends Component {
   }
 
   deleteState(stateId) {
-    fetch('http://localhost:3000/comparisons', {
+    fetch(url, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -164,7 +181,12 @@ class App extends Component {
   }
 
   render() {
-    const { currency, savedStates, selectedState } = this.state;
+    const {
+      currency,
+      savedStates,
+      currentState,
+      hasWorkingAPI,
+    } = this.state;
     const { Items } = savedStates;
     const savedStateList = (
       <SavedStateList
@@ -174,17 +196,18 @@ class App extends Component {
     );
     const savedList = Items ? savedStateList : '';
 
-    return selectedState ? (
+    return currentState ? (
       <div className="App">
         <div className="column">
           <Form
             name="propcalc"
             fields={fields}
-            formData={selectedState}
+            formData={currentState}
             twocols="yes"
             calculate={this.calculate}
             currsymbol={currency}
             onsave={this.saveState}
+            showsave={hasWorkingAPI}
           />
         </div>
         <div className="column results">

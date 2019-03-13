@@ -29,15 +29,8 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const { props, state } = this;
-    props.calculate(state.formData);
-  }
-
-  // noinspection JSCheckFunctionSignatures
-  componentDidUpdate() {
-    const { state } = this;
-    const { projName } = state.formData;
-    document.getElementById('doc-title').text = projName ? projName.replace(/ /g, '-') : 'Untitled';
+    const { props } = this;
+    props.calculate('projectName', '');
   }
 
   doLabel(fname, label) {
@@ -56,7 +49,7 @@ class Form extends Component {
     checked,
     name,
   }) {
-    const { state, props } = this;
+    const { props, state } = this;
     const { formData } = state;
     let val;
     switch (type) {
@@ -70,12 +63,11 @@ class Form extends Component {
         val = value || '';
     }
 
-    formData[name] = val;
-
-    this.setState({ formData }, () => {
-      if (/^select-one$|^checkbox$|^number$/.test(type)) {
-        props.calculate(state.formData);
-      }
+    // formData[name] = val;
+    // const newFormData = { ...formData, [name]: val };
+    props.calculate(name, val);
+    this.setState({
+      formData: { ...formData, [name]: val },
     });
   }
 
@@ -89,15 +81,15 @@ class Form extends Component {
 
   renderFields(fields) {
     const formFields = [];
-    const { props } = this;
+    const { currsymbol, formData } = this.props;
     fields.forEach((field) => {
       const ob = { ...field };
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target);
       ob.onblur = e => this.handleChange(e.target);
-      ob.currency = props.currsymbol;
-      ob.defVal = props.formData[ob.name];
+      ob.currency = currsymbol;
+      ob.defVal = formData[ob.name];
       if (ob.type === 'select') {
         formFields.push(Select(ob));
       } else {
@@ -130,20 +122,29 @@ class Form extends Component {
   }
 
   render() {
-    const { props } = this;
+    const {
+      name,
+      twocols,
+      fields,
+      showsave,
+    } = this.props;
+    const button = showsave ? (
+      <button
+        type="submit"
+        className="btn-primary form-control"
+        onClick={this.handleSave}
+      >
+        save this
+      </button>
+    ) : '';
+
     return (
       <form
-        name={props.name}
-        id={props.name}
+        name={name}
+        id={name}
       >
-        {props.twocols === 'yes' ? this.renderFieldCols() : this.renderFields(props.fields)}
-        <button
-          type="submit"
-          className="btn-primary form-control"
-          onClick={this.handleSave}
-        >
-          save this
-        </button>
+        {twocols === 'yes' ? this.renderFieldCols() : this.renderFields(fields)}
+        {button}
       </form>
     );
   }
