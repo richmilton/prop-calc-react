@@ -68,7 +68,7 @@ class App extends Component {
           window.location = '/';
         } else {
           this.setState({
-            savedStates: { Items: 'No saved items avaialable' },
+            savedStates: { Items: [] },
             currentState: this.setDefaultFormData(),
             hasWorkingAPI: false,
           });
