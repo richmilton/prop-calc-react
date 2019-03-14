@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import calculations from '../../logic/calculations';
+import calculations from '../../../logic/calculations';
 
 const testState = {
   buyingCash: 'yes',

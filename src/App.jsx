@@ -8,7 +8,17 @@ import ResultList from './components/ResultListComponent';
 import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations/index';
 
-const url = 'http://192.168.0.12:3000/comparisons';
+// https://nethouseprices.com/house-prices/bs16%203uh
+// https://www.rightmove.co.uk/property-to-rent/search.html?searchLocation=BS16+3UH
+// https://www.rightmove.co.uk/property-for-sale/search.html?searchLocation=BS16+3UH
+
+const urls = {
+  comparisons: 'http://192.168.0.12:3000/comparisons',
+  rmBuy: 'https://www.rightmove.co.uk/property-for-sale/search.html?searchLocation=',
+  rmRent: 'https://www.rightmove.co.uk/property-to-rent/search.html?searchLocation=',
+  nhpSold: 'https://nethouseprices.com/house-prices/',
+};
+
 // const url = '';
 
 class App extends Component {
@@ -51,11 +61,11 @@ class App extends Component {
       });
     };
 
-    if (url === '') {
+    if (urls.comparisons === '') {
       loadDefault();
     } else {
       const selectedStateId = window.location.pathname.substr(1);
-      fetch(url)
+      fetch(urls.comparisons)
         .then(response => response.json())
         .then((data) => {
           let stateToLoad;
@@ -119,16 +129,28 @@ class App extends Component {
   }
 
   doResults() {
-    const { data } = this.state;
+    const { data, currentState } = this.state;
+    const { postCode } = currentState;
     const {
       dealFinance,
       buyToLet,
       stress,
       flip,
     } = data;
+    const links = (postCode !== '') ? (
+      <div className="res-block">
+        <h4>Links</h4>
+        <a target="_blank" rel="noopener noreferrer" href={urls.nhpSold + postCode}>sold data</a>
+        {' | '}
+        <a target="_blank" rel="noopener noreferrer" href={urls.rmBuy + postCode}>for sale</a>
+        {' | '}
+        <a target="_blank" rel="noopener noreferrer" href={urls.rmRent + postCode}>to rent</a>
+      </div>
+    ) : '';
 
     return (
       <React.Fragment>
+        {links}
         <div className="res-block">
           <h4>Deal finance</h4>
           <ResultList id="1" data={dealFinance} />
@@ -155,7 +177,7 @@ class App extends Component {
       alert('you must supply a project name');
       return;
     }
-    fetch(url, {
+    fetch(urls.comparisons, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -170,7 +192,7 @@ class App extends Component {
   }
 
   deleteState(stateId) {
-    fetch(url, {
+    fetch(urls.comparisons, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
