@@ -8,7 +8,8 @@ import ResultList from './components/ResultListComponent';
 import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations';
 
-const url = 'http://192.168.0.12:3000/comparisons';
+// const url = 'http://192.168.0.12:3000/comparisons';
+const url = '';
 
 class App extends Component {
   static findState(savedStates, stateId) {
@@ -42,38 +43,44 @@ class App extends Component {
   }
 
   getSavedStates() {
-    const selectedStateId = window.location.pathname.substr(1);
-    fetch(url)
-      .then(response => response.json())
-      .then((data) => {
-        let stateToLoad;
-        if (selectedStateId !== '') {
-          stateToLoad = App.findState(data, selectedStateId);
-          if (!stateToLoad) {
-            // TODO change to React router
-            window.location = '/';
-          }
-        } else {
-          stateToLoad = this.setDefaultFormData();
-        }
-        this.setState({
-          savedStates: data,
-          currentState: stateToLoad,
-          hasWorkingAPI: true,
-        });
-      })
-      .catch(() => {
-        if (selectedStateId !== '') {
-          // TODO change to React router
-          window.location = '/';
-        } else {
-          this.setState({
-            savedStates: { Items: [] },
-            currentState: this.setDefaultFormData(),
-            hasWorkingAPI: false,
-          });
-        }
+    const loadDefault = () => {
+      this.setState({
+        savedStates: { Items: [] },
+        currentState: this.setDefaultFormData(),
+        hasWorkingAPI: false,
       });
+    };
+
+    if (url === '') {
+      loadDefault();
+    } else {
+      const selectedStateId = window.location.pathname.substr(1);
+      fetch(url)
+        .then(response => response.json())
+        .then((data) => {
+          let stateToLoad;
+          if (selectedStateId !== '') {
+            stateToLoad = App.findState(data, selectedStateId);
+            if (!stateToLoad) {
+              window.location = '/';
+            }
+          } else {
+            stateToLoad = this.setDefaultFormData();
+          }
+          this.setState({
+            savedStates: data,
+            currentState: stateToLoad,
+            hasWorkingAPI: true,
+          });
+        })
+        .catch(() => {
+          if (selectedStateId !== '') {
+            window.location = '/';
+          } else {
+            loadDefault();
+          }
+        });
+    }
   }
 
   setDefaultFormData() {
