@@ -177,4 +177,5 @@ const fields = [
 module.exports = {
   fields,
   currencyPlaceholder,
+  types,
 };

@@ -8,10 +8,6 @@ import ResultList from './components/ResultListComponent';
 import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations/index';
 
-// https://nethouseprices.com/house-prices/bs16%203uh
-// https://www.rightmove.co.uk/property-to-rent/search.html?searchLocation=BS16+3UH
-// https://www.rightmove.co.uk/property-for-sale/search.html?searchLocation=BS16+3UH
-
 const urls = {
   comparisons: 'http://192.168.0.12:3000/comparisons',
   rmBuy: 'https://www.rightmove.co.uk/property-for-sale/search.html?searchLocation=',
@@ -145,7 +141,7 @@ class App extends Component {
       stress,
       flip,
     } = data;
-    const links = (postCode && postCodeRegEx.test(postCode)) ? (
+    const links = (postCode && postCodeRegEx.test(postCode.toUpperCase())) ? (
       <div className="res-block">
         <h4>Links for this post code</h4>
         <a target="_blank" rel="noopener noreferrer" href={urls.nhpSold + postCode}>sold data</a>

@@ -2,6 +2,7 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import StatelessComponents from './StatelessFormComponents';
+import { types } from './formconfig';
 
 const { Input, Select } = StatelessComponents;
 
@@ -53,18 +54,15 @@ class Form extends Component {
     const { formData } = state;
     let val;
     switch (type) {
-      case 'number':
+      case types.NUMBER:
         val = Number.isNaN(value) ? 0 : (parseFloat(value) || 0);
         break;
-      case 'checkbox':
+      case types.CHECKBOX:
         val = checked ? 'yes' : 'no';
         break;
       default:
         val = value || '';
     }
-
-    // formData[name] = val;
-    // const newFormData = { ...formData, [name]: val };
     props.calculate(name, val);
     this.setState({
       formData: { ...formData, [name]: val },
