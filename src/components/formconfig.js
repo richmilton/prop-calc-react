@@ -43,16 +43,16 @@ const fields = [
     defVal: 0,
   },
   {
-    label: `Initial LTV(${percentSign})`,
-    name: 'initialLoanToValue',
-    type: types.NUMBER,
-    defVal: 75,
-  },
-  {
     label: 'Cash purchase',
     name: 'buyingCash',
     type: types.CHECKBOX,
     defVal: 'no',
+  },
+  {
+    label: `Initial LTV(${percentSign})`,
+    name: 'initialLoanToValue',
+    type: types.NUMBER,
+    defVal: 75,
   },
   {
     label: `Surveyors fee(${currencyPlaceholder})`,
