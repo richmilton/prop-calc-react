@@ -6,10 +6,10 @@ import { fields } from './components/formconfig';
 import './css/app.css';
 import ResultList from './components/ResultListComponent';
 import SavedStateList from './components/SavedStateComponents';
-import calculations from './logic/calculations';
+import calculations from './logic/calculations/index';
 
-// const url = 'http://192.168.0.12:3000/comparisons';
-const url = '';
+const url = 'http://192.168.0.12:3000/comparisons';
+// const url = '';
 
 class App extends Component {
   static findState(savedStates, stateId) {

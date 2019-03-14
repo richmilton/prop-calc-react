@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/react": "^16.8.4",
     "bootstrap": "^4.3.1",
+    "date-format": "^2.0.0",
     "node-sass": "^4.11.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

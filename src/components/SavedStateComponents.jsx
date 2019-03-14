@@ -1,11 +1,16 @@
+/* eslint-env browser */
 /* eslint react/prop-types: 0 */
 // eslint-disable-next-line
 import React, { Component } from 'react';
+import dateFormat from 'date-format';
 
 const handleClick = (e, callback) => {
   e.preventDefault();
   callback(e.target.id.split('-')[1]);
 };
+
+const showDate = milis => dateFormat('dd/MM hh:mm:ss', new Date(parseInt(milis, 0)));
+
 
 const SavedStateListItem = ({
   label,
@@ -14,15 +19,16 @@ const SavedStateListItem = ({
 }) => (
   <li>
     <div className="state">
-      <a
-        className="btn-sm btn-primary"
+      <button
+        className="btn-primary form-control"
         style={{ width: '100%' }}
-        href={value}
+        // href={value}
         type="submit"
         id={`select-${value}`}
+        onClick={e => handleClick(e, (id) => { window.location.href = `/${id}`; })}
       >
-        {label}
-      </a>
+        {`${label} (${showDate(value)})`}
+      </button>
     </div>
     <div className="remove-state">
       <button

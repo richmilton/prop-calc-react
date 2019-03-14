@@ -34,7 +34,7 @@ const calculateStampDuty = (val, sdltType) => {
     tax += ((bandLimit - previousBandLimit) / 100 * (rate + load));
   }
   // shouldn't get here but code won't know should throw error
-  // console.error(`check stampduty-bands for property without upto: 'end' in last entry`);
+  // console.error(`check stampduty-test-bands for property without upto: 'end' in last entry`);
   return tax;
 };
 
