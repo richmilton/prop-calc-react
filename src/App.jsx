@@ -10,8 +10,8 @@ import calculations from './logic/calculations/index';
 
 const urls = {
   comparisons: 'http://192.168.0.12:3000/comparisons',
-  rmBuy: 'https://www.rightmove.co.uk/property-for-sale/search.html?searchLocation=',
-  rmRent: 'https://www.rightmove.co.uk/property-to-rent/search.html?searchLocation=',
+  rmBuy: 'https://www.rightmove.co.uk/property-for-sale/search.html?radius=0.25&includeSSTC=true&searchLocation=',
+  rmRent: 'https://www.rightmove.co.uk/property-to-rent/search.html?radius=0.25&&includeLetAgreed=true&searchLocation=',
   nhpSold: 'https://nethouseprices.com/house-prices/',
 };
 
@@ -66,18 +66,18 @@ class App extends Component {
       fetch(urls.comparisons)
         .then(response => response.json())
         .then((data) => {
-          if (selectedStateId === '') {
+          if (!id && selectedStateId === '') {
             this.setState({
               savedStates: data,
               hasWorkingAPI: true,
               currentState: this.setDefaultFormData(),
             });
           } else {
-            const stateToLoad = App.findState(data, selectedStateId);
+            const stateToLoad = App.findState(data, (selectedStateId || id));
             if (!stateToLoad) {
               window.location = '/';
-            } else if (id && selectedStateId && selectedStateId !== id) {
-              window.location = `/${id || selectedStateId}`;
+            } else if (id && selectedStateId !== id) {
+              window.location = `/${id}`;
             } else {
               this.setState({
                 savedStates: data,
@@ -141,18 +141,20 @@ class App extends Component {
       flip,
     } = data;
     const links = (postCode && postCodeRegEx.test(postCode.toUpperCase())) ? (
-      <div className="res-block">
-        <h4>Links for this post code</h4>
+      <React.Fragment>
         <a target="_blank" rel="noopener noreferrer" href={urls.nhpSold + postCode}>sold data</a>
         {' | '}
-        <a target="_blank" rel="noopener noreferrer" href={`${urls.rmBuy + postCode}&radius=0.25&includeSSTC=true`}>for sale</a>
+        <a target="_blank" rel="noopener noreferrer" href={urls.rmBuy + postCode}>for sale</a>
         {' | '}
-        <a target="_blank" rel="noopener noreferrer" href={`${urls.rmRent + postCode}&radius=0.25&&includeLetAgreed=true`}>to rent</a>
-      </div>
-    ) : '';
+        <a target="_blank" rel="noopener noreferrer" href={`${urls.rmRent + postCode}`}>to rent</a>
+      </React.Fragment>
+    ) : <span style={{ color: 'red' }}>use a full valid post code to see links here</span>;
     return (
       <React.Fragment>
-        {links}
+        <div className="res-block">
+          <h4>Links for this post code</h4>
+          {links}
+        </div>
         <div className="res-block">
           <h4>Deal finance</h4>
           <ResultList id="1" data={dealFinance} />
