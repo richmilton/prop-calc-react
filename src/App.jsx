@@ -109,16 +109,15 @@ class App extends Component {
 
   calculate(changedField, newValue) {
     const { currentState } = this.state;
-    const inputData = { ...currentState, [changedField]: newValue };
+    const inputData = (changedField && newValue)
+      ? { ...currentState, [changedField]: newValue } : currentState;
     const dealFinance = calculations.initialFinance(inputData);
     const buyToLet = calculations.freeCash(inputData);
     const flip = calculations.flip(inputData);
     const stress = calculations.stressTest(inputData);
     const currSymbol = calculations.getCurrencyCode(inputData);
 
-    if (changedField === 'projectName') {
-      document.getElementById('doc-title').text = newValue.replace(/ /g, '-');
-    }
+    document.getElementById('doc-title').text = inputData.projectName.replace(/ /g, '-');
 
     this.setState({
       data: {
@@ -146,12 +145,11 @@ class App extends Component {
         <h4>Links for this post code</h4>
         <a target="_blank" rel="noopener noreferrer" href={urls.nhpSold + postCode}>sold data</a>
         {' | '}
-        <a target="_blank" rel="noopener noreferrer" href={urls.rmBuy + postCode}>for sale</a>
+        <a target="_blank" rel="noopener noreferrer" href={`${urls.rmBuy + postCode}&radius=0.25&includeSSTC=true`}>for sale</a>
         {' | '}
-        <a target="_blank" rel="noopener noreferrer" href={urls.rmRent + postCode}>to rent</a>
+        <a target="_blank" rel="noopener noreferrer" href={`${urls.rmRent + postCode}&radius=0.25&&includeLetAgreed=true`}>to rent</a>
       </div>
     ) : '';
-
     return (
       <React.Fragment>
         {links}
@@ -177,8 +175,8 @@ class App extends Component {
 
   saveState() {
     const { currentState } = this.state;
-    if (currentState.projectName === '') {
-      alert('you must supply a project name');
+    const { projectName, postCode } = currentState;
+    if (projectName === '' || postCode === '') {
       return;
     }
     fetch(urls.comparisons, {
@@ -191,9 +189,12 @@ class App extends Component {
     })
       .then(response => response.json())
       .then(({ id }) => {
-        // console.log();
         this.getSavedStates(id);
-      }).catch(() => this.setState({ savedStates: { Items: 'No save service avaialable' } }));
+      })
+      .catch(() => this.setState({ savedStates: { Items: 'No save service avaialable' } }))
+      .finally(() => {
+        this.setState({ error: null });
+      });
   }
 
   deleteState(stateId) {
@@ -220,6 +221,7 @@ class App extends Component {
       savedStates,
       currentState,
       hasWorkingAPI,
+      error,
     } = this.state;
     const { Items } = savedStates;
     const savedStateList = (
@@ -242,6 +244,7 @@ class App extends Component {
             currsymbol={currency}
             onsave={this.saveState}
             showsave={hasWorkingAPI}
+            error={error}
           />
         </div>
         <div className="column results">

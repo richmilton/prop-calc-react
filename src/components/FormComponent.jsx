@@ -31,7 +31,7 @@ class Form extends Component {
 
   componentDidMount() {
     const { props } = this;
-    props.calculate('projectName', '');
+    props.calculate();
   }
 
   doLabel(fname, label) {

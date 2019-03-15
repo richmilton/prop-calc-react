@@ -31,7 +31,7 @@ function Label({
 
 function Input({
   className, name, type, onInput,
-  placeholder, label, defVal, onblur, doLabelClass, dynamicLabel, currency,
+  placeholder, label, defVal, onblur, doLabelClass, dynamicLabel, currency, required,
 }) {
   const labelWithCurrency = addCurrencySymbolToLabel(label, currency);
 
@@ -49,6 +49,7 @@ function Input({
         defaultValue={defVal || ''}
         defaultChecked={defVal === 'yes'}
         onBlur={e => onblur(e)}
+        required={required || false}
       />
       {Label({
         name, doLabelClass, dynamicLabel, label, type, currency,

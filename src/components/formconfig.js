@@ -12,11 +12,15 @@ const fields = [
     label: 'Project name',
     name: 'projectName',
     type: types.TEXT,
+    defVal: '',
+    required: true,
   },
   {
     label: 'Post code',
     name: 'postCode',
     type: types.TEXT,
+    defVal: '',
+    required: true,
   },
   {
     label: `Asking price(${currencyPlaceholder})`,
