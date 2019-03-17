@@ -10,10 +10,10 @@ import calculations from './logic/calculations/index';
 import validatePostcode from './util/validate-postcode';
 
 const urls = {
-  comparisons: 'http://192.168.0.12:3000/comparisons',
-  rmBuy: 'https://www.rightmove.co.uk/property-for-sale/search.html?radius=0.25&includeSSTC=true&searchLocation=',
-  rmRent: 'https://www.rightmove.co.uk/property-to-rent/search.html?radius=0.25&&includeLetAgreed=true&searchLocation=',
-  nhpSold: 'https://nethouseprices.com/house-prices/',
+  comparisons: process.env.REACT_APP_COMPARISONS_URL,
+  rmBuy: process.env.REACT_APP_RM_BUY_URL,
+  rmRent: process.env.REACT_APP_RM_LET_URL,
+  nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
 };
 
 // const url = '';
@@ -235,6 +235,7 @@ class App extends Component {
 
     return currentState ? (
       <div className="App">
+        <h3>{process.env.NODE_ENV}</h3>
         <div className="column">
           <Form
             name="propcalc"
