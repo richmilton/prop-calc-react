@@ -151,23 +151,23 @@ class App extends Component {
     return (
       <React.Fragment>
         <div className="res-block">
-          <h4>Links for this post code</h4>
+          <h6>Links for this post code</h6>
           {links}
         </div>
         <div className="res-block">
-          <h4>Deal finance</h4>
+          <h6>Deal finance</h6>
           <ResultList id="1" data={dealFinance} />
         </div>
         <div className="res-block">
-          <h4>Buy to let</h4>
+          <h6>Buy to let</h6>
           <ResultList id="2" data={buyToLet} />
         </div>
         <div className="res-block">
-          <h4>Stress test</h4>
+          <h6>Stress test</h6>
           <ResultList id="3" data={stress} />
         </div>
         <div className="res-block">
-          <h4>Flip</h4>
+          <h6>Flip</h6>
           <ResultList id="4" data={flip} />
         </div>
       </React.Fragment>
@@ -232,11 +232,23 @@ class App extends Component {
       />
     );
     const savedList = Items ? savedStateList : '';
+    const newButton = window.location.pathname !== '/'
+      ? (
+        <button
+          type="submit"
+          className="btn-primary form-control"
+          style={{ width: '100%', marginTop: '0.2em' }}
+          onClick={() => { window.location.href = '/'; }}
+        >
+          new
+        </button>
+      )
+      : '';
 
     return currentState ? (
       <div className="App">
-        <h3>{process.env.NODE_ENV}</h3>
-        <div className="column">
+        <div className="column" style={{ textAlign: 'center' }}>
+          <h5>Property investment deal analyser</h5>
           <Form
             name="propcalc"
             fields={fields}
@@ -248,6 +260,7 @@ class App extends Component {
             showsave={hasWorkingAPI}
             error={error}
           />
+          {newButton}
         </div>
         <div className="column results">
           {this.doResults()}
