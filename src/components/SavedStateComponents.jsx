@@ -11,7 +11,6 @@ const handleClick = (e, callback) => {
 
 const showDate = milis => dateFormat('dd/MM hh:mm:ss', new Date(parseInt(milis, 0)));
 
-
 const SavedStateListItem = ({
   label,
   value,

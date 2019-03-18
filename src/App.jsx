@@ -16,8 +16,6 @@ const urls = {
   nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
 };
 
-// const url = '';
-
 class App extends Component {
   static findState(savedStates, stateId) {
     return savedStates.Items.find(state => state.id === stateId);
