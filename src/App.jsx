@@ -232,14 +232,17 @@ class App extends Component {
     const savedList = Items ? savedStateList : '';
     const newButton = window.location.pathname !== '/'
       ? (
-        <button
-          type="submit"
-          className="btn-primary form-control"
-          style={{ width: '100%', marginTop: '0.2em' }}
-          onClick={() => { window.location.href = '/'; }}
-        >
-          new
-        </button>
+        <ul className="right">
+          <li>
+            <button
+              type="submit"
+              className="btn-primary form-control"
+              onClick={() => { window.location.href = '/'; }}
+            >
+              new
+            </button>
+          </li>
+        </ul>
       )
       : '';
 

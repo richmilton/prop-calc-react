@@ -127,13 +127,17 @@ class Form extends Component {
       showsave,
     } = this.props;
     const button = showsave ? (
-      <button
-        type="submit"
-        className="btn-primary form-control"
-        onClick={this.handleSave}
-      >
-        save this
-      </button>
+      <ul className="left">
+        <li>
+          <button
+            type="submit"
+            className="btn-primary form-control"
+            onClick={this.handleSave}
+          >
+            save this
+          </button>
+        </li>
+      </ul>
     ) : '';
 
     return (
