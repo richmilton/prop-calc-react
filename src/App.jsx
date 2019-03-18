@@ -56,7 +56,7 @@ class App extends Component {
       });
     };
 
-    if (urls.comparisons === '') {
+    if (!urls.comparisons || urls.comparisons === '') {
       loadDefault();
     } else {
       const selectedStateId = window.location.pathname.substr(1) || '';
