@@ -137,7 +137,7 @@ class App extends Component {
       stress,
       flip,
     } = data;
-    const links = (postCode && validatePostcode(postCode.toUpperCase())) ? (
+    const links = (postCode && validatePostcode(postCode)) ? (
       <React.Fragment>
         <a target="_blank" rel="noopener noreferrer" href={urls.nhpSold + postCode}>sold data</a>
         {' | '}
