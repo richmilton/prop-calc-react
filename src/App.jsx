@@ -145,7 +145,7 @@ class App extends Component {
         {' | '}
         <a target="_blank" rel="noopener noreferrer" href={`${urls.rmRent + postCode}`}>to rent</a>
       </React.Fragment>
-    ) : <span style={{ color: 'red' }}>use a full valid post code to see links here</span>;
+    ) : <span style={{ color: 'red', fontStyle: 'italic' }}>use a full valid post code to see links here</span>;
     return (
       <React.Fragment>
         <div className="res-block">
