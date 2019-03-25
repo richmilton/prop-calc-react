@@ -263,7 +263,7 @@ class App extends Component {
       />
     );
     const savedList = Items ? savedStateList : '';
-    const newButton = window.location.pathname !== '/'
+    const newButton = isLocal && window.location.pathname !== '/'
       ? (
         <ul className="right">
           <li>
