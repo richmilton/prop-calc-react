@@ -9,6 +9,7 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations/index';
 import validatePostcode from './util/validate-postcode';
 
+const isLocal = /localhost|192.168.0.12/.test(window.location.hostname);
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
   rmBuy: process.env.REACT_APP_RM_BUY_URL,
@@ -44,20 +45,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getSavedStates();
+    if (isLocal) {
+      this.getSavedStates();
+    } else {
+      this.loadDefault();
+    }
   }
 
   getSavedStates(id) {
-    const loadDefault = (hasApi) => {
-      this.setState({
-        savedStates: { Items: [] },
-        currentState: this.setDefaultFormData(),
-        hasWorkingAPI: hasApi,
-      });
-    };
-
     if (!urls.comparisons || urls.comparisons === '') {
-      loadDefault();
+      this.loadDefault();
     } else {
       const selectedStateId = window.location.pathname.substr(1) || '';
       fetch(urls.comparisons)
@@ -88,7 +85,7 @@ class App extends Component {
           if (selectedStateId !== '') {
             window.location = '/';
           } else {
-            loadDefault(false);
+            this.loadDefault(false);
           }
         });
     }
@@ -104,9 +101,18 @@ class App extends Component {
     return defaults;
   }
 
+  loadDefault() {
+    this.setState({
+      savedStates: { Items: [] },
+      currentState: this.setDefaultFormData(),
+      hasWorkingAPI: false,
+    });
+  }
+
+
   calculate(changedField, newValue) {
     const { currentState } = this.state;
-    const inputData = (changedField && newValue)
+    const inputData = (changedField)
       ? { ...currentState, [changedField]: newValue } : currentState;
     const dealFinance = calculations.initialFinance(inputData);
     const buyToLet = calculations.freeCash(inputData);
@@ -130,20 +136,47 @@ class App extends Component {
 
   doResults() {
     const { data, currentState } = this.state;
-    const { postCode } = currentState;
+    const {
+      postCode,
+      askingPrice,
+      monthlyRent,
+      propertyValue,
+    } = currentState;
     const {
       dealFinance,
       buyToLet,
       stress,
       flip,
     } = data;
+    const { oneK, oneHundredK } = { oneK: 1000, oneHundredK: 100000 };
+    const maxPrice = Math
+      .ceil((askingPrice || propertyValue || 400000) / oneHundredK * 1.2) * oneHundredK;
+    const maxRent = Math.ceil((monthlyRent || oneK) / oneK * 1.2) * oneK;
     const links = (postCode && validatePostcode(postCode)) ? (
       <React.Fragment>
-        <a target="_blank" rel="noopener noreferrer" href={urls.nhpSold + postCode}>sold data</a>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={urls.nhpSold + postCode}
+        >
+          sold data
+        </a>
         {' | '}
-        <a target="_blank" rel="noopener noreferrer" href={urls.rmBuy + postCode}>for sale</a>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`${urls.rmBuy + postCode}&maxPrice=${(maxPrice)}`}
+        >
+          for sale
+        </a>
         {' | '}
-        <a target="_blank" rel="noopener noreferrer" href={`${urls.rmRent + postCode}`}>to rent</a>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`${urls.rmRent + postCode}&maxPrice=${maxRent}`}
+        >
+          to rent
+        </a>
       </React.Fragment>
     ) : <span style={{ color: 'red', fontStyle: 'italic' }}>use a full valid post code to see links here</span>;
     return (
