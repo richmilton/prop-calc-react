@@ -61,9 +61,9 @@ class App extends Component {
       .then(response => response.json())
       .then((data) => {
         if (data.Items.length > 0) {
-          data.Items.sort((a, b) => {
-            if (a.projectName < b.projectName) return -1;
-            if (a.projectName > b.projectName) return 1;
+          data.Items.sort(({ projectName: a }, { projectName: b }) => {
+            if (a < b) return -1;
+            if (a > b) return 1;
             return 0;
           });
         }
