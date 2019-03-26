@@ -9,9 +9,6 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations/index';
 import validatePostcode from './util/validate-postcode';
 
-// const { hostname = '', pathname = '' } = window.location;
-// const isLocal = /localhost|192.168.0.12/.test(hostname) || true;
-// const appPath = /prop-calc-react/.test(pathname) ? '/prop-calc-react/' : '/';
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
   rmBuy: process.env.REACT_APP_RM_BUY_URL,
@@ -24,6 +21,15 @@ class App extends Component {
     return savedStates.Items.find(state => state.id === stateId);
   }
 
+  static setDefaultFormData() {
+    const defaults = {};
+    fields.map((ob) => {
+      defaults[ob.name] = ob.defVal;
+      return false;
+    });
+    return defaults;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +39,6 @@ class App extends Component {
         stress: [],
         flip: [],
       },
-      fields,
       currency: 163,
       savedStates: { Items: [] },
       currentState: null,
@@ -41,7 +46,7 @@ class App extends Component {
     };
     this.doResults = this.doResults.bind(this);
     this.calculate = this.calculate.bind(this);
-    this.setDefaultFormData = this.setDefaultFormData.bind(this);
+    // this.setDefaultFormData = this.setDefaultFormData.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
     this.selectState = this.selectState.bind(this);
@@ -62,16 +67,6 @@ class App extends Component {
       });
   }
 
-  setDefaultFormData() {
-    const defaults = {};
-    const { state } = this;
-    state.fields.map((ob) => {
-      defaults[ob.name] = ob.defVal;
-      return false;
-    });
-    return defaults;
-  }
-
   loadState(data, setDefault) {
     const newState = {
       savedStates: data || { Items: [] },
@@ -79,7 +74,7 @@ class App extends Component {
     };
 
     if (setDefault) {
-      newState.currentState = this.setDefaultFormData();
+      newState.currentState = App.setDefaultFormData();
     }
 
     this.setState(newState);
@@ -259,7 +254,7 @@ class App extends Component {
             className="btn-primary form-control"
             onClick={
               () => this.setState(
-                { currentState: this.setDefaultFormData() }, () => this.calculate(),
+                { currentState: App.setDefaultFormData() }, () => this.calculate(),
               )
             }
           >
