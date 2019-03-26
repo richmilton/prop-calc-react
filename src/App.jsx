@@ -60,6 +60,13 @@ class App extends Component {
     fetch(urls.comparisons)
       .then(response => response.json())
       .then((data) => {
+        if (data.Items.length > 0) {
+          data.Items.sort((a, b) => {
+            if (a.projectName < b.projectName) return -1;
+            if (a.projectName > b.projectName) return 1;
+            return 0;
+          });
+        }
         this.loadState(data, setDefault);
       })
       .catch(() => {
@@ -253,9 +260,13 @@ class App extends Component {
             type="submit"
             className="btn-primary form-control"
             onClick={
-              () => this.setState(
-                { currentState: App.setDefaultFormData() }, () => this.calculate(),
-              )
+              (e) => {
+                e.preventDefault();
+                this.setState(
+                  { currentState: App.setDefaultFormData() }, () => this.calculate(),
+                );
+                e.target.blur();
+              }
             }
           >
             new
