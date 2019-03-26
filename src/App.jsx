@@ -236,6 +236,14 @@ class App extends Component {
     this.setState({ currentState: selectedState }, () => this.calculate());
   }
 
+  handleNew(e) {
+    e.preventDefault();
+    this.setState(
+      { currentState: App.setDefaultFormData() }, () => this.calculate(),
+    );
+    e.target.blur();
+  }
+
   render() {
     const {
       currency,
@@ -259,15 +267,7 @@ class App extends Component {
           <button
             type="submit"
             className="btn-primary form-control"
-            onClick={
-              (e) => {
-                e.preventDefault();
-                this.setState(
-                  { currentState: App.setDefaultFormData() }, () => this.calculate(),
-                );
-                e.target.blur();
-              }
-            }
+            onClick={event => this.handleNew(event)}
           >
             new
           </button>
