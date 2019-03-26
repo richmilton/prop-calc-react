@@ -9,10 +9,9 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations/index';
 import validatePostcode from './util/validate-postcode';
 
-const { hostname = '', pathname = '' } = window.location;
-const isLocal = /localhost|192.168.0.12/.test(hostname) || true;
-const appPath = /prop-calc-react/.test(pathname) ? '/prop-calc-react/' : '/';
-// console.log(appPath);
+// const { hostname = '', pathname = '' } = window.location;
+// const isLocal = /localhost|192.168.0.12/.test(hostname) || true;
+// const appPath = /prop-calc-react/.test(pathname) ? '/prop-calc-react/' : '/';
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
   rmBuy: process.env.REACT_APP_RM_BUY_URL,
@@ -49,16 +48,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (isLocal) {
-      this.getSavedStates(true);
-    } else {
-      this.loadState();
-    }
+    this.getSavedStates(true);
   }
 
   getSavedStates(setDefault) {
-    // const { currentState } = this.state;
-    // const setDefault = !deletedId || (currentState.id === deletedId);
     fetch(urls.comparisons)
       .then(response => response.json())
       .then((data) => {
@@ -258,21 +251,23 @@ class App extends Component {
       />
     );
     const savedList = Items ? savedStateList : '';
-    const newButton = isLocal && window.location.pathname !== appPath
-      ? (
-        <ul className="right">
-          <li>
-            <button
-              type="submit"
-              className="btn-primary form-control"
-              onClick={() => { window.location.href = appPath; }}
-            >
-              new
-            </button>
-          </li>
-        </ul>
-      )
-      : '';
+    const newButton = (
+      <ul className="right">
+        <li>
+          <button
+            type="submit"
+            className="btn-primary form-control"
+            onClick={
+              () => this.setState(
+                { currentState: this.setDefaultFormData() }, () => this.calculate(),
+              )
+            }
+          >
+            new
+          </button>
+        </li>
+      </ul>
+    );
 
     return currentState ? (
       <div className="App">
