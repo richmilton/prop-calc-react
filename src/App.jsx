@@ -17,10 +17,6 @@ const urls = {
 };
 
 class App extends Component {
-  static findState(savedStates, stateId) {
-    return savedStates.Items.find(state => state.id === stateId);
-  }
-
   static setDefaultFormData() {
     const defaults = {};
     fields.map((ob) => {
@@ -46,7 +42,6 @@ class App extends Component {
     };
     this.doResults = this.doResults.bind(this);
     this.calculate = this.calculate.bind(this);
-    // this.setDefaultFormData = this.setDefaultFormData.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
     this.selectState = this.selectState.bind(this);
@@ -61,6 +56,7 @@ class App extends Component {
       .then(response => response.json())
       .then((data) => {
         if (data.Items.length > 0) {
+          // sort in alphabetical then date order
           data.Items.sort(({ projectName: a, id: idA }, { projectName: b, id: idB }) => {
             if ((a + idA) < (b + idB)) return -1;
             if ((a + idA) > (b + idB)) return 1;
@@ -72,6 +68,11 @@ class App extends Component {
       .catch(() => {
         this.loadState(null, true);
       });
+  }
+
+  findState(stateId) {
+    const { savedStates } = this.state;
+    return savedStates.Items.find(state => state.id === stateId);
   }
 
   loadState(data, setDefault) {
@@ -231,8 +232,7 @@ class App extends Component {
   }
 
   selectState(stateId) {
-    const { savedStates } = this.state;
-    const selectedState = App.findState(savedStates, stateId);
+    const selectedState = this.findState(stateId);
     this.setState({ currentState: selectedState }, () => this.calculate());
   }
 
