@@ -17,10 +17,6 @@ function FormColumn({ render, fields, className }) {
 class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      fields: props.fields,
-      formData: props.formData,
-    };
     this.doLabel = this.doLabel.bind(this);
     this.doLabelClass = this.doLabelClass.bind(this);
     this.renderFields = this.renderFields.bind(this);
@@ -35,12 +31,12 @@ class Form extends Component {
   }
 
   doLabel(fname, label) {
-    const { formData } = this.state;
+    const { formData } = this.props;
     return formData && formData[fname] ? label || fname : '';
   }
 
   doLabelClass(fname) {
-    const { formData } = this.state;
+    const { formData } = this.props;
     return formData && formData[fname] ? 'show' : 'hide';
   }
 
@@ -50,8 +46,8 @@ class Form extends Component {
     checked,
     name,
   }) {
-    const { props, state } = this;
-    const { formData } = state;
+    const { props } = this;
+    // const { formData } = state;
     let val;
     switch (type) {
       case types.NUMBER:
@@ -64,16 +60,13 @@ class Form extends Component {
         val = value || '';
     }
     props.calculate(name, val);
-    this.setState({
-      formData: { ...formData, [name]: val },
-    });
   }
 
   handleSave(e) {
     e.preventDefault();
-    const { state, props } = this;
+    const { props } = this;
     const { onsave } = props;
-    onsave(state.formData);
+    onsave();
     e.target.blur();
   }
 
@@ -98,9 +91,9 @@ class Form extends Component {
   }
 
   renderFieldCols() {
-    const { state } = this;
-    const arrLength = Math.floor(state.fields.length / 2);
-    const left = state.fields.slice(0);
+    const { fields } = this.props;
+    const arrLength = Math.floor(fields.length / 2);
+    const left = fields.slice(0);
     const right = left.splice(arrLength);
 
     return [

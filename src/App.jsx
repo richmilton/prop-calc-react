@@ -9,7 +9,10 @@ import SavedStateList from './components/SavedStateComponents';
 import calculations from './logic/calculations/index';
 import validatePostcode from './util/validate-postcode';
 
-const isLocal = /localhost|192.168.0.12/.test(window.location.hostname);
+const { hostname = '', pathname = '' } = window.location;
+const isLocal = /localhost|192.168.0.12/.test(hostname) || true;
+const appPath = /prop-calc-react/.test(pathname) ? '/prop-calc-react/' : '/';
+// console.log(appPath);
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
   rmBuy: process.env.REACT_APP_RM_BUY_URL,
@@ -42,6 +45,7 @@ class App extends Component {
     this.setDefaultFormData = this.setDefaultFormData.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
+    this.selectState = this.selectState.bind(this);
   }
 
   componentDidMount() {
@@ -52,43 +56,16 @@ class App extends Component {
     }
   }
 
-  getSavedStates(id) {
-    if (!urls.comparisons || urls.comparisons === '') {
-      this.loadDefault();
-    } else {
-      const selectedStateId = window.location.pathname.substr(1) || '';
-      fetch(urls.comparisons)
-        .then(response => response.json())
-        .then((data) => {
-          if (!id && selectedStateId === '') {
-            this.setState({
-              savedStates: data,
-              hasWorkingAPI: true,
-              currentState: this.setDefaultFormData(),
-            });
-          } else {
-            const stateToLoad = App.findState(data, (selectedStateId || id));
-            if (!stateToLoad) {
-              window.location = '/';
-            } else if (id && selectedStateId !== id) {
-              window.location = `/${id}`;
-            } else {
-              this.setState({
-                savedStates: data,
-                hasWorkingAPI: true,
-                currentState: stateToLoad || this.setDefaultFormData(),
-              });
-            }
-          }
-        })
-        .catch(() => {
-          if (selectedStateId !== '') {
-            window.location = '/';
-          } else {
-            this.loadDefault(false);
-          }
-        });
-    }
+  getSavedStates() {
+    // const selectedStateId = hash.substr(1) || '';
+    fetch(urls.comparisons)
+      .then(response => response.json())
+      .then((data) => {
+        this.loadDefault(data);
+      })
+      .catch(() => {
+        this.loadDefault();
+      });
   }
 
   setDefaultFormData() {
@@ -101,11 +78,11 @@ class App extends Component {
     return defaults;
   }
 
-  loadDefault() {
+  loadDefault(data) {
     this.setState({
-      savedStates: { Items: [] },
+      savedStates: data || { Items: [] },
       currentState: this.setDefaultFormData(),
-      hasWorkingAPI: false,
+      hasWorkingAPI: !!data,
     });
   }
 
@@ -122,7 +99,7 @@ class App extends Component {
 
     document.getElementById('doc-title').text = inputData.projectName.replace(/ /g, '-');
 
-    this.setState({
+    const newState = {
       data: {
         dealFinance,
         buyToLet,
@@ -130,8 +107,13 @@ class App extends Component {
         flip,
       },
       currency: currSymbol,
-      currentState: inputData,
-    });
+    };
+
+    if (changedField) {
+      newState.currentState = inputData;
+    }
+
+    this.setState(newState);
   }
 
   doResults() {
@@ -221,7 +203,7 @@ class App extends Component {
     })
       .then(response => response.json())
       .then(({ id }) => {
-        this.getSavedStates(id);
+        this.setState(id);
       })
       .catch(() => this.setState({ savedStates: { Items: 'No save service avaialable' } }))
       .finally(() => {
@@ -247,6 +229,12 @@ class App extends Component {
       }).catch(() => this.setState({ savedStates: { Items: 'No delete service avaialable' } }));
   }
 
+  selectState(stateId) {
+    const { savedStates } = this.state;
+    const selectedState = App.findState(savedStates, stateId);
+    this.setState({ currentState: selectedState }, () => this.calculate());
+  }
+
   render() {
     const {
       currency,
@@ -260,17 +248,18 @@ class App extends Component {
       <SavedStateList
         data={Items}
         ondelete={this.deleteState}
+        onclick={this.selectState}
       />
     );
     const savedList = Items ? savedStateList : '';
-    const newButton = isLocal && window.location.pathname !== '/'
+    const newButton = isLocal && window.location.pathname !== appPath
       ? (
         <ul className="right">
           <li>
             <button
               type="submit"
               className="btn-primary form-control"
-              onClick={() => { window.location.href = '/'; }}
+              onClick={() => { window.location.href = appPath; }}
             >
               new
             </button>

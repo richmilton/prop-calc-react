@@ -6,6 +6,7 @@ import dateFormat from 'date-format';
 
 const handleClick = (e, callback) => {
   e.preventDefault();
+  e.target.blur();
   callback(e.target.id.split('-')[1]);
 };
 
@@ -15,16 +16,16 @@ const SavedStateListItem = ({
   label,
   value,
   ondelete,
+  onclick,
 }) => (
   <li>
     <div className="state">
       <button
         className="btn-primary form-control"
         style={{ width: '100%' }}
-        // href={value}
         type="submit"
         id={`select-${value}`}
-        onClick={e => handleClick(e, (id) => { window.location.href = `/${id}`; })}
+        onClick={e => handleClick(e, onclick)}
       >
         {`${label} (${showDate(value)})`}
       </button>
@@ -42,7 +43,12 @@ const SavedStateListItem = ({
   </li>
 );
 
-const SavedStateList = ({ data, ondelete, onselect }) => {
+const SavedStateList = ({
+  data,
+  ondelete,
+  onselect,
+  onclick,
+}) => {
   if (data.map) {
     return (
       <ul>
@@ -55,6 +61,7 @@ const SavedStateList = ({ data, ondelete, onselect }) => {
               label={projectName || 'untitled'}
               value={id}
               onselect={onselect}
+              onclick={onclick}
             />
           );
         })}
