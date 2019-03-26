@@ -46,8 +46,8 @@ function Input({
         onChange={ev => onInput(ev)}
         autoComplete="off"
         placeholder={placeholder || labelWithCurrency || `${name} [${type}]`}
-        defaultValue={defVal || ''}
-        defaultChecked={defVal === 'yes'}
+        value={defVal || ''}
+        checked={defVal === 'yes'}
         onBlur={e => onblur(e)}
         required={required || false}
       />

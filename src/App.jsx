@@ -50,21 +50,22 @@ class App extends Component {
 
   componentDidMount() {
     if (isLocal) {
-      this.getSavedStates();
+      this.getSavedStates(true);
     } else {
-      this.loadDefault();
+      this.loadState();
     }
   }
 
-  getSavedStates() {
-    // const selectedStateId = hash.substr(1) || '';
+  getSavedStates(setDefault) {
+    // const { currentState } = this.state;
+    // const setDefault = !deletedId || (currentState.id === deletedId);
     fetch(urls.comparisons)
       .then(response => response.json())
       .then((data) => {
-        this.loadDefault(data);
+        this.loadState(data, setDefault);
       })
       .catch(() => {
-        this.loadDefault();
+        this.loadState(null, true);
       });
   }
 
@@ -78,14 +79,18 @@ class App extends Component {
     return defaults;
   }
 
-  loadDefault(data) {
-    this.setState({
+  loadState(data, setDefault) {
+    const newState = {
       savedStates: data || { Items: [] },
-      currentState: this.setDefaultFormData(),
       hasWorkingAPI: !!data,
-    });
-  }
+    };
 
+    if (setDefault) {
+      newState.currentState = this.setDefaultFormData();
+    }
+
+    this.setState(newState);
+  }
 
   calculate(changedField, newValue) {
     const { currentState } = this.state;
@@ -202,8 +207,8 @@ class App extends Component {
       body: JSON.stringify(currentState),
     })
       .then(response => response.json())
-      .then(({ id }) => {
-        this.setState(id);
+      .then(() => {
+        this.getSavedStates(false);
       })
       .catch(() => this.setState({ savedStates: { Items: 'No save service avaialable' } }))
       .finally(() => {
@@ -222,7 +227,8 @@ class App extends Component {
     })
       .then((resp) => {
         if (resp.ok) {
-          this.getSavedStates();
+          const { currentState } = this.state;
+          this.getSavedStates(stateId === currentState.id);
         } else {
           throw new Error('delete failed');
         }
