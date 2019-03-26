@@ -47,8 +47,8 @@ class Form extends Component {
     name,
   }) {
     const { props } = this;
-    // const { formData } = state;
     let val;
+
     switch (type) {
       case types.NUMBER:
         val = Number.isNaN(value) ? 0 : (parseFloat(value) || 0);
@@ -59,6 +59,7 @@ class Form extends Component {
       default:
         val = value || '';
     }
+
     props.calculate(name, val);
   }
 

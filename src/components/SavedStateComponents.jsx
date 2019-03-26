@@ -1,7 +1,7 @@
 /* eslint-env browser */
 /* eslint react/prop-types: 0 */
 // eslint-disable-next-line
-import React, { Component } from 'react';
+import React from 'react';
 import dateFormat from 'date-format';
 
 const handleClick = (e, callback) => {

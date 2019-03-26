@@ -133,7 +133,8 @@ ul.right {
 
 .checkbox-label {
   min-height: 2.6em;
-  margin-bottom: 1em
+  margin-bottom: 1em;
+  width: 9.5em;
 }
 
 .checkbox-label>label {
