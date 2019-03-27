@@ -10,6 +10,7 @@ const freeCashLabels = [
   'MOE',
   'Letting agent fees',
   'Monthly free cashflow',
+  'Gross yield',
 ];
 
 const initialFinanceLabels = [

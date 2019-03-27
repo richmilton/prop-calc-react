@@ -33,6 +33,7 @@ const freeCash = ({
   const remortgageFees = remortgageFee + remortgageValuationFee + remortgageLegalFee;
   const initialFees = initMortgageFee + initLegalFee + initSurveyorsFee;
   const initialCost = initialFees + totalOtherCosts + sdltTotal + propertyValue;
+  const grossYield = (monthlyRent * 1200) / initialCost;
   const labels = calculationsLabels.freeCashLabels;
 
   return [
@@ -47,6 +48,7 @@ const freeCash = ({
     { label: labels[8], value: moe.toFixed(2) },
     { label: labels[9], value: lettingAgentsFees.toFixed(2) },
     { label: labels[10], value: freeCashFlowMonthly.toFixed(2) },
+    { label: labels[11], value: `${grossYield.toFixed(2)}%` },
   ];
 };
 
