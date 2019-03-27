@@ -9,8 +9,7 @@ const urls = {
   nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
 };
 
-function Results(props) {
-  const { data, currentState } = props;
+function Results({ data, currentState }) {
   const {
     postCode,
     askingPrice,
