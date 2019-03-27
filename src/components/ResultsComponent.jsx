@@ -53,6 +53,7 @@ function Results({ data, currentState }) {
       </a>
     </React.Fragment>
   ) : <span style={{ color: 'red', fontStyle: 'italic' }}>use a full valid post code to see links here</span>;
+
   return (
     <React.Fragment>
       <div className="res-block">

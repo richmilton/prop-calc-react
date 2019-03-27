@@ -33,7 +33,7 @@ class App extends Component {
       },
       currency: 163,
       savedStates: { Items: [] },
-      currentState: null,
+      currentState: { projectName: '' },
       hasWorkingAPI: false,
     };
     this.calculate = this.calculate.bind(this);
@@ -188,7 +188,7 @@ class App extends Component {
         onclick={this.selectState}
       />
     ) : '';
-    const newButton = (
+    const newButton = currentState.projectName ? (
       <ul className="right">
         <li>
           <button
@@ -200,9 +200,9 @@ class App extends Component {
           </button>
         </li>
       </ul>
-    );
+    ) : '';
 
-    return currentState ? (
+    return Object.keys(currentState).length > 1 ? (
       <div className="App">
         <div className="column" style={{ textAlign: 'center' }}>
           <h5>Property investment deal analyser</h5>
