@@ -52,16 +52,18 @@ class App extends Component {
   }
 
   getSavedStates(setDefault) {
+    const sortByNameThenDate = ({ projectName: a, id: idA }, { projectName: b, id: idB }) => {
+      if ((a + idA) < (b + idB)) return -1;
+      if ((a + idA) > (b + idB)) return 1;
+      return 0;
+    };
+
     fetch(urls.comparisons)
       .then(response => response.json())
       .then((data) => {
         if (data.Items.length > 0) {
           // sort in alphabetical then date order
-          data.Items.sort(({ projectName: a, id: idA }, { projectName: b, id: idB }) => {
-            if ((a + idA) < (b + idB)) return -1;
-            if ((a + idA) > (b + idB)) return 1;
-            return 0;
-          });
+          data.Items.sort(sortByNameThenDate);
         }
         this.loadState(data, setDefault);
       })
