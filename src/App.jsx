@@ -4,16 +4,12 @@ import React, { Component } from 'react';
 import Form from './components/FormComponent';
 import { fields } from './components/formconfig';
 import './css/app.css';
-import ResultList from './components/ResultListComponent';
 import SavedStateList from './components/SavedStateComponents';
+import Results from './components/ResultsComponent';
 import calculations from './logic/calculations/index';
-import validatePostcode from './util/validate-postcode';
 
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
-  rmBuy: process.env.REACT_APP_RM_BUY_URL,
-  rmRent: process.env.REACT_APP_RM_LET_URL,
-  nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
 };
 
 class App extends Component {
@@ -40,7 +36,6 @@ class App extends Component {
       currentState: null,
       hasWorkingAPI: false,
     };
-    this.doResults = this.doResults.bind(this);
     this.calculate = this.calculate.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
@@ -121,77 +116,6 @@ class App extends Component {
     this.setState(newState);
   }
 
-  doResults() {
-    const { data, currentState } = this.state;
-    const {
-      postCode,
-      askingPrice,
-      monthlyRent,
-      propertyValue,
-    } = currentState;
-    const {
-      dealFinance,
-      buyToLet,
-      stress,
-      flip,
-    } = data;
-    const { oneK, oneHundredK } = { oneK: 1000, oneHundredK: 100000 };
-    const maxPrice = Math
-      .ceil((askingPrice || propertyValue || 400000) / oneHundredK * 1.2) * oneHundredK;
-    const maxRent = Math.ceil((monthlyRent || oneK) / oneK * 1.2) * oneK;
-    const links = (postCode && validatePostcode(postCode)) ? (
-      <React.Fragment>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={urls.nhpSold + postCode}
-        >
-          sold data
-        </a>
-        {' | '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${urls.rmBuy + postCode}&maxPrice=${(maxPrice)}`}
-        >
-          for sale
-        </a>
-        {' | '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${urls.rmRent + postCode}&maxPrice=${maxRent}`}
-        >
-          to rent
-        </a>
-      </React.Fragment>
-    ) : <span style={{ color: 'red', fontStyle: 'italic' }}>use a full valid post code to see links here</span>;
-    return (
-      <React.Fragment>
-        <div className="res-block">
-          <h6>Links for this post code</h6>
-          {links}
-        </div>
-        <div className="res-block">
-          <h6>Deal finance</h6>
-          <ResultList id="1" data={dealFinance} />
-        </div>
-        <div className="res-block">
-          <h6>Buy to let</h6>
-          <ResultList id="2" data={buyToLet} />
-        </div>
-        <div className="res-block">
-          <h6>Stress test</h6>
-          <ResultList id="3" data={stress} />
-        </div>
-        <div className="res-block">
-          <h6>Flip</h6>
-          <ResultList id="4" data={flip} />
-        </div>
-      </React.Fragment>
-    );
-  }
-
   saveState() {
     const { currentState } = this.state;
     const { projectName, postCode } = currentState;
@@ -210,7 +134,7 @@ class App extends Component {
       .then(() => {
         this.getSavedStates(false);
       })
-      .catch(() => this.setState({ savedStates: { Items: 'No save service avaialable' } }))
+      .catch(() => this.setState({ savedStates: { Items: 'No save service available' } }))
       .finally(() => {
         this.setState({ error: null });
       });
@@ -257,14 +181,13 @@ class App extends Component {
       error,
     } = this.state;
     const { Items } = savedStates;
-    const savedStateList = (
+    const savedList = Items ? (
       <SavedStateList
         data={Items}
         ondelete={this.deleteState}
         onclick={this.selectState}
       />
-    );
-    const savedList = Items ? savedStateList : '';
+    ) : '';
     const newButton = (
       <ul className="right">
         <li>
@@ -297,7 +220,7 @@ class App extends Component {
           {newButton}
         </div>
         <div className="column results">
-          {this.doResults()}
+          {Results(this.state)}
         </div>
         <div className="column states">
           {savedList}
