@@ -43,7 +43,7 @@ function Input({
         type={type}
         name={name}
         id={name}
-        onChange={ev => onInput(ev)}
+        onChange={e => onInput(e)}
         autoComplete="off"
         placeholder={placeholder || labelWithCurrency || `${name} [${type}]`}
         value={defVal || ''}
@@ -70,7 +70,7 @@ function Select({
         key={name}
         name={name}
         id={name}
-        onChange={ev => onInput(ev)}
+        onChange={e => onInput(e)}
         onBlur={e => onblur(e)}
       >
         {options.map(
