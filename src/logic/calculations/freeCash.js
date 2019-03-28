@@ -1,6 +1,7 @@
 import calculateStampDuty from '../stampduty/stampduty-calculator';
 import calculationsLabels from '../../labels/calculations-labels';
 
+const percentSign = String.fromCharCode(37);
 const freeCash = ({
   loanToValue,
   propertyValue,
@@ -48,7 +49,7 @@ const freeCash = ({
     { label: labels[8], value: moe.toFixed(2) },
     { label: labels[9], value: lettingAgentsFees.toFixed(2) },
     { label: labels[10], value: freeCashFlowMonthly.toFixed(2) },
-    { label: labels[11], value: `${grossYield.toFixed(2)}%` },
+    { label: labels[11], value: grossYield.toFixed(2) + percentSign },
   ];
 };
 
