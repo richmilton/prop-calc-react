@@ -30,18 +30,21 @@ const testState = {
 describe('calculations.freeCash()', () => {
   it('should return expected values', () => {
     const fc = calculations.freeCash(testState);
-    const expextedValues = [300000, 100000, 650, 369700, 299350, 70350, 2400, 750, 360, 240, 1050];
+    const expectedValues = [300000, 100000, 650, 369700, 299350, 70350, 2400, 750, 360, 240, 1050];
 
-    fc.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i].toFixed(2)));
+    expectedValues
+      .map((expectedValue, i) => expect(expectedValue.toFixed(2)).to.be.equal(fc[i].value));
+
+    expect(fc[11].value).to.be.equal('7.79%');
   });
 });
 
 describe('calculations.initialFinance()', () => {
   it('should return expected values', () => {
     const initF = calculations.initialFinance(testState);
-    const expextedValues = [0, 350000, 18000, 1700, 0, 369700, 369700];
+    const expectedValues = [0, 350000, 18000, 1700, 0, 369700, 369700];
 
-    initF.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i].toFixed(2)));
+    initF.map((ob, i) => expect(ob.value).to.be.equal(expectedValues[i].toFixed(2)));
   });
 });
 
@@ -74,17 +77,17 @@ describe('calculations.allInputCosts()', () => {
 describe('calculations.flip()', () => {
   it('should return expected values', () => {
     const f = calculations.flip(testState);
-    const expextedValues = [400000, 5500, 369700, 24800, 8.2];
+    const expectedValues = [400000, 5500, 369700, 24800, 8.2];
 
-    f.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i].toFixed(2)));
+    f.map((ob, i) => expect(ob.value).to.be.equal(expectedValues[i].toFixed(2)));
   });
 });
 
 describe('calculations.stressTest()', () => {
   it('should return expected values', () => {
     const s = calculations.stressTest(testState);
-    const expextedValues = ['pass', '1563.00'];
+    const expectedValues = ['pass', '1563.00'];
 
-    s.map((ob, i) => expect(ob.value).to.be.equal(expextedValues[i]));
+    s.map((ob, i) => expect(ob.value).to.be.equal(expectedValues[i]));
   });
 });
