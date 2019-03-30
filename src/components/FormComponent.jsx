@@ -65,8 +65,7 @@ class Form extends Component {
 
   handleSave(e) {
     e.preventDefault();
-    const { props } = this;
-    const { onsave } = props;
+    const { onsave } = this.props;
     onsave();
     e.target.blur();
   }
