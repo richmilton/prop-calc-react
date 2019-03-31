@@ -180,6 +180,7 @@ class App extends Component {
       hasWorkingAPI,
       error,
     } = this.state;
+    const showSave = hasWorkingAPI && currentState.projectName !== '';
     const { Items } = savedStates;
     const savedList = Items ? (
       <SavedStateList
@@ -214,7 +215,7 @@ class App extends Component {
             calculate={this.calculate}
             currsymbol={currency}
             onsave={this.saveState}
-            showsave={hasWorkingAPI}
+            showsave={showSave}
             error={error}
           />
           {newButton}
