@@ -11,10 +11,12 @@ const flip = ({
   otherCost,
   propertyValue,
   stampDutyType,
+  stampDutyRegion,
+  stampDutyBuyer,
   doneUpValue,
 }) => {
   const totCost = allInputCosts(initSurveyorsFee, initLegalFee, initMortgageFee,
-    refurbCost, otherCost, propertyValue, stampDutyType);
+    refurbCost, otherCost, propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer);
 
   const fees = sellingLegalFee + agentSellingFee;
   const flipGain = Math.round((doneUpValue - totCost) / totCost * 10000) / 100;

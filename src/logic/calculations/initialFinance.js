@@ -12,6 +12,8 @@ const initialFinance = ({
   refurbCost,
   otherCost,
   stampDutyType,
+  stampDutyRegion,
+  stampDutyBuyer,
 }) => {
   const isCash = buyingCash === 'yes';
   const loanToVal = initialLoanToValue / 100;
@@ -19,9 +21,11 @@ const initialFinance = ({
   const initFees = initSurveyorsFee + initLegalFee + initMortgageFee;
   const other = refurbCost + otherCost;
   const initialDeposit = isCash ? propertyValue : Math.round(propertyValue * (1 - loanToVal));
-  const sdltTotal = calculateStampDuty(propertyValue, stampDutyType);
+  const sdltTotal = calculateStampDuty(
+    propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
+  );
   const totCost = allInputCosts(initSurveyorsFee, initLegalFee, initMortgageFee,
-    refurbCost, otherCost, propertyValue, stampDutyType);
+    refurbCost, otherCost, propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer);
   const totIn = totCost - initMortgageAdvance;
   const labels = calculationsLabels.initialFinanceLabels;
 

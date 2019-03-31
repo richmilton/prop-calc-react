@@ -8,8 +8,12 @@ const allInputCosts = (
   otherCost,
   propertyValue,
   stampDutyType,
+  stampDutyRegion,
+  stampDutyBuyer,
 ) => {
-  const stampDuty = calculateStampDuty(propertyValue, stampDutyType);
+  const stampDuty = calculateStampDuty(
+    propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
+  );
 
   return (
     initSurveyorsFee

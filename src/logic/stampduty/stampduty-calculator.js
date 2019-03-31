@@ -1,18 +1,24 @@
 import sdltBands from './stampduty-bands';
 
-const calculateStampDuty = (val, sdltType) => {
+const calculateStampDuty = (val, type, region, buyer) => {
   const onePercentOfVal = (val / 100);
-  const bands = sdltBands[sdltType];
+  let bands = sdltBands[type][region];
+  if (buyer === 'first' && type === 'residential') {
+    const { limit, thresholds } = sdltBands[type].first[region];
+    if (limit === -1 || val <= limit) {
+      bands = thresholds;
+    }
+  }
 
   let tax = 0;
   let bandLimit;
   let previousBandLimit;
   let load;
 
-  if (!sdltType) return 0;
+  if (!type || !region) return 0;
 
   for (let idx = 0; idx < bands.length; idx += 1) {
-    load = bands[idx].load || 0;
+    load = buyer === 'investor' ? (bands[idx].load || 0) : 0;
 
     bandLimit = bands[idx].upto;
     const { rate } = bands[idx];

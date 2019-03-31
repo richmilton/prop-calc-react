@@ -14,6 +14,18 @@ const urls = {
   nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
 };
 
+function Link({ href, text }) {
+  return (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={href}
+    >
+      {text}
+    </a>
+  );
+}
+
 function Links(
   {
     postCode,
@@ -31,29 +43,25 @@ function Links(
 
   return (postCode && validatePostcode(postCode)) ? (
     <React.Fragment>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
         href={urls.nhpSold + postCode}
-      >
-        sold data
-      </a>
+        text="sold"
+      />
       {' | '}
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
         href={`${urls.rmBuy[urlType] + postCode}&maxPrice=${(maxPrice)}`}
-      >
-        for sale
-      </a>
+        text="for sale"
+      />
       {' | '}
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
         href={`${urls.rmRent[urlType] + postCode}&maxPrice=${maxRent}`}
-      >
-        to rent
-      </a>
+        text="to let"
+      />
+      {' | '}
+      <Link
+        href={`https://www.google.com/maps/place/${postCode}`}
+        text="gmap"
+      />
     </React.Fragment>
   ) : <span style={{ color: 'red', fontStyle: 'italic' }}>use a full valid post code to see links here</span>;
 }

@@ -180,7 +180,12 @@ class App extends Component {
       hasWorkingAPI,
       error,
     } = this.state;
-    const showSave = hasWorkingAPI && currentState.projectName !== '';
+    const { projectName, postCode } = currentState;
+    const showSave = (
+      hasWorkingAPI
+      && projectName !== ''
+      && postCode !== ''
+    );
     const { Items } = savedStates;
     const savedList = Items ? (
       <SavedStateList
@@ -189,7 +194,7 @@ class App extends Component {
         onclick={this.selectState}
       />
     ) : '';
-    const newButton = currentState.projectName ? (
+    const newButton = currentState.projectName !== '' ? (
       <ul className="right">
         <li>
           <button

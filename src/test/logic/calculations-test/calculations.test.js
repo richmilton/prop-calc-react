@@ -24,6 +24,8 @@ const testState = {
   remortgageValuationFee: 200,
   initSurveyorsFee: 100,
   stampDutyType: 'residential',
+  stampDutyRegion: 'england',
+  stampDutyBuyer: 'investor',
   propertyValue: 350000,
 };
 
@@ -58,6 +60,8 @@ describe('calculations.allInputCosts()', () => {
       otherCost,
       propertyValue,
       stampDutyType,
+      stampDutyRegion,
+      stampDutyBuyer,
     } = testState;
 
     const ti = calculations.allInputCosts(
@@ -68,6 +72,8 @@ describe('calculations.allInputCosts()', () => {
       otherCost,
       propertyValue,
       stampDutyType,
+      stampDutyRegion,
+      stampDutyBuyer,
     );
 
     expect(ti).to.be.equal(369700);
