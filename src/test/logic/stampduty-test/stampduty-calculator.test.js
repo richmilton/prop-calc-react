@@ -26,7 +26,6 @@ describe('calculateStampDuty()', () => {
   });
 });
 
-
 describe('calculateStampDuty()', () => {
   it('should return correct values for residential', () => {
     const expectedValues = [
