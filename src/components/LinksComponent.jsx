@@ -12,6 +12,7 @@ const urls = {
     residential: process.env.REACT_APP_RM_LET_URL,
   },
   nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
+  gMap: process.env.REACT_APP_MAP_URL,
 };
 
 function Link({ href, text }) {
@@ -59,7 +60,7 @@ function Links(
       />
       {' | '}
       <Link
-        href={`https://www.google.com/maps/place/${postCode}`}
+        href={urls.gMap + postCode}
         text="gmap"
       />
     </React.Fragment>
