@@ -81,7 +81,7 @@ class Form extends Component {
       ob.onInput = e => this.handleChange(e.target);
       ob.onblur = e => this.handleChange(e.target);
       ob.currency = currsymbol;
-      ob.defVal = isDisabled ? ob.defVal : formData[ob.name];
+      ob.defVal = isDisabled ? (ob.disabled.defVal || ob.defVal) : formData[ob.name];
       ob.disabled = isDisabled;
       if (ob.type === 'select') {
         formFields.push(Select(ob));

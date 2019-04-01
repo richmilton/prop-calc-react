@@ -145,6 +145,7 @@ const fields = [
     name: 'agentsPercent',
     type: types.NUMBER,
     defVal: 10,
+    disabled: { whenField: 'repairingLease', isEqual: 'yes', defVal: '0' },
   },
   {
     label: `
@@ -152,6 +153,7 @@ const fields = [
     name: 'moePercent',
     type: types.NUMBER,
     defVal: 15,
+    disabled: { whenField: 'repairingLease', isEqual: 'yes', defVal: '0' },
   },
   {
     label: 'Repairing lease',
