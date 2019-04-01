@@ -108,6 +108,7 @@ const fields = [
       { value: 'home', name: 'Moving house' },
     ],
     defVal: 'investor',
+    disabled: { whenField: 'stampDutyType', isEqual: 'commercial' },
   },
   {
     label: `Refurbishment cost(${currencyPlaceholder})`,

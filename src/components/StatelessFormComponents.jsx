@@ -60,7 +60,8 @@ function Input({
 
 // stateless component Select
 function Select({
-  className, name, type, onInput, label, defVal, onblur, options, doLabelClass, dynamicLabel,
+  className, name, type, onInput, label, defVal, onblur,
+  options, doLabelClass, dynamicLabel, disabled,
 }) {
   return (
     <li key={name}>
@@ -72,6 +73,7 @@ function Select({
         id={name}
         onChange={e => onInput(e)}
         onBlur={e => onblur(e)}
+        disabled={disabled}
       >
         {options.map(
           opt => (
