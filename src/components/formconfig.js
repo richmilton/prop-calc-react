@@ -57,6 +57,7 @@ const fields = [
     name: 'initialLoanToValue',
     type: types.NUMBER,
     defVal: 75,
+    disabled: { whenField: 'buyingCash', isEqual: 'yes', defVal: '0' },
   },
   {
     label: `Surveyors fee(${currencyPlaceholder})`,
@@ -69,6 +70,7 @@ const fields = [
     name: 'initMortgageFee',
     type: types.NUMBER,
     defVal: 0,
+    disabled: { whenField: 'buyingCash', isEqual: 'yes', defVal: '0' },
   },
   {
     label: `Legal fees(${currencyPlaceholder})`,

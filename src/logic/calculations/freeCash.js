@@ -23,13 +23,14 @@ const freeCash = ({
   initSurveyorsFee,
   repairingLease,
 }) => {
+  const isRepairing = repairingLease === 'yes';
   const loanToVal = loanToValue / 100;
   const remortgageAdvance = Math.round(doneUpValue * loanToVal);
   const remortgageDeposit = Math.round(doneUpValue * (1 - loanToVal));
   const remortgageMonthlyInterest = Math
     .round(remortgageAdvance * mortgageInterestRatePercent / 1200);
-  const moe = repairingLease === 'yes' ? 0 : (monthlyRent * moePercent / 100);
-  const lettingAgentsFees = monthlyRent * agentsPercent / 100;
+  const moe = isRepairing ? 0 : (monthlyRent * moePercent / 100);
+  const lettingAgentsFees = isRepairing ? 0 : (monthlyRent * agentsPercent / 100);
   const freeCashFlowMonthly = monthlyRent - (repairingLease === 'yes' ? 0 : moe) - remortgageMonthlyInterest - lettingAgentsFees;
   const totalOtherCosts = refurbCost + otherCost;
   const sdltTotal = calculateStampDuty(
