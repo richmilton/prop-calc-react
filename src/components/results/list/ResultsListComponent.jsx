@@ -9,7 +9,7 @@ const ListItem = ({ label, value }) => (
   </li>
 );
 
-const ResultList = ({ data, id }) => (
+const ResultsList = ({ data, id }) => (
   <ul>
     {data.map(({ label, value }, ind) => {
       const key = `li-${id}-${ind}`;
@@ -18,4 +18,4 @@ const ResultList = ({ data, id }) => (
   </ul>
 );
 
-export default ResultList;
+export default ResultsList;

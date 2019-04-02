@@ -1,4 +1,4 @@
-import calculateStampDuty from '../stampduty/stampduty-calculator';
+import calculateStampDuty from './stampduty/stampduty-calculator';
 import allInputCosts from './allInputCosts';
 import calculationsLabels from '../../labels/calculations-labels';
 

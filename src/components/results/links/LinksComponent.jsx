@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import validatePostcode from '../util/validate-postcode';
+import validatePostcode from '../../../util/validate-postcode';
 
 const urls = {
   rmBuy: {

@@ -41,12 +41,6 @@ const fields = [
     defVal: 0,
   },
   {
-    label: `Monthly rent(${currencyPlaceholder})`,
-    name: 'monthlyRent',
-    type: types.NUMBER,
-    defVal: 0,
-  },
-  {
     label: 'Cash purchase',
     name: 'buyingCash',
     type: types.CHECKBOX,
@@ -60,17 +54,17 @@ const fields = [
     disabled: { whenField: 'buyingCash', isEqual: 'yes', defVal: '0' },
   },
   {
-    label: `Surveyors fee(${currencyPlaceholder})`,
-    name: 'initSurveyorsFee',
-    type: types.NUMBER,
-    defVal: 600,
-  },
-  {
     label: `Mortgage fee(${currencyPlaceholder})`,
     name: 'initMortgageFee',
     type: types.NUMBER,
     defVal: 0,
     disabled: { whenField: 'buyingCash', isEqual: 'yes', defVal: '0' },
+  },
+  {
+    label: `Surveyors fee(${currencyPlaceholder})`,
+    name: 'initSurveyorsFee',
+    type: types.NUMBER,
+    defVal: 600,
   },
   {
     label: `Legal fees(${currencyPlaceholder})`,
@@ -113,6 +107,12 @@ const fields = [
     disabled: { whenField: 'stampDutyType', isEqual: 'commercial' },
   },
   {
+    label: `Monthly rent(${currencyPlaceholder})`,
+    name: 'monthlyRent',
+    type: types.NUMBER,
+    defVal: 0,
+  },
+  {
     label: `Refurbishment cost(${currencyPlaceholder})`,
     name: 'refurbCost',
     type: types.NUMBER,
@@ -143,6 +143,12 @@ const fields = [
     defVal: 0,
   },
   {
+    label: 'Repairing lease',
+    name: 'repairingLease',
+    type: types.CHECKBOX,
+    defVal: 'no',
+  },
+  {
     label: `Letting agents rate(${percentSign})`,
     name: 'agentsPercent',
     type: types.NUMBER,
@@ -156,12 +162,6 @@ const fields = [
     type: types.NUMBER,
     defVal: 15,
     disabled: { whenField: 'repairingLease', isEqual: 'yes', defVal: '0' },
-  },
-  {
-    label: 'Repairing lease',
-    name: 'repairingLease',
-    type: types.CHECKBOX,
-    defVal: 'no',
   },
   {
     label: `Interest rate(${percentSign})`,

@@ -1,12 +1,12 @@
 /* eslint-env browser */
 /* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
-import Form from './components/FormComponent';
-import { fields } from './components/formconfig';
-import './css/app.css';
-import SavedStateList from './components/SavedStateComponents';
-import Results from './components/ResultsComponent';
-import calculations from './logic/calculations/index';
+import Form from './form/FormComponent';
+import { fields } from './form/formconfig';
+import '../css/app.css';
+import SavedStateList from './saved/SavedStateComponents';
+import Results from './results/ResultsComponent';
+import calculations from '../logic/calculations/index';
 
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,

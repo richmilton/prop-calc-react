@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import calculateStampDuty from '../../../logic/stampduty/stampduty-calculator';
+import calculateStampDuty from '../../../../logic/calculations/stampduty/stampduty-calculator';
 
 const testValues = [
   100000,
