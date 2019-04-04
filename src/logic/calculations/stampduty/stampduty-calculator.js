@@ -3,7 +3,7 @@ import sdltBands from './stampduty-bands';
 const calculateStampDuty = (val, type, region, buyer) => {
   const onePercentOfVal = (val / 100);
   let bands = sdltBands[type][region];
-  if (buyer === 'first' && type === 'residential') {
+  if (buyer === 'first' && type === 'residential' && !/^ireland$|^wales$/.test(region)) {
     const { limit, thresholds } = sdltBands[type].first[region];
     if (limit === -1 || val <= limit) {
       bands = thresholds;

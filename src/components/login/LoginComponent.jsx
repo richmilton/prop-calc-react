@@ -40,6 +40,7 @@ class Login extends Component {
             autoComplete="off"
             placeholder={`${label} [${type}]`}
             onChange={this.handleChange}
+            onBlur={this.handleChange}
             required
           />
           <button

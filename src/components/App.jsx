@@ -126,8 +126,7 @@ class App extends Component {
   }
 
   saveState() {
-    const { currentState, userEmail } = this.state;
-    const { projectName, postCode } = currentState;
+    const { currentState, currentState: { projectName, postCode }, userEmail } = this.state;
     if (projectName === '' || postCode === '') {
       return;
     }
