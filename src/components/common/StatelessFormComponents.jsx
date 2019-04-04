@@ -2,7 +2,7 @@
 // passed through props
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { currencyPlaceholder } from './formconfig';
+import { currencyPlaceholder } from './formConstants';
 
 const currRegEx = new RegExp(currencyPlaceholder, 'g');
 

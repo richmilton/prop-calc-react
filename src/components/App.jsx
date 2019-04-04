@@ -2,11 +2,12 @@
 /* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
 import Form from './form/FormComponent';
-import { fields } from './form/formconfig';
+import fields from './form/formconfig';
 import '../css/app.css';
 import SavedStateList from './saved/SavedStateComponents';
 import Results from './results/ResultsComponent';
 import calculations from '../logic/calculations/index';
+import Login from './login/LoginComponent';
 
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
@@ -35,15 +36,17 @@ class App extends Component {
       savedStates: { Items: [] },
       currentState: { projectName: '' },
       hasWorkingAPI: false,
+      userEmail: null,
     };
     this.calculate = this.calculate.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
     this.selectState = this.selectState.bind(this);
+    this.login = this.login.bind(this);
   }
 
   componentDidMount() {
-    this.getSavedStates(true);
+    // this.getSavedStates(true);
   }
 
   getSavedStates(setDefault) {
@@ -55,8 +58,9 @@ class App extends Component {
       if ((pNameA + idA) > (pNameB + idB)) return 1;
       return 0;
     };
+    const { userEmail } = this.state;
 
-    fetch(urls.comparisons)
+    fetch(`${urls.comparisons}/user/${userEmail}`)
       .then(response => response.json())
       .then((data) => {
         if (data.Items.length > 0) {
@@ -75,6 +79,7 @@ class App extends Component {
   }
 
   loadState(data, setDefault) {
+    const { userEmail } = this.state;
     const newState = {
       savedStates: data || { Items: [] },
       hasWorkingAPI: !!data,
@@ -82,6 +87,10 @@ class App extends Component {
 
     if (setDefault) {
       newState.currentState = App.setDefaultFormData();
+    }
+
+    if (userEmail && newState.currentState) {
+      newState.currentState.email = userEmail;
     }
 
     this.setState(newState);
@@ -117,18 +126,19 @@ class App extends Component {
   }
 
   saveState() {
-    const { currentState } = this.state;
+    const { currentState, userEmail } = this.state;
     const { projectName, postCode } = currentState;
     if (projectName === '' || postCode === '') {
       return;
     }
+    const stateToSave = { ...currentState, email: userEmail };
     fetch(urls.comparisons, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(currentState),
+      body: JSON.stringify(stateToSave),
     })
       .then(response => response.json())
       .then(() => {
@@ -141,18 +151,19 @@ class App extends Component {
   }
 
   deleteState(stateId) {
+    const { userEmail } = this.state;
     fetch(urls.comparisons, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: stateId }),
+      body: JSON.stringify({ id: stateId, email: userEmail }),
     })
       .then((resp) => {
         if (resp.ok) {
-          const { currentState } = this.state;
-          this.getSavedStates(stateId === currentState.id);
+          const { currentState: id } = this.state;
+          this.getSavedStates(stateId === id);
         } else {
           throw new Error('delete failed');
         }
@@ -172,6 +183,12 @@ class App extends Component {
     e.target.blur();
   }
 
+  login(email) {
+    this.setState({ userEmail: email }, () => {
+      this.getSavedStates(true);
+    });
+  }
+
   render() {
     const {
       currency,
@@ -179,6 +196,7 @@ class App extends Component {
       currentState,
       hasWorkingAPI,
       error,
+      userEmail,
     } = this.state;
     const { projectName, postCode } = currentState;
     const showSave = (
@@ -187,11 +205,12 @@ class App extends Component {
       && postCode !== ''
     );
     const { Items } = savedStates;
-    const savedList = Items ? (
+    const savedList = Items.length > 0 && userEmail ? (
       <SavedStateList
         data={Items}
         ondelete={this.deleteState}
         onclick={this.selectState}
+        email={userEmail}
       />
     ) : '';
     const newButton = currentState.projectName !== '' ? (
@@ -232,7 +251,12 @@ class App extends Component {
           {savedList}
         </div>
       </div>
-    ) : '';
+    )
+      : (
+        <Login
+          doLogin={this.login}
+        />
+      );
   }
 }
 export default App;

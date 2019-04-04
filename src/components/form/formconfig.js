@@ -1,11 +1,4 @@
-const currencyPlaceholder = '##CURR##';
-const percentSign = String.fromCharCode(37);
-const types = {
-  NUMBER: 'number',
-  TEXT: 'text',
-  CHECKBOX: 'checkbox',
-  SELECT: 'select',
-};
+import { types, currencyPlaceholder, percentSign } from '../common/formConstants';
 
 const fields = [
   {
@@ -201,8 +194,4 @@ const fields = [
   },
 ];
 
-module.exports = {
-  fields,
-  currencyPlaceholder,
-  types,
-};
+export default fields;

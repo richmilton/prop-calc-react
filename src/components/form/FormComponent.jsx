@@ -1,8 +1,8 @@
 /* eslint react/prop-types: 0 */
 /* eslint-env browser */
 import React, { Component } from 'react';
-import StatelessComponents from './StatelessFormComponents';
-import { types } from './formconfig';
+import StatelessComponents from '../common/StatelessFormComponents';
+import { types } from '../common/formConstants';
 
 const { Input, Select } = StatelessComponents;
 

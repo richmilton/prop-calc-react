@@ -19,7 +19,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "aws s3 sync build/ s3://prop-calc/prop-calc-react",
+    "deploygh": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

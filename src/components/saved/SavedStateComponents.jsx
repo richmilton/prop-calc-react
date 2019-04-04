@@ -48,11 +48,13 @@ const SavedStateList = ({
   ondelete,
   onselect,
   onclick,
+  email,
 }) => {
   if (data.map) {
+    const filteredData = data.filter(o => o.email === email);
     return (
       <ul>
-        {data.map(({ projectName, id }, ind) => {
+        {filteredData.map(({ projectName, id }, ind) => {
           const key = `li-${id}-${ind}`;
           return (
             <SavedStateListItem
