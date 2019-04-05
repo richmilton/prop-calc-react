@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import ResultsList from './list/ResultsListComponent';
-import Links from './links/LinksComponent';
+import Links from './links/ResultsLinksComponent';
 
 function Results({ data, currentState }) {
   const {

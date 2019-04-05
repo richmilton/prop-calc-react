@@ -205,12 +205,24 @@ class App extends Component {
     );
     const { Items } = savedStates;
     const savedList = Items.length > 0 && userEmail ? (
-      <SavedStateList
-        data={Items}
-        ondelete={this.deleteState}
-        onclick={this.selectState}
-        email={userEmail}
-      />
+      <React.Fragment>
+        <h6>My saved stuff</h6>
+        <SavedStateList
+          data={Items}
+          ondelete={this.deleteState}
+          onclick={this.selectState}
+          useremail={userEmail}
+          filter={o => o.email === userEmail}
+        />
+        <h6>Other saved stuff</h6>
+        <SavedStateList
+          data={Items}
+          ondelete={this.deleteState}
+          onclick={this.selectState}
+          useremail={userEmail}
+          filter={o => o.email !== userEmail}
+        />
+      </React.Fragment>
     ) : '';
     const newButton = currentState.projectName !== '' ? (
       <ul className="right">
@@ -258,4 +270,5 @@ class App extends Component {
       );
   }
 }
+
 export default App;

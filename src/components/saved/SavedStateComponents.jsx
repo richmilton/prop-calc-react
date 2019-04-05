@@ -17,6 +17,8 @@ const SavedStateListItem = ({
   value,
   ondelete,
   onclick,
+  deletable,
+  firstname,
 }) => (
   <li>
     <div className="state">
@@ -27,7 +29,7 @@ const SavedStateListItem = ({
         id={`select-${value}`}
         onClick={e => handleClick(e, onclick)}
       >
-        {`${label} (${showDate(value)})`}
+        {`${label} (${showDate(value)}${deletable ? '' : ` ${firstname}`})`}
       </button>
     </div>
     <div className="remove-state">
@@ -36,6 +38,7 @@ const SavedStateListItem = ({
         type="submit"
         id={`delete-${value}`}
         onClick={e => handleClick(e, ondelete)}
+        style={{ display: deletable ? '' : 'none' }}
       >
         delete
       </button>
@@ -48,13 +51,14 @@ const SavedStateList = ({
   ondelete,
   onselect,
   onclick,
-  email,
+  useremail,
+  filter,
 }) => {
   if (data.map) {
-    const filteredData = data.filter(o => o.email === email);
+    const filteredData = data.filter(filter);
     return (
       <ul>
-        {filteredData.map(({ projectName, id }, ind) => {
+        {filteredData.map(({ projectName, id, email }, ind) => {
           const key = `li-${id}-${ind}`;
           return (
             <SavedStateListItem
@@ -64,6 +68,8 @@ const SavedStateList = ({
               value={id}
               onselect={onselect}
               onclick={onclick}
+              deletable={useremail === email}
+              firstname={email.split('@')[0].split('.')[0]}
             />
           );
         })}
