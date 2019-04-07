@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 // eslint-disable-next-line
-import React, { Component } from 'react';
+import React from 'react';
 
 const ListItem = ({ label, value }) => (
   <li>
@@ -9,13 +9,13 @@ const ListItem = ({ label, value }) => (
   </li>
 );
 
-const ResultsList = ({ data, id }) => (
+const ResultsList = ({ data, id }) => (data ? (
   <ul>
     {data.map(({ label, value }, ind) => {
       const key = `li-${id}-${ind}`;
       return <ListItem key={`li-${key}`} label={label} value={value} />;
     })}
   </ul>
-);
+) : '');
 
 export default ResultsList;

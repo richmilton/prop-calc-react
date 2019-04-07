@@ -21,6 +21,8 @@ const initialFinanceLabels = [
   'Refurb/other costs',
   'Total money in',
   'Total cost',
+  'Interest only mortgage (monthly)',
+  '25 Yr repayment mortgage (monthly)',
 ];
 
 const flipLabels = [

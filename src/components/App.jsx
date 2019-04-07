@@ -101,9 +101,9 @@ class App extends Component {
     const inputData = (changedField)
       ? { ...currentState, [changedField]: newValue } : currentState;
     const dealFinance = calculations.initialFinance(inputData);
-    const buyToLet = calculations.freeCash(inputData);
-    const flip = calculations.flip(inputData);
-    const stress = calculations.stressTest(inputData);
+    const buyToLet = inputData.buyToLet === 'yes' ? calculations.freeCash(inputData) : '';
+    const flip = inputData.flip === 'yes' ? calculations.flip(inputData) : '';
+    const stress = inputData.buyToLet === 'yes' ? calculations.stressTest(inputData) : '';
     const currSymbol = calculations.getCurrencyCode(inputData);
 
     document.getElementById('doc-title').text = inputData.projectName.replace(/ /g, '-');

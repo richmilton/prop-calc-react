@@ -75,13 +75,14 @@ class Form extends Component {
     const { currsymbol, formData } = this.props;
     fields.forEach((field) => {
       const ob = { ...field };
-      const isDisabled = ob.disabled && formData[ob.disabled.whenField] === ob.disabled.isEqual;
+      const isDisabled = (ob.disabled && formData[ob.disabled.whenField] === ob.disabled.isEqual)
+        || (ob.disabled2 && formData[ob.disabled2.whenField] === ob.disabled2.isEqual);
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target);
       ob.onblur = e => this.handleChange(e.target);
       ob.currency = currsymbol;
-      ob.defVal = isDisabled ? (ob.disabled.defVal || ob.defVal) : formData[ob.name];
+      ob.defVal = formData[ob.name];
       ob.disabled = isDisabled;
       if (ob.type === 'select') {
         formFields.push(Select(ob));
