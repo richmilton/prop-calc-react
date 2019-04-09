@@ -4,7 +4,7 @@ import initialFinance from './initialFinance';
 import flip from './flip';
 import stressTest from './stressTest';
 
-const getCurrencyCode = ({ stampDutyType }) => (stampDutyType === 'ireland' ? 8364 : 163);
+const getCurrencyCode = ({ stampDutyRegion }) => (stampDutyRegion === 'ireland' ? 8364 : 163);
 
 const calculations = {
   freeCash,
