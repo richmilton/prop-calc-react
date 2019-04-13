@@ -45,18 +45,17 @@ label {
   padding-right: 10px;
   padding-left: 10px;
   font-weight: bold;
-  color: #666
+  color: #666;
+  transition: opacity 500ms ease-in-out;
 }
 
 .show {
   visibility: visible;
   opacity: 1;
-  transition: opacity 500ms linear;
 }
 .hide {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 500ms linear;
 }
 
 select:required:invalid {

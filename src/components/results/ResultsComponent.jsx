@@ -2,18 +2,21 @@
 import React from 'react';
 import ResultsList from './list/ResultsListComponent';
 import Links from './links/ResultsLinksComponent';
+import validatePostcode from '../../util/validate-postcode'
 
-function Results({ data, currentState }) {
+function Results({ data, currentState, currentState: { postCode } }) {
   const {
     dealFinance,
     buyToLet,
     stress,
     flip,
   } = data;
+  const showBTL = currentState.buyToLet === 'yes';
+  const showFlip = currentState.flip === 'yes';
 
   return (
     <React.Fragment>
-      <div className="res-block">
+      <div className="res-block" style={{ display: validatePostcode(postCode) ? '' : 'none' }}>
         <h6>Links for this post code</h6>
         {Links(currentState)}
       </div>
@@ -21,15 +24,15 @@ function Results({ data, currentState }) {
         <h6>Deal finance</h6>
         <ResultsList id="1" data={dealFinance} />
       </div>
-      <div className="res-block" style={{ display: buyToLet ? '' : 'none' }}>
+      <div className="res-block" style={{ display: showBTL ? '' : 'none' }}>
         <h6>Buy to let</h6>
         <ResultsList id="2" data={buyToLet || ''} />
       </div>
-      <div className="res-block" style={{ display: buyToLet ? '' : 'none' }}>
+      <div className="res-block" style={{ display: showBTL ? '' : 'none' }}>
         <h6>Stress test</h6>
         <ResultsList id="3" data={stress || ''} />
       </div>
-      <div className="res-block" style={{ display: flip ? '' : 'none' }}>
+      <div className="res-block" style={{ display: showFlip ? '' : 'none' }}>
         <h6>Flip</h6>
         <ResultsList id="4" data={flip} />
       </div>
