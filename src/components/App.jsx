@@ -202,9 +202,7 @@ class App extends Component {
   logout() {
     const { cookies } = this.props;
     cookies.set('email', '', { path: '/' });
-    this.setState({ userEmail: '' }, () => {
-      this.getSavedStates(true);
-    });
+    this.setState({ userEmail: '' });
   }
 
   render() {
@@ -269,7 +267,7 @@ class App extends Component {
       </ul>
     ) : '';
 
-    return Object.keys(currentState).length > 1 ? (
+    return Object.keys(currentState).length > 1 && userEmail ? (
       <div className="App">
         <div className="column" style={{ textAlign: 'center' }}>
           <h5>Property investment deal analyser</h5>
