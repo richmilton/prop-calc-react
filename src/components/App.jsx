@@ -223,18 +223,6 @@ class App extends Component {
     const { Items } = savedStates;
     const savedList = Items.length > 0 && userEmail ? (
       <React.Fragment>
-        <div style={{ float: 'left' }}>
-          <h6>
-            My stuff (
-            {userEmail}
-            )
-          </h6>
-        </div>
-        <div style={{ float: 'left' }}>
-          <Logout
-            doLogout={this.logout}
-          />
-        </div>
         <SavedStateList
           data={Items}
           ondelete={this.deleteState}
@@ -288,6 +276,18 @@ class App extends Component {
           {Results(this.state)}
         </div>
         <div className="column states">
+          <div style={{ float: 'left' }}>
+            <h6>
+              My stuff (
+              {userEmail}
+              )
+            </h6>
+          </div>
+          <div style={{ float: 'left' }}>
+            <Logout
+              doLogout={this.logout}
+            />
+          </div>
           {savedList}
         </div>
       </div>
