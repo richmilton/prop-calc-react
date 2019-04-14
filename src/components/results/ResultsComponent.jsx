@@ -2,17 +2,17 @@
 import React from 'react';
 import ResultsList from './list/ResultsListComponent';
 import Links from './links/ResultsLinksComponent';
-import validatePostcode from '../../util/validate-postcode'
+import validatePostcode from '../../util/validate-postcode';
 
-function Results({ data, currentState, currentState: { postCode } }) {
+function Results({ data, currentState, currentState: { postCode, dealType } }) {
   const {
     dealFinance,
     buyToLet,
     stress,
     flip,
   } = data;
-  const showBTL = currentState.buyToLet === 'yes';
-  const showFlip = currentState.flip === 'yes';
+  const showBTL = /btl/.test(dealType);
+  const showFlip = /flip/.test(dealType);
 
   return (
     <React.Fragment>

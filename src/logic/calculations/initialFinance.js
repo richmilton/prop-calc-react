@@ -18,13 +18,16 @@ const initialFinance = ({
   stampDutyType,
   stampDutyRegion,
   stampDutyBuyer,
+  mortgageTerm,
 }) => {
   const isCash = buyingCash === 'yes';
   const loanToVal = initialLoanToValue / 100;
   const initMortgageAdvance = isCash ? 0 : Math.round(propertyValue * loanToVal);
   const mortgageMonthlyInterest = Math
     .round(initMortgageAdvance * mortgageInterestRatePercent / 1200);
-  const monthlyRepayment = repaymentCalc(initMortgageAdvance, mortgageInterestRatePercent, 25);
+  const monthlyRepayment = repaymentCalc(
+    initMortgageAdvance, mortgageInterestRatePercent, mortgageTerm,
+  );
   const initFees = initSurveyorsFee + initLegalFee + initMortgageFee;
   const other = refurbCost + otherCost;
   const initialDeposit = isCash ? propertyValue : Math.round(propertyValue * (1 - loanToVal));

@@ -1,13 +1,15 @@
 /* eslint-env browser */
 /* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
+import { withCookies } from 'react-cookie';
 import Form from './form/FormComponent';
 import fields from './form/formconfig';
 import '../css/app.css';
 import SavedStateList from './saved/SavedStateComponents';
 import Results from './results/ResultsComponent';
-import calculations from '../logic/calculations/index';
+import calculations from '../logic/calculations';
 import Login from './login/LoginComponent';
+import Logout from './login/LogoutComponent';
 
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
@@ -22,6 +24,9 @@ class App extends Component {
     });
     return defaults;
   }
+  // static propTypes = {
+  //   cookies: instanceOf(Cookies).isRequired
+  // };
 
   constructor(props) {
     super(props);
@@ -36,17 +41,21 @@ class App extends Component {
       savedStates: { Items: [] },
       currentState: { projectName: '' },
       hasWorkingAPI: false,
-      userEmail: null,
+      userEmail: props.cookies.get('email') || '',
     };
     this.calculate = this.calculate.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
     this.selectState = this.selectState.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
-    // this.getSavedStates(true);
+    const { userEmail } = this.state;
+    if (userEmail !== '') {
+      this.getSavedStates(true);
+    }
   }
 
   getSavedStates(setDefault) {
@@ -183,7 +192,17 @@ class App extends Component {
   }
 
   login(email) {
+    const { cookies } = this.props;
+    cookies.set('email', email, { path: '/' });
     this.setState({ userEmail: email }, () => {
+      this.getSavedStates(true);
+    });
+  }
+
+  logout() {
+    const { cookies } = this.props;
+    cookies.set('email', '', { path: '/' });
+    this.setState({ userEmail: '' }, () => {
       this.getSavedStates(true);
     });
   }
@@ -206,13 +225,25 @@ class App extends Component {
     const { Items } = savedStates;
     const savedList = Items.length > 0 && userEmail ? (
       <React.Fragment>
-        <h6>My saved stuff</h6>
+        <div style={{ float: 'left' }}>
+          <h6>
+            My stuff (
+            {userEmail}
+            )
+          </h6>
+        </div>
+        <div style={{ float: 'left' }}>
+          <Logout
+            doLogout={this.logout}
+          />
+        </div>
         <SavedStateList
           data={Items}
           ondelete={this.deleteState}
           onclick={this.selectState}
           useremail={userEmail}
           filter={o => o.email === userEmail}
+          doLogin={this.login}
         />
         <h6>Other saved stuff</h6>
         <SavedStateList
@@ -271,4 +302,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withCookies(App);

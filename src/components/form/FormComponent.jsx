@@ -75,8 +75,8 @@ class Form extends Component {
     const { currsymbol, formData } = this.props;
     fields.forEach((field) => {
       const ob = { ...field };
-      const isDisabled = (ob.disabled && formData[ob.disabled.whenField] === ob.disabled.isEqual)
-        || (ob.disabled2 && formData[ob.disabled2.whenField] === ob.disabled2.isEqual);
+      const isDisabled = (ob.disabled && ob.disabled.regex.test(formData[ob.disabled.whenField]))
+        || (ob.disabled2 && ob.disabled2.regex.test(formData[ob.disabled2.whenField]));
       ob.dynamicLabel = (n, l) => this.doLabel(n, l);
       ob.doLabelClass = n => this.doLabelClass(n);
       ob.onInput = e => this.handleChange(e.target);
