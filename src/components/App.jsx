@@ -2,6 +2,7 @@
 /* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
+// import { instanceOf } from 'prop-types';
 import Form from './form/FormComponent';
 import fields from './form/formconfig';
 import '../css/app.css';
@@ -24,9 +25,6 @@ class App extends Component {
     });
     return defaults;
   }
-  // static propTypes = {
-  //   cookies: instanceOf(Cookies).isRequired
-  // };
 
   constructor(props) {
     super(props);
