@@ -12,6 +12,8 @@ const urls = {
     residential: process.env.REACT_APP_RM_LET_URL,
   },
   nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
+  zooSold: process.env.REACT_APP_ZOO_SOLD_URL,
+  otmSold: process.env.REACT_APP_OTM_SOLD_URL,
   gMap: process.env.REACT_APP_MAP_URL,
 };
 
@@ -44,9 +46,21 @@ function Links(
 
   return (postCode && validatePostcode(postCode)) ? (
     <React.Fragment>
+      sold:
+      {' '}
       <Link
         href={urls.nhpSold + postCode}
-        text="sold"
+        text="NHP"
+      />
+      {':'}
+      <Link
+        href={urls.zooSold + postCode}
+        text="Zoopla"
+      />
+      {':'}
+      <Link
+        href={urls.otmSold + postCode}
+        text="OTM"
       />
       {' | '}
       <Link
