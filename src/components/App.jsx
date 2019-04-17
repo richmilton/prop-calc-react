@@ -281,19 +281,19 @@ class App extends Component {
           {Results(this.state)}
         </div>
         <div className="column states">
-          <div style={{ float: 'left', width: '79%' }}>
+          <div className="my-stuff">
             <h6>
               My stuff (
               {userEmail}
               )
             </h6>
           </div>
-          <div style={{ float: 'left', width: '20%', textAlign: 'right' }}>
+          <div className="logout">
             <Logout
               doLogout={this.logout}
             />
           </div>
-          <div style={{ float: 'left', width: '100%' }}>
+          <div className="saved-list">
             {savedList}
           </div>
         </div>

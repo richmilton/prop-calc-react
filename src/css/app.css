@@ -113,6 +113,22 @@ div.res-block {
   background-color: #f8f8f8;
 }
 
+div.saved-list {
+  float: left;
+  width: 100%;
+}
+
+div.logout {
+  float: left;
+  width: 20%;
+  text-align: right;
+}
+
+div.my-stuff {
+  float: left;
+  width: 79%;
+}
+
 form>ul {
   padding: 0;
   margin: 0;
