@@ -1,8 +1,6 @@
 /* eslint-env browser */
-/* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
-import { withCookies } from 'react-cookie';
-// import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 import Form from './form/FormComponent';
 import fields from './form/formconfig';
 import '../css/app.css';
@@ -11,6 +9,8 @@ import Results from './results/ResultsComponent';
 import calculations from '../logic/calculations';
 import Login from './login/LoginComponent';
 import Logout from './login/LogoutComponent';
+
+const PropTypes = require('prop-types');
 
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
@@ -306,5 +306,9 @@ class App extends Component {
       );
   }
 }
+
+App.propTypes = {
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+};
 
 export default withCookies(App);
