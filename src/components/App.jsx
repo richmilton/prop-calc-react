@@ -239,7 +239,7 @@ class App extends Component {
           ondelete={this.deleteState}
           onclick={this.selectState}
           useremail={userEmail}
-          filter={o => o.email !== userEmail && o.email.split('@')[1] === emailDomain}
+          filter={o => o.email !== userEmail}
         />
       </React.Fragment>
     )
