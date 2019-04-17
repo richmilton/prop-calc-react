@@ -1,5 +1,6 @@
-/* eslint react/prop-types: 0 */
 import React from 'react';
+
+const PropTypes = require('prop-types');
 
 function Logout({ doLogout }) {
   const handleClick = (e) => {
@@ -17,5 +18,9 @@ function Logout({ doLogout }) {
     </button>
   );
 }
+
+Logout.propTypes = {
+  doLogout: PropTypes.func.isRequired,
+};
 
 export default Logout;

@@ -1,6 +1,7 @@
-/* eslint react/prop-types: 0 */
 import React from 'react';
 import validatePostcode from '../../../util/validate-postcode';
+
+const PropTypes = require('prop-types');
 
 const urls = {
   rmBuy: {
@@ -28,6 +29,11 @@ function Link({ href, text }) {
     </a>
   );
 }
+
+Link.propTypes = {
+  href: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 function Links(
   {
@@ -80,5 +86,13 @@ function Links(
     </React.Fragment>
   ) : <span style={{ color: 'red', fontStyle: 'italic' }}>use a full valid post code to see links here</span>;
 }
+
+Links.propTypes = {
+  postCode: PropTypes.string.isRequired,
+  askingPrice: PropTypes.string.isRequired,
+  monthlyRent: PropTypes.number.isRequired,
+  propertyValue: PropTypes.number.isRequired,
+  stampDutyType: PropTypes.string.isRequired,
+};
 
 export default Links;

@@ -1,8 +1,9 @@
-/* eslint react/prop-types: 0 */
 /* eslint-env browser */
 import React, { Component } from 'react';
 import StatelessComponents from '../common/StatelessFormComponents';
 import { types } from '../common/formConstants';
+
+const PropTypes = require('prop-types');
 
 const { Input, Select } = StatelessComponents;
 
@@ -13,6 +14,12 @@ function FormColumn({ render, fields, className }) {
     </ul>
   );
 }
+
+FormColumn.propTypes = {
+  render: PropTypes.func.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  className: PropTypes.string.isRequired,
+};
 
 class Form extends Component {
   constructor(props) {
@@ -26,8 +33,8 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const { props } = this;
-    props.calculate();
+    const { calculate } = this.props;
+    calculate();
   }
 
   doLabel(fname, label) {
@@ -147,5 +154,16 @@ class Form extends Component {
     );
   }
 }
+
+Form.propTypes = {
+  name: PropTypes.string.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  formData: PropTypes.shape({}).isRequired,
+  twocols: PropTypes.string.isRequired,
+  calculate: PropTypes.func.isRequired,
+  currsymbol: PropTypes.number.isRequired,
+  onsave: PropTypes.func.isRequired,
+  showsave: PropTypes.bool.isRequired,
+};
 
 export default Form;

@@ -1,7 +1,8 @@
-/* eslint react/prop-types: 0 */
 /* eslint-env browser */
 import React, { Component } from 'react';
 import field from './formconfig';
+
+const PropTypes = require('prop-types');
 
 const { name, type, label } = field;
 
@@ -54,5 +55,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  doLogin: PropTypes.func.isRequired,
+};
 
 export default Login;

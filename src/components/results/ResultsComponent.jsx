@@ -1,8 +1,9 @@
-/* eslint react/prop-types: 0 */
 import React from 'react';
 import ResultsList from './list/ResultsListComponent';
 import Links from './links/ResultsLinksComponent';
 import validatePostcode from '../../util/validate-postcode';
+
+const PropTypes = require('prop-types');
 
 function Results({ data, currentState, currentState: { postCode, dealType } }) {
   const {
@@ -39,5 +40,18 @@ function Results({ data, currentState, currentState: { postCode, dealType } }) {
     </React.Fragment>
   );
 }
+
+Results.propTypes = {
+  data: PropTypes.shape({
+    dealFinance: PropTypes.arrayOf(PropTypes.object).isRequired,
+    buyToLet: PropTypes.arrayOf(PropTypes.object),
+    stress: PropTypes.arrayOf(PropTypes.object),
+    flip: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  currentState: PropTypes.shape({
+    postCode: PropTypes.string,
+    dealType: PropTypes.string,
+  }).isRequired,
+};
 
 export default Results;

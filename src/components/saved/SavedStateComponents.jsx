@@ -1,9 +1,8 @@
 /* eslint-env browser */
-/* eslint react/prop-types: 0 */
-// eslint-disable-next-line
 import React from 'react';
 import dateFormat from 'date-format';
-// import Login from '../login/LoginComponent';
+
+const PropTypes = require('prop-types');
 
 const handleClick = (e, callback) => {
   e.preventDefault();
@@ -47,6 +46,15 @@ const SavedStateListItem = ({
   </li>
 );
 
+SavedStateListItem.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  ondelete: PropTypes.func.isRequired,
+  onclick: PropTypes.func.isRequired,
+  deletable: PropTypes.bool.isRequired,
+  firstname: PropTypes.string.isRequired,
+};
+
 const SavedStateList = ({
   data,
   ondelete,
@@ -78,6 +86,15 @@ const SavedStateList = ({
     );
   }
   return '';
+};
+
+SavedStateList.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+  ondelete: PropTypes.func.isRequired,
+  onselect: PropTypes.func,
+  onclick: PropTypes.func.isRequired,
+  useremail: PropTypes.string.isRequired,
+  filter: PropTypes.func,
 };
 
 export default SavedStateList;

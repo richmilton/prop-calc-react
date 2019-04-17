@@ -1,9 +1,24 @@
-// stateless component Input. Currently handles types text, number, checkbox
-// passed through props
-/* eslint react/prop-types: 0 */
 import React from 'react';
 import { currencyPlaceholder } from './formConstants';
 
+const PropTypes = require('prop-types');
+
+const basePropTypes = {
+  name: PropTypes.string.isRequired,
+  doLabelClass: PropTypes.func.isRequired,
+  dynamicLabel: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  currency: PropTypes.number.isRequired,
+};
+const formControlPropTypes = {
+  className: PropTypes.string.isRequired,
+  onInput: PropTypes.func.isRequired,
+  defVal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onblur: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  disabled: PropTypes.bool.isRequired,
+};
 const currRegEx = new RegExp(currencyPlaceholder, 'g');
 
 const addCurrencySymbolToLabel = (label, currencyCode) => {
@@ -28,6 +43,10 @@ function Label({
     </div>
   );
 }
+
+Label.propTypes = {
+  ...basePropTypes,
+};
 
 function Input({
   className, name, type, onInput,
@@ -59,6 +78,13 @@ function Input({
     </li>
   );
 }
+
+Input.propTypes = {
+  ...basePropTypes,
+  ...formControlPropTypes,
+  placeholder: PropTypes.string.isRequired,
+  required: PropTypes.bool.isRequired,
+};
 
 // stateless component Select
 function Select({
@@ -95,6 +121,11 @@ function Select({
     </li>
   );
 }
+
+Select.propTypes = {
+  ...basePropTypes,
+  ...formControlPropTypes,
+};
 
 const StatelessComponents = {
   Input,
