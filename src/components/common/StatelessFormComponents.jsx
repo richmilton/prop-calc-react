@@ -15,7 +15,6 @@ const formControlPropTypes = {
   className: PropTypes.string.isRequired,
   onInput: PropTypes.func.isRequired,
   defVal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  onblur: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   disabled: PropTypes.bool.isRequired,
 };
@@ -50,7 +49,7 @@ Label.propTypes = {
 
 function Input({
   className, name, type, onInput,
-  placeholder, label, defVal, onblur,
+  placeholder, label, defVal,
   doLabelClass, dynamicLabel, currency, required, disabled,
 }) {
   const labelWithCurrency = addCurrencySymbolToLabel(label, currency);
@@ -68,7 +67,6 @@ function Input({
         placeholder={placeholder || labelWithCurrency || `${name} [${type}]`}
         value={defVal || ''}
         checked={defVal === 'yes'}
-        onBlur={e => onblur(e)}
         required={required || false}
         disabled={disabled}
       />
@@ -88,7 +86,7 @@ Input.propTypes = {
 
 // stateless component Select
 function Select({
-  className, name, type, onInput, label, defVal, onblur,
+  className, name, type, onInput, label, defVal,
   options, doLabelClass, dynamicLabel, disabled,
 }) {
   return (
@@ -100,7 +98,6 @@ function Select({
         name={name}
         id={name}
         onChange={e => onInput(e)}
-        onBlur={e => onblur(e)}
         disabled={disabled}
       >
         {options.map(
