@@ -219,6 +219,7 @@ class App extends Component {
       && postCode !== ''
     );
     const { Items } = savedStates;
+    const emailDomain = userEmail.split('@')[1];
     const savedList = Items.length > 0 && userEmail ? (
       <React.Fragment>
         <SavedStateList
@@ -229,13 +230,16 @@ class App extends Component {
           filter={o => o.email === userEmail}
           doLogin={this.login}
         />
-        <h6>Other saved stuff</h6>
+        <h6>
+          Other saved stuff from
+          {` ${emailDomain}`}
+        </h6>
         <SavedStateList
           data={Items}
           ondelete={this.deleteState}
           onclick={this.selectState}
           useremail={userEmail}
-          filter={o => o.email !== userEmail}
+          filter={o => o.email !== userEmail && o.email.split('@')[1] === emailDomain}
         />
       </React.Fragment>
     )

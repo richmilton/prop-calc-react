@@ -50,7 +50,8 @@ Label.propTypes = {
 function Input({
   className, name, type, onInput,
   placeholder, label, defVal,
-  doLabelClass, dynamicLabel, currency, required, disabled,
+  doLabelClass, dynamicLabel,
+  currency, required, disabled,
 }) {
   const labelWithCurrency = addCurrencySymbolToLabel(label, currency);
 
