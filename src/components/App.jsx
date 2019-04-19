@@ -1,6 +1,6 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
-import { withCookies, Cookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 import Form from './form/FormComponent';
 import fields from './form/formconfig';
 import '../css/app.css';
@@ -349,7 +349,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  cookies: PropTypes.instanceOf(Cookies).isRequired,
+  cookies: PropTypes.instanceOf(Object).isRequired,
   toastManager: PropTypes.instanceOf(Object).isRequired,
 };
 
