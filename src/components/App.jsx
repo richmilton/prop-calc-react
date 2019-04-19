@@ -9,6 +9,7 @@ import Results from './results/ResultsComponent';
 import calculations from '../logic/calculations';
 import Login from './login/LoginComponent';
 import Logout from './login/LogoutComponent';
+import messages from './messages';
 // import stateAPI from '../api/state-api';
 
 const PropTypes = require('prop-types');
@@ -80,6 +81,8 @@ class App extends Component {
           if (data.Items.length > 0) {
             data.Items.sort(sortByNameThenDate);
           }
+        } else if (resp.status === 403) {
+          this.toastIt(messages.unrecognisedUser, { appearance: 'warning', autoDismissTimeout: 10000 });
         } else {
           setDefaultState = true;
         }
@@ -284,9 +287,7 @@ class App extends Component {
     )
       : (
         <div style={{ float: 'left' }}>
-          You need to be whitelisted to use the view and save functions.
-          You can still use the app to perform calculations which can be printed,
-          if you want to save copies.
+          {messages.unrecognisedUser}
         </div>
       );
     const newButton = currentState.projectName !== '' ? (
