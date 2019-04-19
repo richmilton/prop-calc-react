@@ -9,6 +9,7 @@ import Results from './results/ResultsComponent';
 import calculations from '../logic/calculations';
 import Login from './login/LoginComponent';
 import Logout from './login/LogoutComponent';
+// import stateAPI from '../api/state-api';
 
 const PropTypes = require('prop-types');
 
@@ -56,7 +57,7 @@ class App extends Component {
     }
   }
 
-  getSavedStates(setDefault) {
+  async getSavedStates(setDefault) {
     const sortByNameThenDate = (
       { projectName: pNameA, id: idA },
       { projectName: pNameB, id: idB },
@@ -67,17 +68,20 @@ class App extends Component {
     };
     const { userEmail } = this.state;
 
-    fetch(`${urls.comparisons}/user/${userEmail}`)
-      .then(response => response.json())
-      .then((data) => {
+    try {
+      const resp = await fetch(`${urls.comparisons}/user/${userEmail}`);
+      if (resp.status === 200) {
+        const data = await resp.json();
+
         if (data.Items.length > 0) {
           data.Items.sort(sortByNameThenDate);
         }
         this.loadState(data, setDefault);
-      })
-      .catch(() => {
-        this.loadState(null, true);
-      });
+      }
+    } catch (e) {
+      // console.log(e)
+      this.loadState(null, true);
+    }
   }
 
   findState(stateId) {
@@ -132,48 +136,47 @@ class App extends Component {
     this.setState(newState);
   }
 
-  saveState() {
+  async saveState() {
     const { currentState, currentState: { projectName, postCode }, userEmail } = this.state;
     if (projectName === '' || postCode === '') {
       return;
     }
     const stateToSave = { ...currentState, email: userEmail };
-    fetch(urls.comparisons, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(stateToSave),
-    })
-      .then(response => response.json())
-      .then(() => {
-        this.getSavedStates(false);
-      })
-      .catch(() => this.setState({ savedStates: { Items: 'No save service available' } }))
-      .finally(() => {
-        this.setState({ error: null });
+    try {
+      const resp = await fetch(urls.comparisons, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(stateToSave),
       });
+      await resp.json();
+      this.getSavedStates(false);
+    } catch (e) {
+      // err
+    }
   }
 
-  deleteState(stateId) {
+  async deleteState(stateId) {
     const { userEmail } = this.state;
-    fetch(urls.comparisons, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: stateId, email: userEmail }),
-    })
-      .then((resp) => {
-        if (resp.ok) {
-          const { currentState: id } = this.state;
-          this.getSavedStates(stateId === id);
-        } else {
-          throw new Error('delete failed');
-        }
-      }).catch(() => this.setState({ savedStates: { Items: 'No delete service avaialable' } }));
+    try {
+      const resp = await fetch(urls.comparisons, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: stateId, email: userEmail }),
+      });
+      if (resp.ok) {
+        const { currentState: id } = this.state;
+        this.getSavedStates(stateId === id);
+      }
+      // failed
+    } catch (err) {
+      // err
+    }
   }
 
   selectState(stateId) {
