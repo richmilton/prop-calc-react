@@ -146,7 +146,6 @@ class App extends Component {
       newState.currentState = inputData;
     }
 
-    // toastManager.add(`loading ${projectName}`, { appearance: 'success' });
     this.setState(newState);
   }
 
@@ -213,7 +212,7 @@ class App extends Component {
     const selectedState = this.findState(stateId);
     this.setState({ currentState: selectedState }, () => {
       const { currentState: { projectName } } = this.state;
-      this.toastIt(`loading ${projectName}`, { appearance: 'success' });
+      this.toastIt(`${projectName} loaded successfully`, { appearance: 'success' });
       this.calculate();
     });
   }
@@ -230,6 +229,7 @@ class App extends Component {
     const { cookies } = this.props;
     cookies.set('email', email, { path: '/' });
     this.setState({ userEmail: email }, () => {
+      this.toastIt(`logged in as ${email}`, { appearance: 'success' });
       this.getSavedStates(true);
     });
   }
@@ -237,7 +237,9 @@ class App extends Component {
   logout() {
     const { cookies } = this.props;
     cookies.set('email', '', { path: '/' });
-    this.setState({ userEmail: '' });
+    this.setState({ userEmail: '' }, () => {
+      this.toastIt('logged out', { appearance: 'success' });
+    });
   }
 
   render() {
