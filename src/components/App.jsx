@@ -57,31 +57,38 @@ class App extends Component {
     }
   }
 
-  async getSavedStates(setDefault) {
-    const sortByNameThenDate = (
-      { projectName: pNameA, id: idA },
-      { projectName: pNameB, id: idB },
-    ) => {
-      if ((pNameA + idA) < (pNameB + idB)) return -1;
-      if ((pNameA + idA) > (pNameB + idB)) return 1;
-      return 0;
-    };
-    const { userEmail } = this.state;
+  getSavedStates(setDefault) {
+    const retrieveStates = async () => {
+      const sortByNameThenDate = (
+        { projectName: pNameA, id: idA },
+        { projectName: pNameB, id: idB },
+      ) => {
+        if ((pNameA + idA) < (pNameB + idB)) return -1;
+        if ((pNameA + idA) > (pNameB + idB)) return 1;
+        return 0;
+      };
+      const { userEmail } = this.state;
+      let data = null;
+      let setDefaultState = setDefault;
 
-    try {
-      const resp = await fetch(`${urls.comparisons}/user/${userEmail}`);
-      if (resp.status === 200) {
-        const data = await resp.json();
+      try {
+        const resp = await fetch(`${urls.comparisons}/user/${userEmail}`);
+        if (resp.status === 200) {
+          data = await resp.json();
 
-        if (data.Items.length > 0) {
-          data.Items.sort(sortByNameThenDate);
+          if (data.Items.length > 0) {
+            data.Items.sort(sortByNameThenDate);
+          }
+        } else {
+          setDefaultState = true;
         }
-        this.loadState(data, setDefault);
+      } catch (e) {
+        setDefaultState = true;
+      } finally {
+        this.loadState(data, setDefaultState);
       }
-    } catch (e) {
-      // console.log(e)
-      this.loadState(null, true);
-    }
+    };
+    retrieveStates(setDefault).then(() => ({ getSavedStates: 'finished' }));
   }
 
   findState(stateId) {
@@ -133,55 +140,71 @@ class App extends Component {
       newState.currentState = inputData;
     }
 
+    // toastManager.add(`loading ${projectName}`, { appearance: 'success' });
     this.setState(newState);
   }
 
-  async saveState() {
-    const { currentState, currentState: { projectName, postCode }, userEmail } = this.state;
-    if (projectName === '' || postCode === '') {
-      return;
-    }
-    const stateToSave = { ...currentState, email: userEmail };
-    try {
-      const resp = await fetch(urls.comparisons, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(stateToSave),
-      });
-      await resp.json();
-      this.getSavedStates(false);
-    } catch (e) {
-      // err
-    }
+  saveState() {
+    const persistState = async () => {
+      const { currentState, currentState: { projectName, postCode }, userEmail } = this.state;
+      if (projectName === '' || postCode === '') {
+        return;
+      }
+      const stateToSave = { ...currentState, email: userEmail };
+      try {
+        const resp = await fetch(urls.comparisons, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(stateToSave),
+        });
+        await resp.json();
+      } catch (e) {
+        // ignore
+      } finally {
+        // don't overwrite changes in form
+        this.getSavedStates(false);
+      }
+    };
+    persistState().then(() => ({ saveState: 'finished' }));
   }
 
-  async deleteState(stateId) {
-    const { userEmail } = this.state;
-    try {
-      const resp = await fetch(urls.comparisons, {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: stateId, email: userEmail }),
-      });
-      if (resp.ok) {
-        const { currentState: id } = this.state;
-        this.getSavedStates(stateId === id);
+  deleteState(stateId) {
+    let setDefault = false;
+    const removeState = async (deleteStateId) => {
+      const { userEmail } = this.state;
+      try {
+        const resp = await fetch(urls.comparisons, {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: deleteStateId, email: userEmail }),
+        });
+        if (resp.status === 200) {
+          const { currentState: id } = this.state;
+          setDefault = id === deleteStateId;
+        }
+      } catch (err) {
+        // leave setDefault = false
+      } finally {
+        this.getSavedStates(setDefault);
       }
-      // failed
-    } catch (err) {
-      // err
-    }
+    };
+    removeState(stateId).then(() => ({ delete: 'finished' }));
   }
 
   selectState(stateId) {
+    const { toastManager } = this.props;
     const selectedState = this.findState(stateId);
-    this.setState({ currentState: selectedState }, () => this.calculate());
+    this.setState({ currentState: selectedState }, () => {
+      const { currentState: { projectName } } = this.state;
+      toastManager.add(`loading ${projectName}`, { appearance: 'success', autoDismissTimeout: 2000 });
+      this.calculate();
+    });
   }
 
   handleNew(e) {
@@ -316,6 +339,7 @@ class App extends Component {
 
 App.propTypes = {
   cookies: PropTypes.instanceOf(Cookies).isRequired,
+  toastManager: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default withCookies(App);
