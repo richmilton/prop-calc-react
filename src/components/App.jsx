@@ -48,6 +48,7 @@ class App extends Component {
     this.selectState = this.selectState.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.toastIt = this.toastIt.bind(this);
   }
 
   componentDidMount() {
@@ -89,6 +90,11 @@ class App extends Component {
       }
     };
     retrieveStates(setDefault).then(() => ({ getSavedStates: 'finished' }));
+  }
+
+  toastIt(message, options) {
+    const { toastManager } = this.props;
+    toastManager.add(message, options);
   }
 
   findState(stateId) {
@@ -148,8 +154,10 @@ class App extends Component {
     const persistState = async () => {
       const { currentState, currentState: { projectName, postCode }, userEmail } = this.state;
       if (projectName === '' || postCode === '') {
+        this.toastIt(`you must provide both 'project name' and 'post code' ${projectName} `, { appearance: 'error' });
         return;
       }
+      this.toastIt(`saving new version of ${projectName}`, { appearance: 'warning' });
       const stateToSave = { ...currentState, email: userEmail };
       try {
         const resp = await fetch(urls.comparisons, {
@@ -161,8 +169,9 @@ class App extends Component {
           body: JSON.stringify(stateToSave),
         });
         await resp.json();
+        this.toastIt(`new version of ${projectName} saved successfully`, { appearance: 'success' });
       } catch (e) {
-        // ignore
+        this.toastIt(`something went wrong saving new version of ${projectName} `, { appearance: 'error' });
       } finally {
         // don't overwrite changes in form
         this.getSavedStates(false);
@@ -172,6 +181,8 @@ class App extends Component {
   }
 
   deleteState(stateId) {
+    const { currentState: { projectName } } = this.state;
+    this.toastIt(`deleting ${projectName}`, { appearance: 'warning' });
     let setDefault = false;
     const removeState = async (deleteStateId) => {
       const { userEmail } = this.state;
@@ -187,9 +198,10 @@ class App extends Component {
         if (resp.status === 200) {
           const { currentState: id } = this.state;
           setDefault = id === deleteStateId;
+          this.toastIt(`${projectName} deleted successfully`, { appearance: 'success' });
         }
       } catch (err) {
-        // leave setDefault = false
+        this.toastIt(`something went wrong deleting ${projectName} `, { appearance: 'error' });
       } finally {
         this.getSavedStates(setDefault);
       }
@@ -198,11 +210,10 @@ class App extends Component {
   }
 
   selectState(stateId) {
-    const { toastManager } = this.props;
     const selectedState = this.findState(stateId);
     this.setState({ currentState: selectedState }, () => {
       const { currentState: { projectName } } = this.state;
-      toastManager.add(`loading ${projectName}`, { appearance: 'success', autoDismissTimeout: 2000 });
+      this.toastIt(`loading ${projectName}`, { appearance: 'success' });
       this.calculate();
     });
   }
