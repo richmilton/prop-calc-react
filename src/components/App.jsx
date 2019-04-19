@@ -157,7 +157,7 @@ class App extends Component {
         this.toastIt(`you must provide both 'project name' and 'post code' ${projectName} `, { appearance: 'error' });
         return;
       }
-      this.toastIt(`saving new version of ${projectName}`, { appearance: 'warning' });
+      this.toastIt(`saving new version of ${projectName}`, { appearance: 'info' });
       const stateToSave = { ...currentState, email: userEmail };
       try {
         const resp = await fetch(urls.comparisons, {
@@ -171,7 +171,7 @@ class App extends Component {
         await resp.json();
         this.toastIt(`new version of ${projectName} saved successfully`, { appearance: 'success' });
       } catch (e) {
-        this.toastIt(`something went wrong saving new version of ${projectName} `, { appearance: 'error' });
+        this.toastIt(`something went wrong saving new version of ${projectName}`, { appearance: 'error' });
       } finally {
         // don't overwrite changes in form
         this.getSavedStates(false);
@@ -182,7 +182,7 @@ class App extends Component {
 
   deleteState(stateId) {
     const { currentState: { projectName } } = this.state;
-    this.toastIt(`deleting ${projectName}`, { appearance: 'warning' });
+    this.toastIt(`deleting ${projectName}`, { appearance: 'info' });
     let setDefault = false;
     const removeState = async (deleteStateId) => {
       const { userEmail } = this.state;

@@ -8,7 +8,11 @@ const ToastyApp = withToastManager(App);
 export default function Root() {
   return (
     <CookiesProvider>
-      <ToastProvider autoDismissTimeout={2000} autoDismiss>
+      <ToastProvider
+        autoDismissTimeout={2000}
+        autoDismiss
+        placement="bottom-center"
+      >
         <ToastyApp />
       </ToastProvider>
     </CookiesProvider>
