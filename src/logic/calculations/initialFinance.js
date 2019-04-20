@@ -47,8 +47,9 @@ const initialFinance = ({
     { label: labels[4], value: other.toFixed(2) },
     { label: labels[5], value: totIn.toFixed(2) },
     { label: labels[6], value: totCost.toFixed(2) },
-    { label: labels[7], value: mortgageMonthlyInterest.toFixed(2) },
-    { label: labels[8], value: monthlyRepayment.toFixed(2) },
+    { label: labels[7], value: `${mortgageMonthlyInterest.toFixed(2)} pcm` },
+    { label: labels[8], value: `${monthlyRepayment.toFixed(2)} pcm` },
+    { label: labels[9], value: `${mortgageTerm} years` },
   ];
 };
 

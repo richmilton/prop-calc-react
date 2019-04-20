@@ -5,7 +5,11 @@ import validatePostcode from '../../util/validate-postcode';
 
 const PropTypes = require('prop-types');
 
-function Results({ data, currentState, currentState: { postCode, dealType } }) {
+function Results(
+  {
+    data, currentState, currency, currentState: { postCode, dealType },
+  },
+) {
   const {
     dealFinance,
     buyToLet,
@@ -14,6 +18,7 @@ function Results({ data, currentState, currentState: { postCode, dealType } }) {
   } = data;
   const showBTL = /btl/.test(dealType);
   const showFlip = /flip/.test(dealType);
+  const currSymbol = String.fromCharCode(currency);
 
   return (
     <React.Fragment>
@@ -22,19 +27,19 @@ function Results({ data, currentState, currentState: { postCode, dealType } }) {
         {Links(currentState)}
       </div>
       <div className="res-block">
-        <h6>Deal finance</h6>
+        <h6>{`Deal finance (${currSymbol})`}</h6>
         <ResultsList id="1" data={dealFinance} />
       </div>
       <div className="res-block" style={{ display: showBTL ? '' : 'none' }}>
-        <h6>Buy to let</h6>
+        <h6>{`Buy to let (${currSymbol})`}</h6>
         <ResultsList id="2" data={buyToLet || ''} />
       </div>
       <div className="res-block" style={{ display: showBTL ? '' : 'none' }}>
-        <h6>Stress test</h6>
+        <h6>{`Stress test (${currSymbol})`}</h6>
         <ResultsList id="3" data={stress || ''} />
       </div>
       <div className="res-block" style={{ display: showFlip ? '' : 'none' }}>
-        <h6>Flip</h6>
+        <h6>{`Flip (${currSymbol})`}</h6>
         <ResultsList id="4" data={flip} />
       </div>
     </React.Fragment>
@@ -48,6 +53,7 @@ Results.propTypes = {
     stress: PropTypes.arrayOf(PropTypes.object),
     flip: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
+  currency: PropTypes.number.isRequired,
   currentState: PropTypes.shape({
     postCode: PropTypes.string,
     dealType: PropTypes.string,
