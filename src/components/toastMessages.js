@@ -8,17 +8,14 @@ const toastMessages = {
           check the email address and try logging in again, or contact your administrator`,
     options: { appearance: 'warning', autoDismissTimeout: 10000 },
   },
-  retrievingData: {
-    message: 'retrieving data', options: { appearance: 'info' },
-  },
   dataRetrieved: {
-    message: 'data retrieved', options: { appearance: 'success' },
+    message: 'proposal data refreshed', options: { appearance: 'success' },
   },
   noneSaved: {
-    message: 'you have no saved proposals', options: { appearance: 'info' },
+    message: 'you have no saved proposal data', options: { appearance: 'info' },
   },
   dataRetrievalError: {
-    message: 'something went wrong retrieving data', options: { appearance: 'error' },
+    message: 'something went wrong retrieving proposal data', options: { appearance: 'error' },
   },
   saving: {
     message: `saving new version of ${toastPlaceHolder}`, options: { appearance: 'info' },

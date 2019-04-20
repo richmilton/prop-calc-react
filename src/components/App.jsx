@@ -60,7 +60,6 @@ class App extends Component {
   }
 
   getSavedStates(setDefault) {
-    this.toastIt(toastMessages.retrievingData);
     const retrieveStates = async () => {
       const sortByNameThenDate = (
         { projectName: pNameA, id: idA },
