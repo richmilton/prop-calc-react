@@ -52,7 +52,7 @@ function Links(
 
   return (postCode && validatePostcode(postCode)) ? (
     <React.Fragment>
-      sold:
+      sold prices:
       {' '}
       <Link
         href={urls.nhpSold + postCode}

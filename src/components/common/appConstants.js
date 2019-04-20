@@ -1,4 +1,4 @@
-const types = {
+const formTypes = {
   NUMBER: 'number',
   TEXT: 'text',
   CHECKBOX: 'checkbox',
@@ -7,10 +7,12 @@ const types = {
 };
 
 const currencyPlaceholder = '##CURR##';
+const toastPlaceHolder = '##LABEL##';
 const percentSign = String.fromCharCode(37);
 
 module.exports = {
-  types,
+  formTypes,
   currencyPlaceholder,
   percentSign,
+  toastPlaceHolder,
 };

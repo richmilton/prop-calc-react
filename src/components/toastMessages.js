@@ -1,0 +1,52 @@
+import { toastPlaceHolder } from './common/appConstants';
+
+const toastMessages = {
+  unrecognisedUser: {
+    message: `You need to be whitelisted to use the view and save functions.
+          You can still use the app to perform calculations which can be printed,
+          if you want to save copies. If you think you should be whitelisted,
+          check the email address and try logging in again, or contact your administrator`,
+    options: { appearance: 'warning', autoDismissTimeout: 10000 },
+  },
+  retrievingData: {
+    message: 'retrieving data', options: { appearance: 'info' },
+  },
+  dataRetrieved: {
+    message: 'data retrieved', options: { appearance: 'success' },
+  },
+  noneSaved: {
+    message: 'you have no saved proposals', options: { appearance: 'info' },
+  },
+  dataRetrievalError: {
+    message: 'something went wrong retrieving data', options: { appearance: 'error' },
+  },
+  saving: {
+    message: `saving new version of ${toastPlaceHolder}`, options: { appearance: 'info' },
+  },
+  savedSuccess: {
+    message: `new version of ${toastPlaceHolder} saved successfully`, options: { appearance: 'success' },
+  },
+  saveError: {
+    message: `something went wrong saving new version of ${toastPlaceHolder}`, options: { appearance: 'error' },
+  },
+  deleting: {
+    message: `deleting ${toastPlaceHolder}`, options: { appearance: 'info' },
+  },
+  deleteSuccess: {
+    message: `${toastPlaceHolder} deleted successfully`, options: { appearance: 'success' },
+  },
+  deleteError: {
+    message: `something went wrong deleting ${toastPlaceHolder}`, options: { appearance: 'error' },
+  },
+  login: {
+    message: `logged in as ${toastPlaceHolder}`, options: { appearance: 'success' },
+  },
+  logout: {
+    message: 'logged out', options: { appearance: 'success' },
+  },
+  loaded: {
+    message: `${toastPlaceHolder} loaded successfully`, options: { appearance: 'success' },
+  },
+};
+
+export default toastMessages;

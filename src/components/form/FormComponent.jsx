@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import StatelessComponents from '../common/StatelessFormComponents';
-import { types } from '../common/formConstants';
+import { formTypes } from '../common/appConstants';
 
 const PropTypes = require('prop-types');
 
@@ -57,10 +57,10 @@ class Form extends Component {
     let val;
 
     switch (type) {
-      case types.NUMBER:
+      case formTypes.NUMBER:
         val = Number.isNaN(value) ? 0 : (parseFloat(value) || 0);
         break;
-      case types.CHECKBOX:
+      case formTypes.CHECKBOX:
         val = checked ? 'yes' : 'no';
         break;
       default:

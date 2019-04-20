@@ -9,8 +9,8 @@ import Results from './results/ResultsComponent';
 import calculations from '../logic/calculations';
 import Login from './login/LoginComponent';
 import Logout from './login/LogoutComponent';
-import messages from './messages';
-// import stateAPI from '../api/state-api';
+import toastMessages from './toastMessages';
+import { toastPlaceHolder } from './common/appConstants';
 
 const PropTypes = require('prop-types');
 
@@ -60,6 +60,7 @@ class App extends Component {
   }
 
   getSavedStates(setDefault) {
+    this.toastIt(toastMessages.retrievingData);
     const retrieveStates = async () => {
       const sortByNameThenDate = (
         { projectName: pNameA, id: idA },
@@ -80,14 +81,19 @@ class App extends Component {
 
           if (data.Items.length > 0) {
             data.Items.sort(sortByNameThenDate);
+            this.toastIt(toastMessages.dataRetrieved);
+          } else {
+            this.toastIt(toastMessages.noneSaved);
           }
         } else if (resp.status === 403) {
-          this.toastIt(messages.unrecognisedUser, { appearance: 'warning', autoDismissTimeout: 10000 });
+          this.toastIt(toastMessages.unrecognisedUser);
         } else {
           setDefaultState = true;
+          this.toastIt(toastMessages.dataRetrievalError);
         }
       } catch (e) {
         setDefaultState = true;
+        this.toastIt(toastMessages.dataRetrievalError);
       } finally {
         this.loadState(data, setDefaultState);
       }
@@ -95,9 +101,9 @@ class App extends Component {
     retrieveStates(setDefault).then(() => ({ getSavedStates: 'finished' }));
   }
 
-  toastIt(message, options) {
+  toastIt({ message, options }, label) {
     const { toastManager } = this.props;
-    toastManager.add(message, options);
+    toastManager.add(message.replace(toastPlaceHolder, label), options);
   }
 
   findState(stateId) {
@@ -156,10 +162,9 @@ class App extends Component {
     const persistState = async () => {
       const { currentState, currentState: { projectName, postCode }, userEmail } = this.state;
       if (projectName === '' || postCode === '') {
-        this.toastIt(`you must provide both 'project name' and 'post code' ${projectName} `, { appearance: 'error' });
         return;
       }
-      this.toastIt(`saving new version of ${projectName}`, { appearance: 'info' });
+      this.toastIt(toastMessages.saving, projectName);
       const stateToSave = { ...currentState, email: userEmail };
       try {
         const resp = await fetch(urls.comparisons, {
@@ -171,9 +176,9 @@ class App extends Component {
           body: JSON.stringify(stateToSave),
         });
         await resp.json();
-        this.toastIt(`new version of ${projectName} saved successfully`, { appearance: 'success' });
+        this.toastIt(toastMessages.savedSuccess, projectName);
       } catch (e) {
-        this.toastIt(`something went wrong saving new version of ${projectName}`, { appearance: 'error' });
+        this.toastIt(toastMessages.saveError, projectName);
       } finally {
         // don't overwrite changes in form
         this.getSavedStates(false);
@@ -183,8 +188,8 @@ class App extends Component {
   }
 
   deleteState(stateId) {
-    const { currentState: { projectName } } = this.state;
-    this.toastIt(`deleting ${projectName}`, { appearance: 'info' });
+    const { projectName } = this.findState(stateId);
+    this.toastIt(toastMessages.deleting, projectName);
     let setDefault = false;
     const removeState = async (deleteStateId) => {
       const { userEmail } = this.state;
@@ -200,10 +205,10 @@ class App extends Component {
         if (resp.status === 200) {
           const { currentState: id } = this.state;
           setDefault = id === deleteStateId;
-          this.toastIt(`${projectName} deleted successfully`, { appearance: 'success' });
+          this.toastIt(toastMessages.deleteSuccess, projectName);
         }
       } catch (err) {
-        this.toastIt(`something went wrong deleting ${projectName} `, { appearance: 'error' });
+        this.toastIt(toastMessages.deleteError, projectName);
       } finally {
         this.getSavedStates(setDefault);
       }
@@ -215,7 +220,7 @@ class App extends Component {
     const selectedState = this.findState(stateId);
     this.setState({ currentState: selectedState }, () => {
       const { currentState: { projectName } } = this.state;
-      this.toastIt(`${projectName} loaded successfully`, { appearance: 'success' });
+      this.toastIt(toastMessages.loaded, projectName);
       this.calculate();
     });
   }
@@ -232,7 +237,7 @@ class App extends Component {
     const { cookies } = this.props;
     cookies.set('email', email, { path: '/' });
     this.setState({ userEmail: email }, () => {
-      this.toastIt(`logged in as ${email}`, { appearance: 'success' });
+      this.toastIt(toastMessages.login, email);
       this.getSavedStates(true);
     });
   }
@@ -241,7 +246,7 @@ class App extends Component {
     const { cookies } = this.props;
     cookies.set('email', '', { path: '/' });
     this.setState({ userEmail: '' }, () => {
-      this.toastIt('logged out', { appearance: 'success' });
+      this.toastIt(toastMessages.logout);
     });
   }
 
@@ -287,7 +292,7 @@ class App extends Component {
     )
       : (
         <div style={{ float: 'left' }}>
-          {messages.unrecognisedUser}
+          {toastMessages.unrecognisedUser.message}
         </div>
       );
     const newButton = currentState.projectName !== '' ? (

@@ -1,9 +1,9 @@
-import { types } from '../common/formConstants';
+import { formTypes } from '../common/appConstants';
 
 const field = {
   label: 'User',
   name: 'userEmail',
-  type: types.EMAIL,
+  type: formTypes.EMAIL,
   defVal: '',
   required: true,
 };

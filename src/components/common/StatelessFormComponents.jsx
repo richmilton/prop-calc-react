@@ -1,5 +1,5 @@
 import React from 'react';
-import { currencyPlaceholder } from './formConstants';
+import { currencyPlaceholder } from './appConstants';
 
 const PropTypes = require('prop-types');
 
