@@ -7,6 +7,7 @@ const fields = [
     type: formTypes.TEXT,
     defVal: '',
     required: true,
+    tooltip: 'used as reference when saving',
   },
   {
     label: 'Post code',
@@ -14,24 +15,51 @@ const fields = [
     type: formTypes.TEXT,
     defVal: '',
     required: true,
+    tooltip: 'a valid UK postcode will show links panel in results section',
   },
   {
     label: `Asking price(${currencyPlaceholder})`,
     name: 'askingPrice',
     type: formTypes.NUMBER,
     defVal: 0,
+    tooltip: 'for reference only: not used in calculations',
   },
   {
     label: `Purchase price(${currencyPlaceholder})`,
     name: 'propertyValue',
     type: formTypes.NUMBER,
     defVal: 0,
+    tooltip: 'price you intend paying for property: will be used in deal finance and stamp duty calculation',
   },
   {
     label: `Done up value(${currencyPlaceholder})`,
     name: 'doneUpValue',
     type: formTypes.NUMBER,
     defVal: 0,
+    tooltip: 'market value after completing works: used to calculate buy to let section',
+  },
+  {
+    label: `Initial LTV(${percentSign})`,
+    name: 'initialLoanToValue',
+    type: formTypes.NUMBER,
+    defVal: 75,
+    disabled: [{ whenField: 'buyingCash', regex: /yes/ }],
+    tooltip: 'used to calculate deal finance mortgage advance and deposit',
+  },
+  {
+    label: `Mortgage fee(${currencyPlaceholder})`,
+    name: 'initMortgageFee',
+    type: formTypes.NUMBER,
+    defVal: 0,
+    disabled: [{ whenField: 'buyingCash', regex: /yes/ }],
+    tooltip: 'included in deal finance professional fees',
+  },
+  {
+    label: `Surveyors fee(${currencyPlaceholder})`,
+    name: 'initSurveyorsFee',
+    type: formTypes.NUMBER,
+    defVal: 600,
+    tooltip: 'included in deal finance professional fees',
   },
   {
     label: 'Cash purchase',
@@ -40,30 +68,19 @@ const fields = [
     defVal: 'no',
   },
   {
-    label: `Initial LTV(${percentSign})`,
-    name: 'initialLoanToValue',
+    label: 'Mortgage term',
+    name: 'mortgageTerm',
     type: formTypes.NUMBER,
-    defVal: 75,
+    defVal: 25,
     disabled: [{ whenField: 'buyingCash', regex: /yes/ }],
-  },
-  {
-    label: `Mortgage fee(${currencyPlaceholder})`,
-    name: 'initMortgageFee',
-    type: formTypes.NUMBER,
-    defVal: 0,
-    disabled: [{ whenField: 'buyingCash', regex: /yes/ }],
-  },
-  {
-    label: `Surveyors fee(${currencyPlaceholder})`,
-    name: 'initSurveyorsFee',
-    type: formTypes.NUMBER,
-    defVal: 600,
+    tooltip: 'used in deal finance repayment mortgage calculation',
   },
   {
     label: `Legal fees(${currencyPlaceholder})`,
     name: 'initLegalFee',
     type: formTypes.NUMBER,
     defVal: 1500,
+    tooltip: 'included in deal finance professional fees',
   },
   {
     label: 'Stamp duty type',
@@ -74,6 +91,7 @@ const fields = [
       { value: 'commercial', name: 'Commercial' },
     ],
     defVal: 'residential',
+    tooltip: 'what kind of property are you buying',
   },
   {
     label: 'Stamp duty region',
@@ -86,6 +104,7 @@ const fields = [
       { value: 'ireland', name: 'Ireland' },
     ],
     defVal: 'england',
+    tooltip: 'where is it',
   },
   {
     label: 'Stamp duty buyer',
@@ -98,6 +117,7 @@ const fields = [
     ],
     defVal: 'investor',
     disabled: [{ whenField: 'stampDutyType', regex: /commercial/ }],
+    tooltip: 'what kind of buyer are you',
   },
   {
     label: `Monthly rent(${currencyPlaceholder})`,
@@ -117,18 +137,21 @@ const fields = [
       { value: 'home', name: 'Home only' },
     ],
     defVal: 'btl&flip',
+    tooltip: 'what kind of purchase are you interested in',
   },
   {
     label: `Refurbishment cost(${currencyPlaceholder})`,
     name: 'refurbCost',
     type: formTypes.NUMBER,
     defVal: 0,
+    tooltip: 'used in deal finance and buy to let money in and yield calculations',
   },
   {
     label: `Other cost(${currencyPlaceholder})`,
     name: 'otherCost',
     type: formTypes.NUMBER,
     defVal: 0,
+    tooltip: 'used in deal finance and buy to let money in and yield calculations',
   },
   {
     label: `Remortgage fee(${currencyPlaceholder})`,
@@ -136,6 +159,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 0,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'included in buy to let remortgage fees',
   },
   {
     label: `Remortgage valuation fee(${currencyPlaceholder})`,
@@ -143,6 +167,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 0,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'included in buy to let remortgage fees',
   },
   {
     label: `Remortgage legal fees(${currencyPlaceholder})`,
@@ -150,13 +175,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 0,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
-  },
-  {
-    label: 'Repairing lease',
-    name: 'repairingLease',
-    type: formTypes.CHECKBOX,
-    defVal: 'no',
-    disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'included in buy to let remortgage fees',
   },
   {
     label: `Letting agents rate(${percentSign})`,
@@ -167,6 +186,7 @@ const fields = [
       { whenField: 'dealType', regex: /^((?!btl).)*$/ },
       { whenField: 'repairingLease', regex: /yes/ },
     ],
+    tooltip: 'used in free cash flow calculation',
   },
   {
     label: `
@@ -178,18 +198,21 @@ const fields = [
       { whenField: 'dealType', regex: /^((?!btl).)*$/ },
       { whenField: 'repairingLease', regex: /yes/ },
     ],
+    tooltip: 'used in free cash flow calculation',
   },
   {
-    label: 'Mortgage term',
-    name: 'mortgageTerm',
-    type: formTypes.NUMBER,
-    defVal: 25,
+    label: 'Repairing lease',
+    name: 'repairingLease',
+    type: formTypes.CHECKBOX,
+    defVal: 'no',
+    disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
   },
   {
     label: `Interest rate(${percentSign})`,
     name: 'mortgageInterestRatePercent',
     type: formTypes.NUMBER,
     defVal: 6.0,
+    tooltip: 'used in both deal finance and buy to let remortgage calculations',
   },
   {
     label: `Remortgage LTV(${percentSign})`,
@@ -197,6 +220,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 75,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'used in buy to let remortgage calculations',
   },
   {
     label: `Solicitors selling fee(${currencyPlaceholder})`,
@@ -204,6 +228,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 0,
     disabled: [{ whenField: 'dealType', regex: /^((?!flip).)*$/ }],
+    tooltip: 'included in flip selling costs',
   },
   {
     label: `Agent/selling fee(${currencyPlaceholder})`,
@@ -211,6 +236,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 0,
     disabled: [{ whenField: 'dealType', regex: /^((?!flip).)*$/ }],
+    tooltip: 'included in flip selling costs',
   },
   {
     label: `Mortgage stress test(${percentSign})`,
@@ -218,6 +244,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 125,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'used only for stress test calculations',
   },
   {
     label: `Stress interest rate(${percentSign})`,
@@ -225,6 +252,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 5.0,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'used only for stress test calcualtions',
   },
 ];
 

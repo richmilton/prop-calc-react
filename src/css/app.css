@@ -88,6 +88,10 @@ div.state, div.remove-state {
 }
 
 div.state {
+  width: 100%;
+}
+
+div.deletable {
   width: 83%;
 }
 

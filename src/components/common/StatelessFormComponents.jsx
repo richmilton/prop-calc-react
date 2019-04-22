@@ -51,7 +51,7 @@ function Input({
   className, name, type, onInput,
   placeholder, label, defVal,
   doLabelClass, dynamicLabel,
-  currency, required, disabled,
+  currency, required, disabled, tooltip,
 }) {
   const labelWithCurrency = addCurrencySymbolToLabel(label, currency);
 
@@ -70,6 +70,7 @@ function Input({
         checked={defVal === 'yes'}
         required={required || false}
         disabled={disabled}
+        title={tooltip || labelWithCurrency}
       />
       {Label({
         name, doLabelClass, dynamicLabel, label, type, currency,
@@ -88,7 +89,7 @@ Input.propTypes = {
 // stateless component Select
 function Select({
   className, name, type, onInput, label, defVal,
-  options, doLabelClass, dynamicLabel, disabled,
+  options, doLabelClass, dynamicLabel, disabled, tooltip,
 }) {
   return (
     <li key={name}>
@@ -100,6 +101,7 @@ function Select({
         id={name}
         onChange={e => onInput(e)}
         disabled={disabled}
+        title={tooltip || ''}
       >
         {options.map(
           opt => (

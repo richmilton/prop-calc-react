@@ -19,19 +19,8 @@ const SavedStateListItem = ({
   onclick,
   deletable,
   firstname,
-}) => (
-  <li>
-    <div className="state">
-      <button
-        className="btn-primary form-control"
-        style={{ width: '100%' }}
-        type="submit"
-        id={`select-${value}`}
-        onClick={e => handleClick(e, onclick)}
-      >
-        {`${label} (${showDate(value)}${deletable ? '' : ` ${firstname}`})`}
-      </button>
-    </div>
+}) => {
+  const deleteButton = (
     <div className="remove-state">
       <button
         className="btn-sm btn-primary btn-warning"
@@ -43,8 +32,24 @@ const SavedStateListItem = ({
         delete
       </button>
     </div>
-  </li>
-);
+  );
+  return (
+    <li>
+      <div className={`state ${deletable ? 'deletable' : ''}`}>
+        <button
+          className="btn-primary form-control"
+          style={{ width: '100%' }}
+          type="submit"
+          id={`select-${value}`}
+          onClick={e => handleClick(e, onclick)}
+        >
+          {`${label} (${showDate(value)}${deletable ? '' : ` ${firstname}`})`}
+        </button>
+      </div>
+      {deletable ? deleteButton : ''}
+    </li>
+  );
+};
 
 SavedStateListItem.propTypes = {
   label: PropTypes.string.isRequired,

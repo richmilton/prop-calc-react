@@ -17,17 +17,11 @@ const toastMessages = {
   dataRetrievalError: {
     message: 'something went wrong retrieving proposal data', options: { appearance: 'error' },
   },
-  saving: {
-    message: `saving new version of ${toastPlaceHolder}`, options: { appearance: 'info' },
-  },
   savedSuccess: {
     message: `new version of ${toastPlaceHolder} saved successfully`, options: { appearance: 'success' },
   },
   saveError: {
     message: `something went wrong saving new version of ${toastPlaceHolder}`, options: { appearance: 'error' },
-  },
-  deleting: {
-    message: `deleting ${toastPlaceHolder}`, options: { appearance: 'info' },
   },
   deleteSuccess: {
     message: `${toastPlaceHolder} deleted successfully`, options: { appearance: 'success' },

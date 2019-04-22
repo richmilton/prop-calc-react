@@ -168,7 +168,6 @@ class App extends Component {
       if (projectName === '' || postCode === '') {
         return;
       }
-      this.toastIt(toastMessages.saving, projectName);
       const stateToSave = { ...currentState, email: userEmail };
       try {
         const resp = await fetch(urls.comparisons, {
@@ -236,10 +235,14 @@ class App extends Component {
   allowAbortChanges(fn) {
     const { currentState, currentState: { projectName, id } } = this.state;
     const changed = projectName !== '' && !shallowObjectEquals(currentState, this.findState(id));
+    const message = `'${projectName}' data has changed, changes will be lost, do you want to continue?`;
     if (!changed) {
       fn();
     } else {
-      confirmDialog(`'${projectName}' data has changed, changes will be lost, do you want to continue?`, fn);
+      confirmDialog(message, fn, 'Save', () => {
+        this.saveState();
+        fn();
+      });
     }
   }
 
