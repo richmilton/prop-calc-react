@@ -125,6 +125,7 @@ const fields = [
     type: formTypes.NUMBER,
     defVal: 0,
     disabled: [{ whenField: 'dealType', regex: /^((?!btl).)*$/ }],
+    tooltip: 'used for but to let calculation',
   },
   {
     label: 'Deal type',
