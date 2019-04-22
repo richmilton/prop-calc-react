@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import confirmDialog from './common/confirmDialog'; // Import
 import Form from './form/FormComponent';
 import fields from './form/formconfig';
 import '../css/app.css';
@@ -14,6 +14,7 @@ import toastMessages from './toastMessages';
 import { toastPlaceHolder } from './common/appConstants';
 import shallowObjectEquals from '../util/shallowObjectEquals';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import showDate from '../util/showDate';
 
 const PropTypes = require('prop-types');
 
@@ -192,31 +193,33 @@ class App extends Component {
 
   deleteState(stateId) {
     const { projectName } = this.findState(stateId);
-    this.toastIt(toastMessages.deleting, projectName);
-    let setDefault = false;
-    const removeState = async (deleteStateId) => {
-      const { userEmail } = this.state;
-      try {
-        const resp = await fetch(urls.comparisons, {
-          method: 'DELETE',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id: deleteStateId, email: userEmail }),
-        });
-        if (resp.status === 200) {
-          const { currentState: id } = this.state;
-          setDefault = id === deleteStateId;
-          this.toastIt(toastMessages.deleteSuccess, projectName);
+    const message = `do you really want to delete '${projectName}' created ${showDate(stateId)}`;
+    confirmDialog(message, () => {
+      let setDefault = false;
+      const removeState = async (deleteStateId) => {
+        const { userEmail } = this.state;
+        try {
+          const resp = await fetch(urls.comparisons, {
+            method: 'DELETE',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: deleteStateId, email: userEmail }),
+          });
+          if (resp.status === 200) {
+            const { currentState: id } = this.state;
+            setDefault = id === deleteStateId;
+            this.toastIt(toastMessages.deleteSuccess, projectName);
+          }
+        } catch (err) {
+          this.toastIt(toastMessages.deleteError, projectName);
+        } finally {
+          this.getSavedStates(setDefault);
         }
-      } catch (err) {
-        this.toastIt(toastMessages.deleteError, projectName);
-      } finally {
-        this.getSavedStates(setDefault);
-      }
-    };
-    removeState(stateId).then(() => ({ delete: 'finished' }));
+      };
+      removeState(stateId).then(() => ({ delete: 'finished' }));
+    });
   }
 
   selectState(stateId) {
@@ -231,27 +234,12 @@ class App extends Component {
   }
 
   allowAbortChanges(fn) {
-    const confirm = (name) => {
-      confirmAlert({
-        message: `'${name}' data has changed, changes will be lost, do you want to continue?`,
-        buttons: [
-          {
-            label: 'Ok',
-            onClick: fn,
-          },
-          {
-            label: 'No',
-            onClick: () => false,
-          },
-        ],
-      });
-    };
     const { currentState, currentState: { projectName, id } } = this.state;
     const changed = projectName !== '' && !shallowObjectEquals(currentState, this.findState(id));
     if (!changed) {
       fn();
     } else {
-      confirm(projectName);
+      confirmDialog(`'${projectName}' data has changed, changes will be lost, do you want to continue?`, fn);
     }
   }
 

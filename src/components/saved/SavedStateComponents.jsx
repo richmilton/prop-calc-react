@@ -1,6 +1,6 @@
 /* eslint-env browser */
 import React from 'react';
-import dateFormat from 'date-format';
+import showDate from '../../util/showDate';
 
 const PropTypes = require('prop-types');
 
@@ -10,7 +10,7 @@ const handleClick = (e, callback) => {
   callback(e.target.id.split('-')[1]);
 };
 
-const showDate = milis => dateFormat('dd/MM hh:mm:ss', new Date(parseInt(milis, 0)));
+// const showDate = milis => dateFormat('dd/MM hh:mm:ss', new Date(parseInt(milis, 0)));
 
 const SavedStateListItem = ({
   label,
