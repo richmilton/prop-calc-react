@@ -1,6 +1,7 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 import Form from './form/FormComponent';
 import fields from './form/formconfig';
 import '../css/app.css';
@@ -11,6 +12,8 @@ import Login from './login/LoginComponent';
 import Logout from './login/LogoutComponent';
 import toastMessages from './toastMessages';
 import { toastPlaceHolder } from './common/appConstants';
+import shallowObjectEquals from '../util/shallowObjectEquals';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const PropTypes = require('prop-types');
 
@@ -50,6 +53,7 @@ class App extends Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.toastIt = this.toastIt.bind(this);
+    this.allowAbortChanges = this.allowAbortChanges.bind(this);
   }
 
   componentDidMount() {
@@ -216,19 +220,48 @@ class App extends Component {
   }
 
   selectState(stateId) {
-    const selectedState = this.findState(stateId);
-    this.setState({ currentState: selectedState }, () => {
-      const { currentState: { projectName } } = this.state;
-      this.toastIt(toastMessages.loaded, projectName);
-      this.calculate();
+    this.allowAbortChanges(() => {
+      const selectedState = this.findState(stateId);
+      this.setState({ currentState: selectedState }, () => {
+        const { currentState: { projectName } } = this.state;
+        this.toastIt(toastMessages.loaded, projectName);
+        this.calculate();
+      });
     });
   }
 
+  allowAbortChanges(fn) {
+    const confirm = (name) => {
+      confirmAlert({
+        message: `'${name}' data has changed, changes will be lost, do you want to continue?`,
+        buttons: [
+          {
+            label: 'Ok',
+            onClick: fn,
+          },
+          {
+            label: 'No',
+            onClick: () => false,
+          },
+        ],
+      });
+    };
+    const { currentState, currentState: { projectName, id } } = this.state;
+    const changed = projectName !== '' && !shallowObjectEquals(currentState, this.findState(id));
+    if (!changed) {
+      fn();
+    } else {
+      confirm(projectName);
+    }
+  }
+
   handleNew(e) {
-    e.preventDefault();
-    this.setState(
-      { currentState: App.setDefaultFormData() }, () => this.calculate(),
-    );
+    this.allowAbortChanges(() => {
+      e.preventDefault();
+      this.setState(
+        { currentState: App.setDefaultFormData() }, () => this.calculate(),
+      );
+    });
     e.target.blur();
   }
 
