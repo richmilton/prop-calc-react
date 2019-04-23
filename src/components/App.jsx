@@ -54,7 +54,7 @@ class App extends Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.toastIt = this.toastIt.bind(this);
-    this.allowAbortChanges = this.allowAbortChanges.bind(this);
+    this.checkSaveOrAbortChanges = this.checkSaveOrAbortChanges.bind(this);
   }
 
   componentDidMount() {
@@ -222,7 +222,7 @@ class App extends Component {
   }
 
   selectState(stateId) {
-    this.allowAbortChanges(() => {
+    this.checkSaveOrAbortChanges(() => {
       const selectedState = this.findState(stateId);
       this.setState({ currentState: selectedState }, () => {
         const { currentState: { projectName } } = this.state;
@@ -232,14 +232,14 @@ class App extends Component {
     });
   }
 
-  allowAbortChanges(fn) {
+  checkSaveOrAbortChanges(fn) {
     const { currentState, currentState: { projectName, id } } = this.state;
     const changed = projectName !== '' && !shallowObjectEquals(currentState, this.findState(id));
     const message = `'${projectName}' data has changed, changes will be lost, do you want to continue?`;
     if (!changed) {
       fn();
     } else {
-      confirmDialog(message, fn, 'Save', () => {
+      confirmDialog(message, fn, 'Save new version and continue', () => {
         this.saveState();
         fn();
       });
@@ -247,7 +247,7 @@ class App extends Component {
   }
 
   handleNew(e) {
-    this.allowAbortChanges(() => {
+    this.checkSaveOrAbortChanges(() => {
       e.preventDefault();
       this.setState(
         { currentState: App.setDefaultFormData() }, () => this.calculate(),
