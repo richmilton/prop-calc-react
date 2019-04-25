@@ -58,7 +58,7 @@ class Form extends Component {
 
     switch (type) {
       case formTypes.NUMBER:
-        val = Number.isNaN(value) ? 0 : (parseFloat(value) || 0);
+        val = Number.isNaN(value) ? 0 : (Number.parseFloat(value) || 0);
         break;
       case formTypes.CHECKBOX:
         val = checked ? 'yes' : 'no';

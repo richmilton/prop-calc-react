@@ -1,11 +1,12 @@
+const load = 3;
 const ireland = [
   { upto: 1000000, rate: 1 },
   { upto: 'end', rate: 2 },
 ];
-const scotland = [{ upto: 250000, rate: 2, load: 3 },
-  { upto: 325000, rate: 5, load: 3 },
-  { upto: 750000, rate: 10, load: 3 },
-  { upto: 'end', rate: 12, load: 3 },
+const scotland = [{ upto: 250000, rate: 2, load },
+  { upto: 325000, rate: 5, load },
+  { upto: 750000, rate: 10, load },
+  { upto: 'end', rate: 12, load },
 ];
 const bands = {
   commercial: {
@@ -46,22 +47,22 @@ const bands = {
       },
     },
     england: [
-      { upto: 125000, rate: 0, load: 3 },
-      { upto: 250000, rate: 2, load: 3 },
-      { upto: 925000, rate: 5, load: 3 },
-      { upto: 1500000, rate: 10, load: 3 },
-      { upto: 'end', rate: 12, load: 3 },
+      { upto: 125000, rate: 0, load },
+      { upto: 250000, rate: 2, load },
+      { upto: 925000, rate: 5, load },
+      { upto: 1500000, rate: 10, load },
+      { upto: 'end', rate: 12, load },
     ],
     wales: [
-      { upto: 180000, rate: 0, load: 3 },
-      { upto: 250000, rate: 3.5, load: 3 },
-      { upto: 400000, rate: 5, load: 3 },
-      { upto: 750000, rate: 7.5, load: 3 },
-      { upto: 1500000, rate: 10, load: 3 },
-      { upto: 'end', rate: 12, load: 3 },
+      { upto: 180000, rate: 0, load },
+      { upto: 250000, rate: 3.5, load },
+      { upto: 400000, rate: 5, load },
+      { upto: 750000, rate: 7.5, load },
+      { upto: 1500000, rate: 10, load },
+      { upto: 'end', rate: 12, load },
     ],
     scotland: [
-      { upto: 145000, rate: 0, load: 3 },
+      { upto: 145000, rate: 0, load },
       ...scotland,
     ],
     ireland,
