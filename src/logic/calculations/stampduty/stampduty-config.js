@@ -1,4 +1,18 @@
 const load = 3;
+const countries = {
+  ENGLAND: 'england',
+  SCOTLAND: 'scotland',
+  WALES: 'wales',
+  IRELAND: 'ireland',
+};
+const propertyTypes = {
+  COMMERCIAL: 'commercial',
+  RESIDENTIAL: 'residential',
+};
+const buyerTypes = {
+  FIRST_TIME: 'first',
+  MOVING_HOUSE: '',
+};
 const ireland = [
   { upto: 1000000, rate: 1 },
   { upto: 'end', rate: 2 },
@@ -8,20 +22,20 @@ const scotland = [{ upto: 250000, rate: 2, load },
   { upto: 750000, rate: 10, load },
   { upto: 'end', rate: 12, load },
 ];
-const bands = {
-  commercial: {
-    england: [
+const sdltBands = {
+  [propertyTypes.COMMERCIAL]: {
+    [countries.ENGLAND]: [
       { upto: 150000, rate: 0 },
       { upto: 250000, rate: 2 },
       { upto: 'end', rate: 5 },
     ],
-    wales: [
+    [countries.WALES]: [
       { upto: 150000, rate: 0 },
       { upto: 250000, rate: 1 },
       { upto: 1000000, rate: 5 },
       { upto: 'end', rate: 6 },
     ],
-    scotland: [
+    [countries.SCOTLAND]: [
       { upto: 150000, rate: 0 },
       { upto: 250000, rate: 1 },
       { upto: 'end', rate: 5 },
@@ -29,16 +43,16 @@ const bands = {
     ireland,
   },
 
-  residential: {
-    first: {
-      england: {
+  [propertyTypes.RESIDENTIAL]: {
+    [buyerTypes.FIRST_TIME]: {
+      [countries.ENGLAND]: {
         thresholds: [
           { upto: 300000, rate: 0 },
           { upto: 500000, rate: 5 },
         ],
         limit: 500000,
       },
-      scotland: {
+      [countries.SCOTLAND]: {
         thresholds: [
           { upto: 175000, rate: 0 },
           ...scotland,
@@ -46,14 +60,14 @@ const bands = {
         limit: -1,
       },
     },
-    england: [
+    [countries.ENGLAND]: [
       { upto: 125000, rate: 0, load },
       { upto: 250000, rate: 2, load },
       { upto: 925000, rate: 5, load },
       { upto: 1500000, rate: 10, load },
       { upto: 'end', rate: 12, load },
     ],
-    wales: [
+    [countries.WALES]: [
       { upto: 180000, rate: 0, load },
       { upto: 250000, rate: 3.5, load },
       { upto: 400000, rate: 5, load },
@@ -61,7 +75,7 @@ const bands = {
       { upto: 1500000, rate: 10, load },
       { upto: 'end', rate: 12, load },
     ],
-    scotland: [
+    [countries.SCOTLAND]: [
       { upto: 145000, rate: 0, load },
       ...scotland,
     ],
@@ -69,4 +83,12 @@ const bands = {
   },
 };
 
-module.exports = bands;
+// module.exports = sdltBands;
+const stampDutyConfig = {
+  sdltBands,
+  countries,
+  propertyTypes,
+  buyerTypes,
+};
+
+export default stampDutyConfig;

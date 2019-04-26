@@ -27,6 +27,7 @@ const testState = {
   stampDutyRegion: 'england',
   stampDutyBuyer: 'investor',
   propertyValue: 350000,
+  mortgageTerm: 25,
 };
 
 describe('calculations.freeCash()', () => {
@@ -44,9 +45,9 @@ describe('calculations.freeCash()', () => {
 describe('calculations.initialFinance()', () => {
   it('should return expected values', () => {
     const initF = calculations.initialFinance(testState);
-    const expectedValues = [0, 350000, 18000, 1700, 0, 369700, 369700];
+    const expectedValues = ['0.00', '350000.00', '18000.00', '1700.00', '0.00', '369700.00', '369700.00', '0.00 pcm', '0.00 pcm', '25 years'];
 
-    initF.map((ob, i) => expect(ob.value).to.be.equal(expectedValues[i].toFixed(2)));
+    initF.map((ob, i) => expect(ob.value).to.be.equal(expectedValues[i]));
   });
 });
 

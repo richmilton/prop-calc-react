@@ -31,7 +31,7 @@ const initialFinance = ({
   const initFees = initSurveyorsFee + initLegalFee + initMortgageFee;
   const other = refurbCost + otherCost;
   const initialDeposit = isCash ? propertyValue : Math.round(propertyValue * (1 - loanToVal));
-  const sdltTotal = calculateStampDuty(
+  const { tax: sdltTotal } = calculateStampDuty(
     propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
   );
   const totCost = allInputCosts(initSurveyorsFee, initLegalFee, initMortgageFee,

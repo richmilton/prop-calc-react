@@ -11,7 +11,7 @@ const allInputCosts = (
   stampDutyRegion,
   stampDutyBuyer,
 ) => {
-  const stampDuty = calculateStampDuty(
+  const { tax: stampDuty } = calculateStampDuty(
     propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
   );
 

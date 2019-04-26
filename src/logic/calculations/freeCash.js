@@ -33,7 +33,7 @@ const freeCash = ({
   const lettingAgentsFees = isRepairing ? 0 : (monthlyRent * agentsPercent / 100);
   const freeCashFlowMonthly = monthlyRent - (repairingLease === 'yes' ? 0 : moe) - remortgageMonthlyInterest - lettingAgentsFees;
   const totalOtherCosts = refurbCost + otherCost;
-  const sdltTotal = calculateStampDuty(
+  const { tax: sdltTotal } = calculateStampDuty(
     propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
   );
   const remortgageFees = remortgageFee + remortgageValuationFee + remortgageLegalFee;
