@@ -1,4 +1,4 @@
-import calculateStampDuty from './stampduty/stampduty-calculator';
+import stampDutyCalculator from 'uk-ireland-stampduty-calculator';
 
 const allInputCosts = (
   initSurveyorsFee,
@@ -11,7 +11,7 @@ const allInputCosts = (
   stampDutyRegion,
   stampDutyBuyer,
 ) => {
-  const { tax: stampDuty } = calculateStampDuty(
+  const { tax: stampDuty } = stampDutyCalculator.calculate(
     propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
   );
 

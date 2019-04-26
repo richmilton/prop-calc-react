@@ -1,4 +1,4 @@
-import calculateStampDuty from './stampduty/stampduty-calculator';
+import stampDutyCalculator from 'uk-ireland-stampduty-calculator';
 import calculationsLabels from '../../labels/calculations-labels';
 
 const percentSign = String.fromCharCode(37);
@@ -33,7 +33,7 @@ const freeCash = ({
   const lettingAgentsFees = isRepairing ? 0 : (monthlyRent * agentsPercent / 100);
   const freeCashFlowMonthly = monthlyRent - (repairingLease === 'yes' ? 0 : moe) - remortgageMonthlyInterest - lettingAgentsFees;
   const totalOtherCosts = refurbCost + otherCost;
-  const { tax: sdltTotal } = calculateStampDuty(
+  const { tax: sdltTotal } = stampDutyCalculator.calculate(
     propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
   );
   const remortgageFees = remortgageFee + remortgageValuationFee + remortgageLegalFee;

@@ -1,4 +1,4 @@
-import calculateStampDuty from './stampduty/stampduty-calculator';
+import stampDutyCalculator from 'uk-ireland-stampduty-calculator';
 import allInputCosts from './allInputCosts';
 import calculationsLabels from '../../labels/calculations-labels';
 
@@ -31,7 +31,7 @@ const initialFinance = ({
   const initFees = initSurveyorsFee + initLegalFee + initMortgageFee;
   const other = refurbCost + otherCost;
   const initialDeposit = isCash ? propertyValue : Math.round(propertyValue * (1 - loanToVal));
-  const { tax: sdltTotal } = calculateStampDuty(
+  const { tax: sdltTotal } = stampDutyCalculator.calculate(
     propertyValue, stampDutyType, stampDutyRegion, stampDutyBuyer,
   );
   const totCost = allInputCosts(initSurveyorsFee, initLegalFee, initMortgageFee,
