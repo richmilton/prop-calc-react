@@ -32,7 +32,7 @@ const fields = [
     tooltip: 'price you intend paying for property: will be used in deal finance and stamp duty calculation',
   },
   {
-    label: `Done up value(${currencyPlaceholder})`,
+    label: `Done up value/GDV(${currencyPlaceholder})`,
     name: 'doneUpValue',
     type: formTypes.NUMBER,
     defVal: 0,
