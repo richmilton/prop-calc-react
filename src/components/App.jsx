@@ -47,6 +47,7 @@ class App extends Component {
       hasWorkingAPI: false,
       userEmail: props.cookies.get('email') || '',
     };
+    this.topRef = React.createRef();
     this.calculate = this.calculate.bind(this);
     this.saveState = this.saveState.bind(this);
     this.deleteState = this.deleteState.bind(this);
@@ -228,6 +229,7 @@ class App extends Component {
         const { currentState: { projectName } } = this.state;
         this.toastIt(toastMessages.loaded, projectName);
         this.calculate();
+        window.scrollTo(0, this.topRef.current.topRef);
       });
     });
   }
@@ -337,6 +339,7 @@ class App extends Component {
         <div className="column" style={{ textAlign: 'center' }}>
           <h5>Property investment deal analyser</h5>
           <Form
+            ref={this.topRef}
             name="propcalc"
             fields={fields}
             formData={currentState}
