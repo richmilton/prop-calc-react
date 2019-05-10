@@ -5,18 +5,18 @@ const PropTypes = require('prop-types');
 
 const basePropTypes = {
   name: PropTypes.string.isRequired,
-  doLabelClass: PropTypes.func.isRequired,
-  dynamicLabel: PropTypes.func.isRequired,
+  doLabelClass: PropTypes.func,
+  dynamicLabel: PropTypes.func,
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  currency: PropTypes.number.isRequired,
+  currency: PropTypes.number,
 };
 const formControlPropTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   onInput: PropTypes.func.isRequired,
   defVal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  disabled: PropTypes.bool.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object),
+  disabled: PropTypes.bool,
 };
 const currRegEx = new RegExp(currencyPlaceholder, 'g');
 
@@ -35,9 +35,9 @@ function Label({
     <div className={type === 'checkbox' ? 'checkbox-label' : 'input-label'}>
       <label
         htmlFor={name}
-        className={doLabelClass(name)}
+        className={doLabelClass ? doLabelClass(name) : name}
       >
-        {dynamicLabel(name, labelWithCurrency)}
+        {dynamicLabel ? dynamicLabel(name, labelWithCurrency) : label}
       </label>
     </div>
   );

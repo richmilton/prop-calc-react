@@ -15,8 +15,11 @@ import { toastPlaceHolder } from './common/appConstants';
 import shallowObjectEquals from '../util/shallowObjectEquals';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import showDate from '../util/showDate';
+import StatelessComponents from './common/StatelessFormComponents';
 
 const PropTypes = require('prop-types');
+
+const { Input } = StatelessComponents;
 
 const urls = {
   comparisons: process.env.REACT_APP_COMPARISONS_URL,
@@ -46,6 +49,9 @@ class App extends Component {
       currentState: { projectName: '' },
       hasWorkingAPI: false,
       userEmail: props.cookies.get('email') || '',
+      showInput: true,
+      showResults: true,
+      showSaved: true,
     };
     this.topRef = React.createRef();
     this.calculate = this.calculate.bind(this);
@@ -56,6 +62,8 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.toastIt = this.toastIt.bind(this);
     this.checkSaveOrAbortChanges = this.checkSaveOrAbortChanges.bind(this);
+    this.tabLink = this.tabLink.bind(this);
+    this.selectTab = this.selectTab.bind(this);
   }
 
   componentDidMount() {
@@ -225,11 +233,11 @@ class App extends Component {
   selectState(stateId) {
     this.checkSaveOrAbortChanges(() => {
       const selectedState = this.findState(stateId);
-      this.setState({ currentState: selectedState }, () => {
+      this.setState({ currentState: selectedState, showInput: true }, () => {
         const { currentState: { projectName } } = this.state;
         this.toastIt(toastMessages.loaded, projectName);
         this.calculate();
-        window.scrollTo(0, this.topRef.current.topRef);
+        window.scrollTo({ top: this.topRef, left: 0, behavior: 'smooth' });
       });
     });
   }
@@ -267,12 +275,23 @@ class App extends Component {
     });
   }
 
+  tabLink(event) {
+    event.preventDefault();
+    const { id } = event.target;
+    this.setState({ selectedTab: id });
+  }
+
   logout() {
     const { cookies } = this.props;
     cookies.set('email', '', { path: '/' });
     this.setState({ userEmail: '' }, () => {
       this.toastIt(toastMessages.logout);
     });
+  }
+
+  selectTab(event) {
+    const { target: { name, checked } } = event;
+    this.setState({ [name]: checked });
   }
 
   render() {
@@ -283,6 +302,9 @@ class App extends Component {
       hasWorkingAPI,
       error,
       userEmail,
+      showInput,
+      showResults,
+      showSaved,
     } = this.state;
     const { projectName, postCode } = currentState;
     const showSave = (
@@ -336,8 +358,52 @@ class App extends Component {
 
     return Object.keys(currentState).length > 1 && userEmail ? (
       <div className="App">
-        <div className="column" style={{ textAlign: 'center' }}>
-          <h5>Property investment deal analyser</h5>
+        <div className="d-flex flex-wrap">
+          <div className="column">
+            <h5>Property investment deal analyser</h5>
+          </div>
+          <div className="column">
+            <ul className="display-options">
+              <li className="do-label">
+                show:
+              </li>
+              <Input
+                style={{ float: 'left' }}
+                name="showInput"
+                label="input"
+                defVal={showInput ? 'yes' : 'no'}
+                type="checkbox"
+                onInput={this.selectTab}
+                placeholder=""
+                required={false}
+              />
+              <Input
+                style={{ float: 'left' }}
+                name="showResults"
+                defVal={showResults ? 'yes' : 'no'}
+                label="results"
+                type="checkbox"
+                onInput={this.selectTab}
+                placeholder=""
+                required={false}
+              />
+              <Input
+                style={{ float: 'left' }}
+                name="showSaved"
+                defVal={showSaved ? 'yes' : 'no'}
+                label="saved"
+                type="checkbox"
+                onInput={this.selectTab}
+                placeholder=""
+                required={false}
+              />
+            </ul>
+          </div>
+        </div>
+        <div
+          className="column input-form"
+          style={{ display: showInput ? '' : 'none' }}
+        >
           <Form
             ref={this.topRef}
             name="propcalc"
@@ -352,10 +418,10 @@ class App extends Component {
           />
           {newButton}
         </div>
-        <div className="column results">
+        <div className="column results" style={{ display: showResults ? '' : 'none' }}>
           {Results(this.state)}
         </div>
-        <div className="column states">
+        <div className="column states" style={{ display: showSaved ? '' : 'none' }}>
           <div className="my-stuff">
             <h6>
               My stuff (

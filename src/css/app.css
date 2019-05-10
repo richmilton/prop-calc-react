@@ -107,6 +107,11 @@ div.column {
   padding: 0.05em
 }
 
+div.app-header {
+  font-size: 0.85em;
+  text-align: center;
+}
+
 div.res-block {
   display: inline-block;
   width: 100%;
@@ -164,4 +169,15 @@ ul.right {
   color: #666;
   background-color: transparent;
   padding: 0;
+}
+
+.display-options li{
+  float: left;
+  width: 25%;
+}
+
+.do-label {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0.5em;
 }
