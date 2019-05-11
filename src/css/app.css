@@ -174,10 +174,15 @@ ul.right {
 .display-options li{
   float: left;
   width: 25%;
+  height: 2em;
 }
 
 .do-label {
   text-align: center;
   font-weight: bold;
   margin-top: 0.5em;
+}
+
+h5 {
+  margin: 0;
 }

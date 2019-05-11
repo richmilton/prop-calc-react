@@ -359,7 +359,10 @@ class App extends Component {
     return Object.keys(currentState).length > 1 && userEmail ? (
       <div className="App">
         <div className="d-flex flex-wrap">
-          <div className="column">
+          <div
+            ref={this.topRef}
+            className="column text-center"
+          >
             <h5>Property investment deal analyser</h5>
           </div>
           <div className="column">
@@ -405,7 +408,6 @@ class App extends Component {
           style={{ display: showInput ? '' : 'none' }}
         >
           <Form
-            ref={this.topRef}
             name="propcalc"
             fields={fields}
             formData={currentState}
