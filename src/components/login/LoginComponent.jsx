@@ -38,7 +38,6 @@ class Login extends Component {
             type={type}
             name={name}
             id={name}
-            autoComplete="off"
             placeholder={`${label} [${type}]`}
             onChange={this.handleChange}
             onBlur={this.handleChange}
