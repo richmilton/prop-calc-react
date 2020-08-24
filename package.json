@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://richmilton.github.io/prop-calc-react",
-  "repository": "https://richmilton.github.io/prop-calc-react",
+  "repository": "https://github.com/richmilton/prop-calc-react",
   "dependencies": {
     "@types/react": "^16.8.13",
     "bootstrap": "^4.3.1",
