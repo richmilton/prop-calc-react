@@ -65,7 +65,7 @@ function Links(
       />
       {':'}
       <Link
-        href={urls.otmSold + postCode}
+        href={urls.otmSold + postCode.toLowerCase().replace(/ /, '-')}
         text="OTM"
       />
       {' | '}
