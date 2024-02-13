@@ -56,6 +56,8 @@ class Form extends Component {
     const { props } = this;
     let val;
 
+    console.log(value, name);
+
     switch (type) {
       case formTypes.NUMBER:
         val = Number.isNaN(value) ? 0 : (Number.parseFloat(value) || 0);

@@ -15,6 +15,7 @@ const urls = {
   nhpSold: process.env.REACT_APP_NHP_SOLD_URL,
   zooSold: process.env.REACT_APP_ZOO_SOLD_URL,
   otmSold: process.env.REACT_APP_OTM_SOLD_URL,
+  rmSold: process.env.REACT_APP_RM_SOLD_URL,
   gMap: process.env.REACT_APP_MAP_URL,
 };
 
@@ -58,15 +59,20 @@ function Links(
         href={urls.nhpSold + postCode}
         text="NHP"
       />
-      {':'}
+      :
       <Link
         href={urls.zooSold + postCode}
-        text="Zoopla"
+        text="Zoo"
       />
-      {':'}
+      :
       <Link
         href={urls.otmSold + postCode.toLowerCase().replace(/ /, '-')}
         text="OTM"
+      />
+      :
+      <Link
+        href={`${urls.rmSold}${postCode.toLowerCase().replace(/ /, '-')}.html`}
+        text="RM"
       />
       {' | '}
       <Link
