@@ -11033,10 +11033,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-uk-ireland-stampduty-calculator@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/uk-ireland-stampduty-calculator/-/uk-ireland-stampduty-calculator-1.3.1.tgz#0cd54760a65e1429e5ef469623f1b99b4d4e4aa1"
-  integrity sha512-MR2gd1VEDua4nQoB1xFa3L9jUsozorTq33OoSeZb/H3XWjccs3iGJZKi9vC0WzpXzEmlqr20UGgjvVUeNb8ERg==
+uk-ireland-stampduty-calculator@1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/uk-ireland-stampduty-calculator/-/uk-ireland-stampduty-calculator-1.3.4.tgz#684c44d39299875fbdcb630c09beaac77eca4d2c"
+  integrity sha512-CFG6OXIrlC7oA47RpnQf2nLE39wDUQhs0/rWJrPdAAc8Y01N33bF9yFSu5UFgNMQhdccZVpWxP9rWwDJ58Sb5Q==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
